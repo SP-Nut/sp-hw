@@ -65,7 +65,7 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
       {/* Top Banner Image Area - Full Width No Padding */}
       <div className={`w-full relative overflow-hidden transition-all duration-300 ${
-        isScrolled ? 'h-0 opacity-0' : 'h-20 md:h-24 opacity-100'
+        isScrolled ? 'h-0 opacity-0' : 'h-12 sm:h-20 md:h-24 opacity-100'
       }`}>
         {/* Header Promotion Images Slider */}
         <div className="absolute inset-0">
@@ -88,15 +88,15 @@ export default function Header() {
         </div>
         
         {/* Slide Indicators */}
-        <div className="absolute bottom-2 right-4 flex space-x-1 z-10">
+        <div className="absolute bottom-1 sm:bottom-2 right-2 sm:right-4 flex space-x-1 z-10">
           {headerPromotionImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentHeaderSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`w-2 h-2 rounded-full transition-all duration-300 touch-manipulation ${
                 index === currentHeaderSlide 
                   ? 'bg-white' 
-                  : 'bg-white/50 hover:bg-white/75'
+                  : 'bg-white/50 hover:bg-white/75 active:bg-white'
               }`}
             />
           ))}
@@ -122,33 +122,35 @@ export default function Header() {
       </div>
 
       {/* Main Header */}
-      <div className="bg-white py-4 border-b border-gray-100">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <div className="bg-white py-2 sm:py-4 border-b border-gray-100">
+        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
           <div className="flex items-center justify-between">
             {/* Left Section - Logo */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Mobile menu button */}
               <button
-                className="lg:hidden p-2 text-[#1E2E4F] hover:bg-gray-50 rounded-lg transition-colors"
+                className="lg:hidden p-1.5 sm:p-2 text-[#1E2E4F] hover:bg-gray-50 active:bg-gray-100 rounded-lg transition-colors touch-manipulation"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMenuOpen ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
               </button>
               
               {/* Logo */}
               <Link href="/" className="flex items-center group">
-                <div className="bg-[#1E2E4F] text-white px-4 py-2 rounded-lg shadow-sm group-hover:bg-[#31487A] transition-colors">
-                  <span className="text-xl font-black">SP</span>
-                </div>
-                <div className="ml-3">
-                  <h1 className="text-xl font-black text-[#1E2E4F] group-hover:text-[#31487A] transition-colors">SP Hardware</h1>
-                  <p className="text-xs text-[#8FB3E2] font-medium">วัสดุก่อสร้าง</p>
+                <div className="w-20 h-12 sm:w-24 sm:h-14 md:w-28 md:h-16 lg:w-32 lg:h-18 transition-transform group-hover:scale-105">
+                  <Image
+                    src="/logo.png"
+                    alt="SP Hardware Logo"
+                    width={128}
+                    height={72}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </Link>
             </div>
 
             {/* Search Bar - Desktop */}
-            <div className="hidden lg:flex flex-1 max-w-xl mx-8">
+            <div className="hidden md:flex flex-1 max-w-lg lg:max-w-xl mx-4 lg:mx-8">
               <div className="relative w-full">
                 <input
                   type="text"
@@ -156,12 +158,12 @@ export default function Header() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   placeholder="ค้นหาสินค้า..."
-                  className="w-full px-4 py-3 pl-12 pr-12 border border-gray-200 rounded-lg focus:border-[#8FB3E2] focus:outline-none focus:ring-2 focus:ring-[#8FB3E2]/20 bg-gray-50 placeholder-gray-400"
+                  className="w-full px-3 py-2 lg:px-4 lg:py-3 pl-10 lg:pl-12 pr-10 lg:pr-12 border border-gray-200 rounded-lg focus:border-[#8FB3E2] focus:outline-none focus:ring-2 focus:ring-[#8FB3E2]/20 bg-gray-50 placeholder-gray-400 text-sm lg:text-base"
                 />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 lg:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 lg:h-5 lg:w-5 text-gray-400" />
                 <button 
                   onClick={handleSearch}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#8FB3E2] hover:bg-[#31487A] text-white px-3 py-1.5 rounded-md transition-colors"
+                  className="absolute right-1.5 lg:right-2 top-1/2 transform -translate-y-1/2 bg-[#8FB3E2] hover:bg-[#31487A] active:bg-[#1E2E4F] text-white px-2 py-1 lg:px-3 lg:py-1.5 rounded-md transition-colors text-sm lg:text-base touch-manipulation"
                 >
                   ค้นหา
                 </button>
@@ -169,34 +171,34 @@ export default function Header() {
             </div>
 
             {/* Right Section */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
+              {/* Mobile Search Button */}
+              <button 
+                className="md:hidden p-1.5 sm:p-2 text-gray-600 hover:bg-gray-50 active:bg-gray-100 rounded-lg transition-colors touch-manipulation"
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+              >
+                <Search className="h-5 w-5 sm:h-6 sm:w-6" />
+              </button>
+
+              {/* LINE Button */}
+              <button 
+                onClick={handleLineAdd}
+                className="hidden sm:flex items-center space-x-1 sm:space-x-2 bg-[#06C755] hover:bg-green-600 active:bg-green-700 text-white px-2 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors shadow-sm text-sm touch-manipulation"
+              >
+                <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span>LINE</span>
+              </button>
+              
               {/* Cart */}
-              <Link href="/cart" className="relative p-2 text-gray-600 hover:text-[#1E2E4F] transition-colors group">
-                <ShoppingCart className="h-6 w-6" />
+              <Link href="/cart" className="relative p-1.5 sm:p-2 text-gray-600 hover:text-[#1E2E4F] active:text-[#31487A] transition-colors group touch-manipulation">
+                <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
-                    {cartCount}
+                  <span className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 bg-red-500 text-white text-xs font-bold min-w-[16px] h-[16px] sm:min-w-[18px] sm:h-[18px] flex items-center justify-center rounded-full">
+                    {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}
               </Link>
-              
-              {/* LINE Button - Desktop */}
-              <button 
-                onClick={handleLineAdd}
-                className="hidden lg:flex items-center space-x-2 bg-[#06C755] hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
-              >
-                <MessageCircle className="h-4 w-4" />
-                <span>LINE</span>
-              </button>
             </div>
-              
-              {/* Mobile Search Button */}
-              <button 
-                className="lg:hidden p-2 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-              >
-                <Search className="h-5 w-5" />
-              </button>
           </div>
         </div>
       </div>

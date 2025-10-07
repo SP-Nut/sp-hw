@@ -52,6 +52,49 @@ body {
   line-clamp: 3;
 }
 
+/* Mobile Optimizations */
+@media (max-width: 640px) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Touch-friendly buttons */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide scrollbar for mobile carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+/* Custom focus states for accessibility */
+.focus-visible:focus {
+  outline: 2px solid #8FB3E2;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Improved text rendering on mobile */
+@media (max-width: 768px) {
+  h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  body {
+    overflow-x: hidden;
+  }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -68,4 +111,11 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1a1;
+}
+
+/* Mobile-specific animations */
+@media (prefers-reduced-motion: no-preference) {
+  .transform-gpu {
+    transform: translateZ(0);
+  }
 }

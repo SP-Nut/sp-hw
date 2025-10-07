@@ -255,9 +255,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Banner Promotion Section */}
-      <div className="py-6 bg-gray-100">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="relative aspect-[16/5] w-full overflow-hidden bg-gradient-to-r from-[#1E2E4F] to-[#31487A] rounded-lg shadow-xl">
+      <div className="py-3 sm:py-6 bg-gray-100">
+        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
+          <div className="relative aspect-[4/3] sm:aspect-[16/7] lg:aspect-[16/5] w-full overflow-hidden bg-gradient-to-r from-[#1E2E4F] to-[#31487A] rounded-lg shadow-xl">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10 rounded-lg">
               <div className="w-full h-full bg-repeat opacity-20" style={{
@@ -288,27 +288,27 @@ export default function Home() {
             {/* Navigation Controls */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur text-white p-3 rounded-full transition-all duration-300 z-20 group"
+              className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 active:bg-white/50 backdrop-blur text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-20 group touch-manipulation"
             >
-              <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
+              <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur text-white p-3 rounded-full transition-all duration-300 z-20 group"
+              className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 active:bg-white/50 backdrop-blur text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-20 group touch-manipulation"
             >
-              <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
+              <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
             </button>
 
             {/* Slide Indicators */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+            <div className="absolute bottom-3 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
               {promotionImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 touch-manipulation ${
                     index === currentSlide 
                       ? 'bg-white scale-125' 
-                      : 'bg-white/50 hover:bg-white/75'
+                      : 'bg-white/50 hover:bg-white/75 active:bg-white'
                   }`}
                 />
               ))}
@@ -320,19 +320,20 @@ export default function Home() {
       </div>
 
       {/* Promotional Cards */}
-      <div className="py-6 bg-white">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="py-4 sm:py-6 bg-white">
+        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
             {promotionalCards.map((card, index) => (
               <Link key={index} href={card.link} className="group">
-                <div className="bg-white border border-gray-200 hover:border-[#8FB3E2] rounded-lg p-4 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <div className="bg-white border border-gray-200 hover:border-[#8FB3E2] active:border-[#31487A] rounded-lg p-2 sm:p-4 hover:shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95">
                   <div className="text-center">
-                    <div className="mb-3 p-2 bg-gradient-to-br from-[#1E2E4F] to-[#31487A] rounded-full inline-flex group-hover:from-[#31487A] group-hover:to-[#8FB3E2] transition-all duration-300">
-                      {React.createElement(card.icon, { className: "h-6 w-6 text-white" })}
+                    <div className="mb-2 sm:mb-3 p-1.5 sm:p-2 bg-gradient-to-br from-[#1E2E4F] to-[#31487A] rounded-full inline-flex group-hover:from-[#31487A] group-hover:to-[#8FB3E2] transition-all duration-300">
+                      {React.createElement(card.icon, { className: "h-4 w-4 sm:h-6 sm:w-6 text-white" })}
                     </div>
-                    <h3 className="font-bold text-[#1E2E4F] mb-2 text-sm">{card.title}</h3>
-                    <p className="text-xs text-gray-600 leading-relaxed mb-3">{card.description}</p>
-                    <div className="bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white text-xs font-bold py-1 px-3 rounded-full">ลด {card.discount}</div>
+                    <h3 className="font-bold text-[#1E2E4F] mb-1 sm:mb-2 text-xs sm:text-sm">{card.title}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed mb-2 sm:mb-3 hidden sm:block">{card.description}</p>
+                    <p className="text-xs text-gray-600 leading-relaxed mb-2 sm:hidden">ลดสูงสุด {card.discount}</p>
+                    <div className="bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white text-xs font-bold py-1 px-2 sm:px-3 rounded-full">ลด {card.discount}</div>
                   </div>
                 </div>
               </Link>
@@ -342,60 +343,59 @@ export default function Home() {
       </div>
 
       {/* Popular Products Section */}
-      <div className="py-8 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center mb-6">
-
-            <h2 className="text-xl font-bold text-[#1E2E4F] mb-2">สินค้ายอดนิยม</h2>
-            <Link href="/categories" className="inline-flex items-center text-[#1E2E4F] hover:text-[#31487A] font-semibold text-xs mt-2 group">
+      <div className="py-4 sm:py-8 bg-gradient-to-b from-white to-gray-50">
+        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
+          <div className="text-center mb-4 sm:mb-6">
+            <h2 className="text-lg sm:text-xl font-bold text-[#1E2E4F] mb-2">สินค้ายอดนิยม</h2>
+            <Link href="/categories" className="inline-flex items-center text-[#1E2E4F] hover:text-[#31487A] active:text-[#8FB3E2] font-semibold text-xs mt-2 group touch-manipulation">
               ดูสินค้าทั้งหมด
               <ChevronRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
             {popularProducts.slice(0, 5).map((product) => (
               <Link key={product.id} href={`/product/${product.id}`} className="group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden border border-gray-100 hover:border-[#8FB3E2] group h-full flex flex-col">
+                <div className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden border border-gray-100 hover:border-[#8FB3E2] active:border-[#31487A] group h-full flex flex-col">
                   {/* Product Image */}
                   <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                     <div className="w-full h-full flex items-center justify-center">
-                      <Package className="h-16 w-16 text-[#8FB3E2] group-hover:text-[#31487A] transition-colors" />
+                      <Package className="h-10 w-10 sm:h-16 sm:w-16 text-[#8FB3E2] group-hover:text-[#31487A] transition-colors" />
                     </div>
                     {/* Badge */}
-                    <div className="absolute top-3 left-3 bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <div className="absolute top-1 sm:top-3 left-1 sm:left-3 bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white text-xs font-bold px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg">
                       {product.badge}
                     </div>
                     {/* Discount */}
-                    <div className="absolute top-3 right-3 bg-gradient-to-r from-[#31487A] to-[#8FB3E2] text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <div className="absolute top-1 sm:top-3 right-1 sm:right-3 bg-gradient-to-r from-[#31487A] to-[#8FB3E2] text-white text-xs font-bold px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg">
                       {product.discount}
                     </div>
                   </div>
                   
                   {/* Product Info */}
-                  <div className="p-4 flex-1 flex flex-col">
-                    <h3 className="font-semibold text-[#1E2E4F] text-sm leading-tight mb-3 line-clamp-2 group-hover:text-[#31487A] transition-colors flex-1">
+                  <div className="p-2 sm:p-4 flex-1 flex flex-col">
+                    <h3 className="font-semibold text-[#1E2E4F] text-xs sm:text-sm leading-tight mb-2 sm:mb-3 line-clamp-2 group-hover:text-[#31487A] transition-colors flex-1">
                       {product.name}
                     </h3>
                     
-                    {/* Category */}
-                    <p className="text-xs text-[#8FB3E2] font-medium mb-3 bg-[#8FB3E2]/10 px-2 py-1 rounded-full inline-block">{product.category}</p>
+                    {/* Category - Hidden on mobile to save space */}
+                    <p className="hidden sm:block text-xs text-[#8FB3E2] font-medium mb-3 bg-[#8FB3E2]/10 px-2 py-1 rounded-full">{product.category}</p>
                     
                     {/* Rating & Sold */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center bg-yellow-50 px-2 py-1 rounded-full">
-                        <Star className="h-3 w-3 text-yellow-500 fill-current" />
-                        <span className="text-xs text-yellow-700 ml-1 font-medium">{product.rating}</span>
+                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                      <div className="flex items-center bg-yellow-50 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
+                        <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-yellow-500 fill-current" />
+                        <span className="text-xs text-yellow-700 ml-0.5 sm:ml-1 font-medium">{product.rating}</span>
                       </div>
-                      <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">ขายแล้ว {product.sold}</span>
+                      <span className="text-xs text-gray-600 bg-gray-100 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">ขาย {product.sold}</span>
                     </div>
                     
                     {/* Price */}
-                    <div className="border-t border-gray-100 pt-3 mt-auto">
-                      <div className="flex items-center justify-between">
+                    <div className="border-t border-gray-100 pt-2 sm:pt-3 mt-auto">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                          <span className="text-lg font-bold text-[#1E2E4F]">฿{product.price}</span>
-                          <span className="text-xs text-gray-500 line-through ml-2">฿{product.originalPrice}</span>
+                          <span className="text-sm sm:text-lg font-bold text-[#1E2E4F]">฿{product.price}</span>
+                          <span className="text-xs text-gray-500 line-through ml-1 sm:ml-2">฿{product.originalPrice}</span>
                         </div>
                       </div>
                     </div>
@@ -410,33 +410,33 @@ export default function Home() {
       </div>
 
       {/* Shop by Brands Section */}
-      <div className="py-8 bg-gray-50">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <div className="py-4 sm:py-8 bg-gray-50">
+        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
           {/* Brand Slider */}
-          <div className="relative bg-white rounded-2xl shadow-lg p-8 overflow-hidden">
+          <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8 overflow-hidden">
             {/* Header inside card */}
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white px-4 py-2 rounded-full text-sm font-bold mb-4">
-                <Star className="h-4 w-4 mr-2" />
+            <div className="text-center mb-4 sm:mb-6">
+              <div className="inline-flex items-center bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4">
+                <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 ช้อปตามแบรนด์
               </div>
             </div>
-            {/* Navigation Buttons */}
-            <button className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors z-10">
+            {/* Navigation Buttons - Hidden on mobile */}
+            <button className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 active:bg-gray-100 transition-colors z-10 touch-manipulation">
               <ChevronLeft className="h-5 w-5 text-gray-600" />
             </button>
-            <button className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors z-10">
+            <button className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 active:bg-gray-100 transition-colors z-10 touch-manipulation">
               <ChevronRight className="h-5 w-5 text-gray-600" />
             </button>
             
             {/* Brand Logos Container */}
-            <div className="flex items-center justify-center gap-8 md:gap-12">
+            <div className="flex items-center justify-center gap-3 sm:gap-8 md:gap-12 overflow-x-auto scrollbar-hide pb-2">
               {brands.slice(0, 6).map((brand, index) => (
                 <Link key={index} href={brand.link} className="group flex-shrink-0">
-                  <div className="bg-white border border-gray-100 rounded-xl p-6 hover:shadow-md transition-all duration-300 transform hover:scale-105 w-32 h-20 flex items-center justify-center">
+                  <div className="bg-white border border-gray-100 rounded-lg sm:rounded-xl p-3 sm:p-6 hover:shadow-md active:shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95 w-20 h-12 sm:w-32 sm:h-20 flex items-center justify-center">
                     {/* Brand Logo/Name */}
                     <div className="text-center">
-                      <span className="text-lg font-bold text-gray-700 group-hover:text-[#1E2E4F] transition-colors">
+                      <span className="text-sm sm:text-lg font-bold text-gray-700 group-hover:text-[#1E2E4F] group-active:text-[#31487A] transition-colors">
                         {brand.name}
                       </span>
                     </div>
@@ -456,20 +456,20 @@ export default function Home() {
       </div>
 
       {/* Category Grid */}
-      <div className="py-8 bg-gray-100">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center bg-gradient-to-r from-[#8FB3E2] to-[#31487A] text-white px-3 py-1 rounded-full text-xs font-bold mb-3">
+      <div className="py-4 sm:py-8 bg-gray-100">
+        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
+          <div className="text-center mb-4 sm:mb-6">
+            <div className="inline-flex items-center bg-gradient-to-r from-[#8FB3E2] to-[#31487A] text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold mb-2 sm:mb-3">
               <Package className="h-3 w-3 mr-1" />
               หมวดหมู่สินค้า
             </div>
-            <h2 className="text-xl font-bold text-[#1E2E4F] mb-2">เลือกซื้อตามหมวดหมู่</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-[#1E2E4F] mb-2">เลือกซื้อตามหมวดหมู่</h2>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-3">
             {categories.map((category, index) => (
               <Link key={index} href={category.link} className="group">
-                <div className={`${category.color} text-white rounded-lg p-4 text-center hover:shadow-lg transition-all duration-300 transform hover:scale-105 min-h-[80px] flex flex-col justify-center relative overflow-hidden`}>
+                <div className={`${category.color} text-white rounded-lg p-2 sm:p-4 text-center hover:shadow-lg active:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[60px] sm:min-h-[80px] flex flex-col justify-center relative overflow-hidden touch-manipulation`}>
                   {/* Background Pattern */}
                   <div className="absolute inset-0 opacity-10">
                     <div className="w-full h-full" style={{
@@ -477,8 +477,8 @@ export default function Home() {
                     }}></div>
                   </div>
                   <div className="relative z-10">
-                    <div className="mb-2 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
-                      {React.createElement(category.icon, { className: "h-5 w-5" })}
+                    <div className="mb-1 sm:mb-2 flex justify-center transform group-hover:scale-110 group-active:scale-125 transition-transform duration-300">
+                      {React.createElement(category.icon, { className: "h-4 w-4 sm:h-5 sm:w-5" })}
                     </div>
                     <h3 className="text-xs font-semibold leading-tight">{category.title}</h3>
                   </div>
