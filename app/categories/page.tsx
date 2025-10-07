@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Grid, List, ShoppingCart, Search, Check, Plus } from "lucide-react";
@@ -10,7 +10,8 @@ import { brands } from "../data/brands";
 import { products } from "../data/products";
 import { filterProducts, sortProducts, paginateProducts, getBrandCounts } from "../data/utils";
 
-export default function Categories() {
+// Component ที่ใช้ useSearchParams
+function CategoriesContent() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
@@ -524,5 +525,21 @@ export default function Categories() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function Categories() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1E2E4F] mx-auto mb-4"></div>
+          <p className="text-gray-600">กำลังโหลด...</p>
+        </div>
+      </div>
+    }>
+      <CategoriesContent />
+    </Suspense>
   );
 }
