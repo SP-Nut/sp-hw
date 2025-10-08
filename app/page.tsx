@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { 
   ChevronLeft,
   ChevronRight,
@@ -12,37 +12,28 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { 
+  heroImages, 
+  promotionalCards, 
+  popularProducts, 
+  brands, 
+  customerReviews 
+} from "./data/homepage-data";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentProductSlide, setCurrentProductSlide] = useState(0);
   const [currentReviewSlide, setCurrentReviewSlide] = useState(0);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-
-  const heroImages = [
-    {
-      src: "/hero-promotion/1.png",
-      alt: "SP Hardware - วัสดุก่อสร้างครบวงจร"
-    },
-    {
-      src: "/hero-promotion/2.png",
-      alt: "SP Hardware - คุณภาพระดับพรีเมียม"  
-    },
-    {
-      src: "/hero-promotion/3.png",
-      alt: "SP Hardware - เครื่องมือมืออาชีพ"
-    }
-  ];
+  const [heroTouchStart, setHeroTouchStart] = useState(0);
+  const [heroTouchEnd, setHeroTouchEnd] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [heroImages.length]);
+  }, []);
 
   // Check if device is mobile
   useEffect(() => {
@@ -96,253 +87,49 @@ export default function Home() {
     });
   };
 
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(0); // Otherwise the swipe is fired even with usual touch events
-    setTouchStart(e.targetTouches[0].clientX);
+
+
+  // Icon mapping for promotional cards
+  const iconMap = {
+    "กันสาดทึบแสง": HomeIcon,
+    "เครื่องมือช่าง": Wrench,
+    "สี & วัสดุทาสี": Lightbulb,
+    "อุปกรณ์ติดตั้ง": Package
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+  // Hero touch handlers for swipe navigation
+  const handleHeroTouchStart = (e: React.TouchEvent) => {
+    setHeroTouchEnd(0);
+    setHeroTouchStart(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
+  const handleHeroTouchMove = (e: React.TouchEvent) => {
+    setHeroTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleHeroTouchEnd = () => {
+    if (!heroTouchStart || !heroTouchEnd) return;
+    const distance = heroTouchStart - heroTouchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
 
     if (isLeftSwipe) {
-      nextProductSlide();
+      nextSlide();
     }
     if (isRightSwipe) {
-      prevProductSlide();
+      prevSlide();
     }
   };
-
-  const promotionalCards = [
-    {
-      title: "กันสาดทึบแสง",
-      description: "เมทัลชีท กระเบื้องลอน ลดสูงสุด 15%",
-      icon: HomeIcon,
-      discount: "15%",
-      link: "/categories?cat=opaque-roof"
-    },
-    {
-      title: "เครื่องมือช่าง",
-      description: "สว่าน ค้อน เลื่อย ลดสูงสุด 12%",
-      icon: Wrench, 
-      discount: "12%",
-      link: "/categories?cat=tools"
-    },
-    {
-      title: "สี & วัสดุทาสี",
-      description: "สีทาบ้าน รองพื้น ลดสูงสุด 10%",
-      icon: Lightbulb,
-      discount: "10%",
-      link: "/categories?cat=paint"
-    },
-    {
-      title: "อุปกรณ์ติดตั้ง",
-      description: "สกรู ตะปู น็อต ลดสูงสุด 8%",
-      icon: Package,
-      discount: "8%",
-      link: "/categories?cat=installation"
-    }
-  ];
-
-  const popularProducts = [
-    {
-      id: 1,
-      name: "เมทัลชีท SCG สีแดง",
-      price: "285",
-      originalPrice: "320",
-      discount: "11% OFF",
-      image: "/api/placeholder/200/200",
-      rating: 4.8,
-      sold: "2.5k+",
-      category: "กันสาดทึบแสง",
-      badge: "ขายดี"
-    },
-    {
-      id: 2,
-      name: "สว่านกระแทก Makita HP2050H",
-      price: "3,850",
-      originalPrice: "4,290",
-      discount: "10% OFF",
-      image: "/api/placeholder/200/200",
-      rating: 4.9,
-      sold: "1.8k+",
-      category: "เครื่องมือช่าง",
-      badge: "โปรพิเศษ"
-    },
-    {
-      id: 3,
-      name: "สีทาบ้าน TOA SuperShield 18L",
-      price: "1,890",
-      originalPrice: "2,100",
-      discount: "10% OFF",
-      image: "/api/placeholder/200/200",
-      rating: 4.7,
-      sold: "950+",
-      category: "สี & วัสดุทาสี",
-      badge: "แนะนำ"
-    },
-    {
-      id: 4,
-      name: "สกรูหลังคา เบอร์ 14 ขนาด 6.3x75mm",
-      price: "12",
-      originalPrice: "15",
-      discount: "20% OFF",
-      image: "/api/placeholder/200/200",
-      rating: 4.6,
-      sold: "5k+",
-      category: "อุปกรณ์ติดตั้ง",
-      badge: "ราคาดี"
-    },
-    {
-      id: 5,
-      name: "ชินโคไลท์ โปร่งแสง 0.5mm",
-      price: "95",
-      originalPrice: "110",
-      discount: "14% OFF",
-      image: "/api/placeholder/200/200",
-      rating: 4.5,
-      sold: "3.2k+",
-      category: "กันสาดโปร่งแสง",
-      badge: "ลดพิเศษ"
-    },
-    {
-      id: 6,
-      name: "ค้อนก้ามกระตุก Vessel หัวยาง",
-      price: "280",
-      originalPrice: "320",
-      discount: "13% OFF",
-      image: "/api/placeholder/200/200",
-      rating: 4.8,
-      sold: "1.5k+",
-      category: "เครื่องมือช่าง",
-      badge: "คุณภาพดี"
-    }
-  ];
-
-  const brands = [
-    {
-      name: "ADRO",
-      logo: "/api/placeholder/120/60",
-      description: "วัสดุก่อสร้างคุณภาพสูง",
-      link: "/categories?brand=adro"
-    },
-    {
-      name: "TRE",
-      logo: "/api/placeholder/120/60", 
-      description: "เครื่องมือช่างมืออาชีพ",
-      link: "/categories?brand=tre"
-    },
-    {
-      name: "HKS",
-      logo: "/api/placeholder/120/60",
-      description: "อะไหล่และอุปกรณ์",
-      link: "/categories?brand=hks"
-    },
-    {
-      name: "VORSTEINER",
-      logo: "/api/placeholder/120/60",
-      description: "เครื่องมือและอุปกรณ์",
-      link: "/categories?brand=vorsteiner"
-    },
-    {
-      name: "ZAERO",
-      logo: "/api/placeholder/120/60",
-      description: "วัสดุคุณภาพพรีเมียม",
-      link: "/categories?brand=zaero"
-    },
-    {
-      name: "MILLTEK",
-      logo: "/api/placeholder/120/60",
-      description: "เครื่องมือและอุปกรณ์ช่าง",
-      link: "/categories?brand=milltek"
-    },
-    {
-      name: "3D DESIGN",
-      logo: "/api/placeholder/120/60",
-      description: "เทคโนโลยีและนวัตกรรม",
-      link: "/categories?brand=3d-design"
-    }
-  ];
-
-  const customerReviews = [
-    {
-      id: 1,
-      name: "สมชาย ก.",
-      date: "10/06/25",
-      rating: 5,
-      title: "คุณภาพดีมาก",
-      comment: "สินค้าของแท้ คุณภาพเยี่ยม ใช้งานได้ดีจริงๆ",
-      verified: true,
-      product: "เมทัลชีท SCG สีแดง กันสาดทึบแสง"
-    },
-    {
-      id: 2,
-      name: "วิชัย ส.",
-      date: "10/06/25",
-      rating: 5,
-      title: "ง่ายต่อการติดตั้ง",
-      comment: "ใช้เวลาแค่ 10 นาทีในการติดตั้ง พอดีกับรถเป็นอย่างดี",
-      verified: true,
-      product: "สว่านกระแทก Makita HP2050H เครื่องมือช่าง"
-    },
-    {
-      id: 3,
-      name: "นิรันดร์ พ.",
-      date: "10/07/25",
-      rating: 5,
-      title: "สะอาดและสวยงาม",
-      comment: "ติดตั้งง่ายมาก ดูสวยงามและเรียบร้อย",
-      verified: true,
-      product: "สีทาบ้าน TOA SuperShield 18L สีขาวมุก"
-    },
-    {
-      id: 4,
-      name: "ประเสริฐ ม.",
-      date: "10/07/25",
-      rating: 5,
-      title: "ติดตั้งง่าย ดูดีมาก",
-      comment: "ใส่น๊อตได้ง่าย ดูเรียบร้อยมาก คุ้มค่ามากๆ",
-      verified: true,
-      product: "สกรูหลังคา เบอร์ 14 ขนาด 6.3x75mm"
-    },
-    {
-      id: 5,
-      name: "ศุภชัย ร.",
-      date: "09/28/25",
-      rating: 5,
-      title: "ราคาดี คุณภาพเยี่ยม",
-      comment: "ซื้อมาใช้หลังบ้าน โปร่งแสงดี ทนทานมาก",
-      verified: true,
-      product: "ชินโคไลท์ โปร่งแสง 0.5mm กันสาดโปร่งแสง"
-    },
-    {
-      id: 6,
-      name: "อรรณพ ว.",
-      date: "09/25/25",
-      rating: 4,
-      title: "ค้อนหนักดี มือจับนิ่ม",
-      comment: "ใช้งานสะดวก น้ำหนักพอดี ไม่หนักเกินไป",
-      verified: true,
-      product: "ค้อนก้ามกระตุก Vessel หัวยาง น้ำหนัก 280g"
-    }
-  ];
-
-
-
-
 
   return (
     <div className="bg-white">
       {/* Hero Section - Light AUTOID Style */}
-      <div className="relative h-[80vh] overflow-hidden">
+      <div 
+        className="relative h-[80vh] overflow-hidden"
+        onTouchStart={handleHeroTouchStart}
+        onTouchMove={handleHeroTouchMove}
+        onTouchEnd={handleHeroTouchEnd}
+      >
         {/* Background Images Slider */}
         <div className="absolute inset-0 z-0">
           {heroImages.map((image, index) => (
@@ -364,44 +151,44 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="absolute bottom-8 left-8 z-10 text-left text-white max-w-2xl">
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black mb-2 tracking-tight drop-shadow-lg whitespace-nowrap italic">
+        <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-auto z-10 text-left text-white max-w-2xl">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black mb-2 sm:mb-2 tracking-tight drop-shadow-lg italic">
             SP HARDWARE
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl mb-4 text-white/90 font-light drop-shadow-md">
-            ศูนย์รวมวัสดุก่อสร้างและเครื่องมือช่างคุณภาพสูง
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-3 sm:mb-4 text-white/90 font-light drop-shadow-md leading-tight">
+            ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
           </p>
           <div className="flex">
-            <Link href="/categories" className="bg-white text-gray-900 px-8 py-4 text-lg font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 min-w-[200px] shadow-lg">
+            <Link href="/categories" className="bg-white text-gray-900 px-4 sm:px-8 py-2 sm:py-4 text-base sm:text-lg font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 sm:min-w-[200px] shadow-lg">
               เลือกซื้อสินค้า
             </Link>
           </div>
         </div>
 
-        {/* Navigation Controls */}
+        {/* Navigation Controls - Hidden on mobile */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
         >
           <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
         >
           <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+        <div className="absolute bottom-2 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
           {heroImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 transition-all duration-300 ${
+              className={`w-2 h-2 sm:w-3 sm:h-3 transition-all duration-300 ${
                 index === currentSlide 
-                  ? 'bg-gray-900' 
-                  : 'bg-gray-500 hover:bg-gray-700'
+                  ? 'bg-white' 
+                  : 'bg-white/50 hover:bg-white/70'
               }`}
             />
           ))}
@@ -418,7 +205,7 @@ export default function Home() {
                   {/* Background Image */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200">
                     <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                      {React.createElement(card.icon, { className: "h-8 w-8 sm:h-10 sm:w-10 text-gray-300" })}
+                      {React.createElement(iconMap[card.title as keyof typeof iconMap], { className: "h-8 w-8 sm:h-10 sm:w-10 text-gray-300" })}
                     </div>
                   </div>
                   
@@ -444,7 +231,7 @@ export default function Home() {
           <div className="flex items-center justify-between mb-8">
             <div className="text-left">
               <h2 className="text-3xl sm:text-5xl font-black text-gray-900 mb-2">
-                SHOP FOR LESS
+                สินค้ายอดนิยม
               </h2>
               <Link href="/categories" className="inline-flex items-center text-gray-600 hover:text-gray-900 font-semibold text-lg group">
                 ดูสินค้าทั้งหมด
@@ -470,17 +257,69 @@ export default function Home() {
           </div>
           
           {/* Scrollable Products Container */}
-          <div className="overflow-hidden">
-            <div 
-              className="flex space-x-4 md:space-x-8 pb-4 transition-transform duration-500 ease-in-out"
-              style={{ 
-                transform: `translateX(-${currentProductSlide * (isMobile ? 320 + 16 : 384 + 32)}px)`
-              }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              {popularProducts.map((product) => (
+          <div className="overflow-hidden md:block">
+            <div className="md:hidden overflow-x-auto scrollbar-hide">
+              <div className="flex space-x-4 pb-4 px-1">
+                {popularProducts.map((product) => (
+                  <Link key={product.id} href={`/product/${product.id}`} className="group flex-shrink-0 w-80">
+                    <div className="bg-white transition-colors duration-300 overflow-hidden">
+                      {/* Product Image */}
+                      <div className="relative aspect-square overflow-hidden bg-gray-50">
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Package className="h-20 w-20 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                        </div>
+                        {/* Badge */}
+                        <div className="absolute top-4 left-4 bg-gray-900 text-white text-sm font-bold px-4 py-2">
+                          {product.badge}
+                        </div>
+                        {/* Discount */}
+                        <div className="absolute top-4 right-4 bg-red-600 text-white text-sm font-bold px-4 py-2">
+                          {product.discount}
+                        </div>
+                      </div>
+                      
+                      {/* Product Info */}
+                      <div className="p-6 flex-1 flex flex-col">
+                        <h3 className="font-bold text-gray-900 text-base leading-tight mb-4 line-clamp-2 group-hover:text-gray-700 transition-colors">
+                          {product.name}
+                        </h3>
+                        
+                        {/* Category */}
+                        <p className="text-sm text-gray-600 font-medium mb-4 uppercase tracking-wide">{product.category}</p>
+                        
+                        {/* Rating & Sold */}
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center">
+                            <Star className="h-5 w-5 text-yellow-500 fill-current" />
+                            <span className="text-base text-gray-700 ml-2 font-medium">{product.rating}</span>
+                          </div>
+                          <span className="text-sm text-gray-500">{product.sold} รีวิว</span>
+                        </div>
+                        
+                        {/* Price */}
+                        <div className="border-t border-gray-200 pt-6 mt-auto">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <span className="text-xl font-bold text-gray-900">฿{product.price}</span>
+                              <span className="text-base text-gray-500 line-through ml-3">฿{product.originalPrice}</span>
+                            </div>
+                            <span className="text-sm text-green-600 font-bold">มีสินค้า</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="hidden md:block">
+              <div 
+                className="flex space-x-8 pb-4 transition-transform duration-500 ease-in-out"
+                style={{ 
+                  transform: `translateX(-${currentProductSlide * 416}px)`
+                }}
+              >
+                {popularProducts.map((product) => (
                 <Link key={product.id} href={`/product/${product.id}`} className="group flex-shrink-0 w-80 md:w-96">
                   <div className="bg-white transition-colors duration-300 overflow-hidden">
                     {/* Product Image */}
@@ -530,23 +369,10 @@ export default function Home() {
                   </div>
                 </Link>
               ))}
+              </div>
             </div>
           </div>
-          
-          {/* Mobile Slide Indicators */}
-          <div className="flex md:hidden justify-center mt-6 space-x-2">
-            {Array.from({ length: Math.max(0, popularProducts.length - (isMobile ? 0 : 2)) }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentProductSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentProductSlide 
-                    ? 'bg-gray-900' 
-                    : 'bg-gray-300 hover:bg-gray-500'
-                }`}
-              />
-            ))}
-          </div>
+
         </div>
       </div>
 
@@ -555,7 +381,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-8 max-w-full">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
-              TRUSTED BY TOP BRANDS
+              PARTNER
             </h2>
           </div>
           
