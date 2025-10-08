@@ -8,8 +8,7 @@ import {
   Wrench,
   Package,
   Star,
-  Lightbulb,
-  CreditCard
+  Lightbulb
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,35 +16,109 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentProductSlide, setCurrentProductSlide] = useState(0);
+  const [currentReviewSlide, setCurrentReviewSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const promotionImages = [
+  const heroImages = [
     {
       src: "/hero-promotion/1.png",
-      alt: "โปรโมชั่น 1"
+      alt: "SP Hardware - วัสดุก่อสร้างครบวงจร"
     },
     {
       src: "/hero-promotion/2.png",
-      alt: "โปรโมชั่น 2"  
+      alt: "SP Hardware - คุณภาพระดับพรีเมียม"  
     },
     {
       src: "/hero-promotion/3.png",
-      alt: "โปรโมชั่น 3"
+      alt: "SP Hardware - เครื่องมือมืออาชีพ"
     }
   ];
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % promotionImages.length);
-    }, 5000);
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 6000);
     return () => clearInterval(timer);
-  }, [promotionImages.length]);
+  }, [heroImages.length]);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % promotionImages.length);
+    setCurrentSlide((prev) => (prev + 1) % heroImages.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + promotionImages.length) % promotionImages.length);
+    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  };
+
+  const nextProductSlide = () => {
+    setCurrentProductSlide((prev) => {
+      const cardsPerView = isMobile ? 1 : 3;
+      const maxSlide = Math.max(0, popularProducts.length - cardsPerView);
+      return prev >= maxSlide ? 0 : prev + 1;
+    });
+  };
+
+  const prevProductSlide = () => {
+    setCurrentProductSlide((prev) => {
+      const cardsPerView = isMobile ? 1 : 3;
+      const maxSlide = Math.max(0, popularProducts.length - cardsPerView);
+      return prev <= 0 ? maxSlide : prev - 1;
+    });
+  };
+
+  const nextReviewSlide = () => {
+    setCurrentReviewSlide((prev) => {
+      const cardsPerView = isMobile ? 1 : 4;
+      const maxSlide = Math.max(0, customerReviews.length - cardsPerView);
+      return prev >= maxSlide ? 0 : prev + 1;
+    });
+  };
+
+  const prevReviewSlide = () => {
+    setCurrentReviewSlide((prev) => {
+      const cardsPerView = isMobile ? 1 : 4;
+      const maxSlide = Math.max(0, customerReviews.length - cardsPerView);
+      return prev <= 0 ? maxSlide : prev - 1;
+    });
+  };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0); // Otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextProductSlide();
+    }
+    if (isRightSwipe) {
+      prevProductSlide();
+    }
   };
 
   const promotionalCards = [
@@ -156,336 +229,519 @@ export default function Home() {
 
   const brands = [
     {
-      name: "SCG",
-      logo: "/api/placeholder/100/50",
-      description: "เมทัลชีท กระเบื้อง คุณภาพพ remium",
-      color: "bg-gradient-to-br from-[#1E2E4F] to-[#31487A]",
-      link: "/categories?brand=scg"
+      name: "ADRO",
+      logo: "/api/placeholder/120/60",
+      description: "วัสดุก่อสร้างคุณภาพสูง",
+      link: "/categories?brand=adro"
     },
     {
-      name: "Makita",
-      logo: "/api/placeholder/100/50", 
+      name: "TRE",
+      logo: "/api/placeholder/120/60", 
       description: "เครื่องมือช่างมืออาชีพ",
-      color: "bg-gradient-to-br from-[#31487A] to-[#8FB3E2]",
-      link: "/categories?brand=makita"
+      link: "/categories?brand=tre"
     },
     {
-      name: "TOA",
-      logo: "/api/placeholder/100/50",
-      description: "สี และวัสดุทาสี คุณภาพดี",
-      color: "bg-gradient-to-br from-[#8FB3E2] to-[#31487A]",
-      link: "/categories?brand=toa"
+      name: "HKS",
+      logo: "/api/placeholder/120/60",
+      description: "อะไหล่และอุปกรณ์",
+      link: "/categories?brand=hks"
     },
     {
-      name: "Vessel",
-      logo: "/api/placeholder/100/50",
-      description: "อุปกรณ์และเครื่องมือ",
-      color: "bg-gradient-to-br from-[#1E2E4F] to-[#8FB3E2]",
-      link: "/categories?brand=vessel"
+      name: "VORSTEINER",
+      logo: "/api/placeholder/120/60",
+      description: "เครื่องมือและอุปกรณ์",
+      link: "/categories?brand=vorsteiner"
     },
     {
-      name: "Shinkolite",
-      logo: "/api/placeholder/100/50",
-      description: "แผ่นโปร่งแสง พลาสติก",
-      color: "bg-gradient-to-br from-[#31487A] to-[#1E2E4F]",
-      link: "/categories?brand=shinkolite"
+      name: "ZAERO",
+      logo: "/api/placeholder/120/60",
+      description: "วัสดุคุณภาพพรีเมียม",
+      link: "/categories?brand=zaero"
     },
     {
-      name: "Bosch",
-      logo: "/api/placeholder/100/50",
-      description: "เครื่องมือไฟฟ้า เทคโนโลยีชั้นนำ",
-      color: "bg-gradient-to-br from-[#8FB3E2] to-[#1E2E4F]",
-      link: "/categories?brand=bosch"
+      name: "MILLTEK",
+      logo: "/api/placeholder/120/60",
+      description: "เครื่องมือและอุปกรณ์ช่าง",
+      link: "/categories?brand=milltek"
+    },
+    {
+      name: "3D DESIGN",
+      logo: "/api/placeholder/120/60",
+      description: "เทคโนโลยีและนวัตกรรม",
+      link: "/categories?brand=3d-design"
     }
   ];
 
-  const categories = [
+  const customerReviews = [
     {
-      title: "กันสาดทึบแสง",
-      icon: HomeIcon,
-      color: "bg-[#1E2E4F]",
-      link: "/categories?cat=opaque-roof"
+      id: 1,
+      name: "สมชาย ก.",
+      date: "10/06/25",
+      rating: 5,
+      title: "คุณภาพดีมาก",
+      comment: "สินค้าของแท้ คุณภาพเยี่ยม ใช้งานได้ดีจริงๆ",
+      verified: true,
+      product: "เมทัลชีท SCG สีแดง กันสาดทึบแสง"
     },
     {
-      title: "กันสาดโปร่งแสง",
-      icon: Lightbulb,
-      color: "bg-[#31487A]",
-      link: "/categories?cat=translucent-roof"
+      id: 2,
+      name: "วิชัย ส.",
+      date: "10/06/25",
+      rating: 5,
+      title: "ง่ายต่อการติดตั้ง",
+      comment: "ใช้เวลาแค่ 10 นาทีในการติดตั้ง พอดีกับรถเป็นอย่างดี",
+      verified: true,
+      product: "สว่านกระแทก Makita HP2050H เครื่องมือช่าง"
     },
     {
-      title: "อุปกรณ์ติดตั้ง",
-      icon: Package,
-      color: "bg-[#8FB3E2]",
-      link: "/categories?cat=installation"
+      id: 3,
+      name: "นิรันดร์ พ.",
+      date: "10/07/25",
+      rating: 5,
+      title: "สะอาดและสวยงาม",
+      comment: "ติดตั้งง่ายมาก ดูสวยงามและเรียบร้อย",
+      verified: true,
+      product: "สีทาบ้าน TOA SuperShield 18L สีขาวมุก"
     },
     {
-      title: "เครื่องมือช่าง",
-      icon: Wrench,
-      color: "bg-[#1E2E4F]",
-      link: "/categories?cat=tools"
+      id: 4,
+      name: "ประเสริฐ ม.",
+      date: "10/07/25",
+      rating: 5,
+      title: "ติดตั้งง่าย ดูดีมาก",
+      comment: "ใส่น๊อตได้ง่าย ดูเรียบร้อยมาก คุ้มค่ามากๆ",
+      verified: true,
+      product: "สกรูหลังคา เบอร์ 14 ขนาด 6.3x75mm"
     },
     {
-      title: "ฮาร์ดแวร์",
-      icon: Package,
-      color: "bg-[#31487A]",
-      link: "/categories?cat=hardware"
+      id: 5,
+      name: "ศุภชัย ร.",
+      date: "09/28/25",
+      rating: 5,
+      title: "ราคาดี คุณภาพเยี่ยม",
+      comment: "ซื้อมาใช้หลังบ้าน โปร่งแสงดี ทนทานมาก",
+      verified: true,
+      product: "ชินโคไลท์ โปร่งแสง 0.5mm กันสาดโปร่งแสง"
     },
     {
-      title: "สี & วัสดุทาสี",
-      icon: Lightbulb,
-      color: "bg-[#8FB3E2]",
-      link: "/categories?cat=paint"
-    },
-    {
-      title: "สินค้ายอดนิยม",
-      icon: Star,
-      color: "bg-[#1E2E4F]",
-      link: "/categories"
-    },
-    {
-      title: "ดูสินค้าทั้งหมด",
-      icon: CreditCard,
-      color: "bg-[#31487A]",
-      link: "/categories"
+      id: 6,
+      name: "อรรณพ ว.",
+      date: "09/25/25",
+      rating: 4,
+      title: "ค้อนหนักดี มือจับนิ่ม",
+      comment: "ใช้งานสะดวก น้ำหนักพอดี ไม่หนักเกินไป",
+      verified: true,
+      product: "ค้อนก้ามกระตุก Vessel หัวยาง น้ำหนัก 280g"
     }
   ];
+
+
 
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Banner Promotion Section */}
-      <div className="py-3 sm:py-6 bg-gray-100">
-        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
-          <div className="relative aspect-[4/3] sm:aspect-[16/7] lg:aspect-[16/5] w-full overflow-hidden bg-gradient-to-r from-[#1E2E4F] to-[#31487A] rounded-lg shadow-xl">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10 rounded-lg">
-              <div className="w-full h-full bg-repeat opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-              }}></div>
-            </div>
-
-            {/* Banner Images Slider */}
-            <div className="absolute inset-0 z-10">
-              {promotionImages.map((image, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover rounded-lg"
-                    priority={index === 0}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Navigation Controls */}
-            <button
-              onClick={prevSlide}
-              className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 active:bg-white/50 backdrop-blur text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-20 group touch-manipulation"
+    <div className="bg-white">
+      {/* Hero Section - Light AUTOID Style */}
+      <div className="relative h-[80vh] overflow-hidden">
+        {/* Background Images Slider */}
+        <div className="absolute inset-0 z-0">
+          {heroImages.map((image, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
             >
-              <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 active:bg-white/50 backdrop-blur text-white p-2 sm:p-3 rounded-full transition-all duration-300 z-20 group touch-manipulation"
-            >
-              <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform" />
-            </button>
-
-            {/* Slide Indicators */}
-            <div className="absolute bottom-3 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-20">
-              {promotionImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 touch-manipulation ${
-                    index === currentSlide 
-                      ? 'bg-white scale-125' 
-                      : 'bg-white/50 hover:bg-white/75 active:bg-white'
-                  }`}
-                />
-              ))}
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover"
+                priority={index === 0}
+              />
             </div>
-
-
-          </div>
+          ))}
         </div>
-      </div>
 
-      {/* Promotional Cards */}
-      <div className="py-4 sm:py-6 bg-white">
-        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
-            {promotionalCards.map((card, index) => (
-              <Link key={index} href={card.link} className="group">
-                <div className="bg-white border border-gray-200 hover:border-[#8FB3E2] active:border-[#31487A] rounded-lg p-2 sm:p-4 hover:shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95">
-                  <div className="text-center">
-                    <div className="mb-2 sm:mb-3 p-1.5 sm:p-2 bg-gradient-to-br from-[#1E2E4F] to-[#31487A] rounded-full inline-flex group-hover:from-[#31487A] group-hover:to-[#8FB3E2] transition-all duration-300">
-                      {React.createElement(card.icon, { className: "h-4 w-4 sm:h-6 sm:w-6 text-white" })}
-                    </div>
-                    <h3 className="font-bold text-[#1E2E4F] mb-1 sm:mb-2 text-xs sm:text-sm">{card.title}</h3>
-                    <p className="text-xs text-gray-600 leading-relaxed mb-2 sm:mb-3 hidden sm:block">{card.description}</p>
-                    <p className="text-xs text-gray-600 leading-relaxed mb-2 sm:hidden">ลดสูงสุด {card.discount}</p>
-                    <div className="bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white text-xs font-bold py-1 px-2 sm:px-3 rounded-full">ลด {card.discount}</div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Popular Products Section */}
-      <div className="py-4 sm:py-8 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
-          <div className="text-center mb-4 sm:mb-6">
-            <h2 className="text-lg sm:text-xl font-bold text-[#1E2E4F] mb-2">สินค้ายอดนิยม</h2>
-            <Link href="/categories" className="inline-flex items-center text-[#1E2E4F] hover:text-[#31487A] active:text-[#8FB3E2] font-semibold text-xs mt-2 group touch-manipulation">
-              ดูสินค้าทั้งหมด
-              <ChevronRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
+        {/* Hero Content */}
+        <div className="absolute bottom-8 left-8 z-10 text-left text-white max-w-2xl">
+          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black mb-2 tracking-tight drop-shadow-lg whitespace-nowrap italic">
+            SP HARDWARE
+          </h1>
+          <p className="text-base sm:text-lg lg:text-xl mb-4 text-white/90 font-light drop-shadow-md">
+            ศูนย์รวมวัสดุก่อสร้างและเครื่องมือช่างคุณภาพสูง
+          </p>
+          <div className="flex">
+            <Link href="/categories" className="bg-white text-gray-900 px-8 py-4 text-lg font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 min-w-[200px] shadow-lg">
+              เลือกซื้อสินค้า
             </Link>
           </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
-            {popularProducts.slice(0, 5).map((product) => (
-              <Link key={product.id} href={`/product/${product.id}`} className="group">
-                <div className="bg-white rounded-lg sm:rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 overflow-hidden border border-gray-100 hover:border-[#8FB3E2] active:border-[#31487A] group h-full flex flex-col">
-                  {/* Product Image */}
-                  <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Package className="h-10 w-10 sm:h-16 sm:w-16 text-[#8FB3E2] group-hover:text-[#31487A] transition-colors" />
-                    </div>
-                    {/* Badge */}
-                    <div className="absolute top-1 sm:top-3 left-1 sm:left-3 bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white text-xs font-bold px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg">
-                      {product.badge}
-                    </div>
-                    {/* Discount */}
-                    <div className="absolute top-1 sm:top-3 right-1 sm:right-3 bg-gradient-to-r from-[#31487A] to-[#8FB3E2] text-white text-xs font-bold px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-lg">
-                      {product.discount}
+        </div>
+
+        {/* Navigation Controls */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+        >
+          <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+        >
+          <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
+        </button>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-3 h-3 transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-gray-900' 
+                  : 'bg-gray-500 hover:bg-gray-700'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Category Navigation - Full Width */}
+      <div className="py-6 bg-white">
+        <div className="px-4 sm:px-8 max-w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+            {promotionalCards.map((card, index) => (
+              <Link key={index} href={card.link} className="group">
+                <div className="relative h-28 sm:h-36 overflow-hidden bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md">
+                  {/* Background Image */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200">
+                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
+                      {React.createElement(card.icon, { className: "h-8 w-8 sm:h-10 sm:w-10 text-gray-300" })}
                     </div>
                   </div>
                   
-                  {/* Product Info */}
-                  <div className="p-2 sm:p-4 flex-1 flex flex-col">
-                    <h3 className="font-semibold text-[#1E2E4F] text-xs sm:text-sm leading-tight mb-2 sm:mb-3 line-clamp-2 group-hover:text-[#31487A] transition-colors flex-1">
-                      {product.name}
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
+                  
+                  {/* Category Title */}
+                  <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
+                    <h3 className="text-white font-bold text-center text-xs sm:text-sm drop-shadow-lg">
+                      {card.title}
                     </h3>
-                    
-                    {/* Category - Hidden on mobile to save space */}
-                    <p className="hidden sm:block text-xs text-[#8FB3E2] font-medium mb-3 bg-[#8FB3E2]/10 px-2 py-1 rounded-full">{product.category}</p>
-                    
-                    {/* Rating & Sold */}
-                    <div className="flex items-center justify-between mb-2 sm:mb-3">
-                      <div className="flex items-center bg-yellow-50 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">
-                        <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-yellow-500 fill-current" />
-                        <span className="text-xs text-yellow-700 ml-0.5 sm:ml-1 font-medium">{product.rating}</span>
-                      </div>
-                      <span className="text-xs text-gray-600 bg-gray-100 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">ขาย {product.sold}</span>
-                    </div>
-                    
-                    {/* Price */}
-                    <div className="border-t border-gray-100 pt-2 sm:pt-3 mt-auto">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                          <span className="text-sm sm:text-lg font-bold text-[#1E2E4F]">฿{product.price}</span>
-                          <span className="text-xs text-gray-500 line-through ml-1 sm:ml-2">฿{product.originalPrice}</span>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-          
-      
         </div>
       </div>
 
-      {/* Shop by Brands Section */}
-      <div className="py-4 sm:py-8 bg-gray-50">
-        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
-          {/* Brand Slider */}
-          <div className="relative bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8 overflow-hidden">
-            {/* Header inside card */}
-            <div className="text-center mb-4 sm:mb-6">
-              <div className="inline-flex items-center bg-gradient-to-r from-[#1E2E4F] to-[#31487A] text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4">
-                <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                ช้อปตามแบรนด์
-              </div>
+      {/* Popular Products Section - Light AUTOID Style */}
+      <div className="py-16 bg-gray-100">
+        <div className="container mx-auto px-8 max-w-full">
+          <div className="flex items-center justify-between mb-8">
+            <div className="text-left">
+              <h2 className="text-3xl sm:text-5xl font-black text-gray-900 mb-2">
+                SHOP FOR LESS
+              </h2>
+              <Link href="/categories" className="inline-flex items-center text-gray-600 hover:text-gray-900 font-semibold text-lg group">
+                ดูสินค้าทั้งหมด
+                <ChevronRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
-            {/* Navigation Buttons - Hidden on mobile */}
-            <button className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 active:bg-gray-100 transition-colors z-10 touch-manipulation">
-              <ChevronLeft className="h-5 w-5 text-gray-600" />
-            </button>
-            <button className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 active:bg-gray-100 transition-colors z-10 touch-manipulation">
-              <ChevronRight className="h-5 w-5 text-gray-600" />
-            </button>
             
-            {/* Brand Logos Container */}
-            <div className="flex items-center justify-center gap-3 sm:gap-8 md:gap-12 overflow-x-auto scrollbar-hide pb-2">
-              {brands.slice(0, 6).map((brand, index) => (
-                <Link key={index} href={brand.link} className="group flex-shrink-0">
-                  <div className="bg-white border border-gray-100 rounded-lg sm:rounded-xl p-3 sm:p-6 hover:shadow-md active:shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95 w-20 h-12 sm:w-32 sm:h-20 flex items-center justify-center">
-                    {/* Brand Logo/Name */}
-                    <div className="text-center">
-                      <span className="text-sm sm:text-lg font-bold text-gray-700 group-hover:text-[#1E2E4F] group-active:text-[#31487A] transition-colors">
-                        {brand.name}
-                      </span>
+            {/* Navigation Controls - Hidden on mobile */}
+            <div className="hidden md:flex space-x-2">
+              <button 
+                onClick={prevProductSlide}
+                className="p-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-full group"
+              >
+                <ChevronLeft className="h-5 w-5 group-hover:scale-110 transition-transform" />
+              </button>
+              <button 
+                onClick={nextProductSlide}
+                className="p-3 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 transition-all duration-300 rounded-full group"
+              >
+                <ChevronRight className="h-5 w-5 group-hover:scale-110 transition-transform" />
+              </button>
+            </div>
+          </div>
+          
+          {/* Scrollable Products Container */}
+          <div className="overflow-hidden">
+            <div 
+              className="flex space-x-4 md:space-x-8 pb-4 transition-transform duration-500 ease-in-out"
+              style={{ 
+                transform: `translateX(-${currentProductSlide * (isMobile ? 320 + 16 : 384 + 32)}px)`
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {popularProducts.map((product) => (
+                <Link key={product.id} href={`/product/${product.id}`} className="group flex-shrink-0 w-80 md:w-96">
+                  <div className="bg-white transition-colors duration-300 overflow-hidden">
+                    {/* Product Image */}
+                    <div className="relative aspect-square overflow-hidden bg-gray-50">
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Package className="h-20 w-20 lg:h-24 lg:w-24 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                      </div>
+                      {/* Badge */}
+                      <div className="absolute top-4 left-4 bg-gray-900 text-white text-sm font-bold px-4 py-2">
+                        {product.badge}
+                      </div>
+                      {/* Discount */}
+                      <div className="absolute top-4 right-4 bg-red-600 text-white text-sm font-bold px-4 py-2">
+                        {product.discount}
+                      </div>
+                    </div>
+                    
+                    {/* Product Info */}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="font-bold text-gray-900 text-base lg:text-lg leading-tight mb-4 line-clamp-2 group-hover:text-gray-700 transition-colors">
+                        {product.name}
+                      </h3>
+                      
+                      {/* Category */}
+                      <p className="text-sm text-gray-600 font-medium mb-4 uppercase tracking-wide">{product.category}</p>
+                      
+                      {/* Rating & Sold */}
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center">
+                          <Star className="h-5 w-5 text-yellow-500 fill-current" />
+                          <span className="text-base text-gray-700 ml-2 font-medium">{product.rating}</span>
+                        </div>
+                        <span className="text-sm text-gray-500">{product.sold} รีวิว</span>
+                      </div>
+                      
+                      {/* Price */}
+                      <div className="border-t border-gray-200 pt-6 mt-auto">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-xl lg:text-2xl font-bold text-gray-900">฿{product.price}</span>
+                            <span className="text-base text-gray-500 line-through ml-3">฿{product.originalPrice}</span>
+                          </div>
+                          <span className="text-sm text-green-600 font-bold">มีสินค้า</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
-            
-            {/* Dots Indicator */}
-            <div className="flex justify-center mt-6 space-x-2">
-              <div className="w-2 h-2 bg-[#1E2E4F] rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+          </div>
+          
+          {/* Mobile Slide Indicators */}
+          <div className="flex md:hidden justify-center mt-6 space-x-2">
+            {Array.from({ length: Math.max(0, popularProducts.length - (isMobile ? 0 : 2)) }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentProductSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentProductSlide 
+                    ? 'bg-gray-900' 
+                    : 'bg-gray-300 hover:bg-gray-500'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Trusted Brands Section - Light AUTOID Style */}
+      <div className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-8 max-w-full">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
+              TRUSTED BY TOP BRANDS
+            </h2>
+          </div>
+          
+          {/* Desktop Grid - Hidden on mobile */}
+          <div className="hidden md:grid grid-cols-7 gap-6 items-center justify-items-center">
+            {brands.map((brand, index) => (
+              <Link key={index} href={brand.link} className="group w-full">
+                <div className="bg-gray-100 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 h-24 flex items-center justify-center px-4 py-6">
+                  <span className="text-lg font-black text-gray-700 group-hover:text-gray-900 transition-colors text-center">
+                    {brand.name}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile Horizontal Scroll */}
+          <div className="md:hidden overflow-x-auto scrollbar-hide">
+            <div className="flex space-x-4 pb-4 px-2">
+              {brands.map((brand, index) => (
+                <Link key={index} href={brand.link} className="group flex-shrink-0">
+                  <div className="bg-gray-100 hover:bg-gray-200 transition-all duration-300 h-20 w-32 flex items-center justify-center px-4 py-3">
+                    <span className="text-sm font-black text-gray-700 group-hover:text-gray-900 transition-colors text-center">
+                      {brand.name}
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Category Grid */}
-      <div className="py-4 sm:py-8 bg-gray-100">
-        <div className="container mx-auto px-2 sm:px-4 max-w-7xl">
-          <div className="text-center mb-4 sm:mb-6">
-            <div className="inline-flex items-center bg-gradient-to-r from-[#8FB3E2] to-[#31487A] text-white px-2 sm:px-3 py-1 rounded-full text-xs font-bold mb-2 sm:mb-3">
-              <Package className="h-3 w-3 mr-1" />
-              หมวดหมู่สินค้า
-            </div>
-            <h2 className="text-lg sm:text-xl font-bold text-[#1E2E4F] mb-2">เลือกซื้อตามหมวดหมู่</h2>
-          </div>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-3">
-            {categories.map((category, index) => (
-              <Link key={index} href={category.link} className="group">
-                <div className={`${category.color} text-white rounded-lg p-2 sm:p-4 text-center hover:shadow-lg active:shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95 min-h-[60px] sm:min-h-[80px] flex flex-col justify-center relative overflow-hidden touch-manipulation`}>
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="w-full h-full" style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/g%3E%3C/svg%3E")`
-                    }}></div>
-                  </div>
-                  <div className="relative z-10">
-                    <div className="mb-1 sm:mb-2 flex justify-center transform group-hover:scale-110 group-active:scale-125 transition-transform duration-300">
-                      {React.createElement(category.icon, { className: "h-4 w-4 sm:h-5 sm:w-5" })}
-                    </div>
-                    <h3 className="text-xs font-semibold leading-tight">{category.title}</h3>
-                  </div>
-                </div>
+      {/* Customer Reviews Section - Light AUTOID Style */}
+      <div className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-8 max-w-full">
+          <div className="mb-12">
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
+              รีวิวจากลูกค้า
+            </h2>
+            
+            {/* Overall Rating */}
+            <div className="flex items-center space-x-4 mb-6">
+              <div className="flex items-center space-x-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className="h-5 w-5 text-blue-500 fill-current" />
+                ))}
+              </div>
+              <span className="text-sm text-gray-600">2,449 รีวิว</span>
+              <Link href="/reviews" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                ดูรีวิวทั้งหมด
               </Link>
-            ))}
+            </div>
           </div>
+
+          {/* Desktop Reviews Slider - Hidden on mobile */}
+          <div className="hidden md:block overflow-hidden">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out gap-6"
+              style={{ 
+                transform: `translateX(-${currentReviewSlide * 25}%)`
+              }}
+            >
+              {customerReviews.map((review) => (
+                <div key={review.id} className="bg-white p-6 border border-gray-200 flex-shrink-0 w-1/4">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <p className="text-sm text-gray-500">{review.date}</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {review.name} {review.verified && (
+                          <span className="text-xs text-gray-500">○ ลูกค้าที่ยืนยันแล้ว</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center space-x-1 mb-3">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={`h-4 w-4 ${
+                          star <= review.rating 
+                            ? 'text-blue-500 fill-current' 
+                            : 'text-gray-300'
+                        }`} 
+                      />
+                    ))}
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-bold text-gray-900 mb-2 text-sm">
+                    {review.title}
+                  </h3>
+
+                  {/* Comment */}
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                    {review.comment}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Reviews Scroll */}
+          <div className="md:hidden overflow-x-auto scrollbar-hide">
+            <div className="flex space-x-4 pb-4">
+              {customerReviews.map((review) => (
+                <div key={review.id} className="bg-white p-4 border border-gray-200 flex-shrink-0 w-80">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <p className="text-xs text-gray-500">{review.date}</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        {review.name} {review.verified && (
+                          <span className="text-xs text-gray-500">○ ลูกค้าที่ยืนยันแล้ว</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center space-x-1 mb-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={`h-4 w-4 ${
+                          star <= review.rating 
+                            ? 'text-blue-500 fill-current' 
+                            : 'text-gray-300'
+                        }`} 
+                      />
+                    ))}
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-bold text-gray-900 mb-2 text-sm">
+                    {review.title}
+                  </h3>
+
+                  {/* Comment */}
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                    {review.comment}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation arrows for desktop */}
+          <div className="hidden md:flex justify-center mt-8 space-x-4">
+            <button 
+              onClick={prevReviewSlide}
+              className="p-2 bg-white border border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 transition-all duration-300"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button 
+              onClick={nextReviewSlide}
+              className="p-2 bg-white border border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 transition-all duration-300"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer CTA - Light AUTOID Style */}
+      <div className="py-24 bg-white">
+        <div className="container mx-auto px-8 max-w-full text-center">
+          <h2 className="text-4xl sm:text-6xl font-black text-gray-900 mb-8">
+            THE #1 EXPERTS IN<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-900">
+              CONSTRUCTION TOOLS
+            </span>
+          </h2>
+          <p className="text-gray-600 text-xl mb-12 max-w-2xl mx-auto">
+            มืออาชีพเลือกใช้ เพราะเราคือผู้เชี่ยวชาญด้านเครื่องมือและวัสดุก่อสร้าง
+          </p>
+          <Link 
+            href="/categories" 
+            className="inline-block bg-gray-900 text-white px-12 py-6 text-xl font-black hover:bg-gray-800 transition-all duration-300 transform hover:scale-105"
+          >
+            SHOP CONSTRUCTION TOOLS
+          </Link>
         </div>
       </div>
     </div>

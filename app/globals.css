@@ -1,38 +1,77 @@
 @import 'tailwindcss';
 
-/* SP Hardware Custom Variables */
+/* SP Hardware - Light AUTOID Style Variables */
 :root {
   --font-prompt: 'Prompt', system-ui, sans-serif;
   
-  /* SP Hardware Color Palette */
-  --oxford-blue: #192338;
-  --space-cadet: #1e2e4f;
-  --yinmn-blue: #31487a;
-  --jordy-blue: #8fb3e2;
-  --lavender: #d9e1f1;
+  /* Light AUTOID Color Palette */
+  --pure-white: #ffffff;
+  --light-gray: #f8fafc;
+  --medium-gray: #e2e8f0;
+  --dark-gray: #64748b;
+  --charcoal: #334155;
+  --pure-black: #0f172a;
 }
 
+/* เอาเฉพาะ default margin/padding ของ body */
 body {
   font-family: var(--font-prompt);
+  background-color: var(--pure-white);
+  color: var(--pure-black);
+  margin: 0;
+  padding: 0;
 }
 
-/* SP Hardware Gradient Utilities */
-.sp-gradient {
-  background: linear-gradient(135deg, var(--oxford-blue) 0%, var(--space-cadet) 50%, var(--yinmn-blue) 100%);
+html {
+  margin: 0;
+  padding: 0;
 }
 
-.sp-gradient-light {
-  background: linear-gradient(135deg, var(--jordy-blue) 0%, var(--lavender) 100%);
+/* ใช้ฟอนต์ Prompt สำหรับทุกองค์ประกอบ */
+*:not(svg):not(path) {
+  font-family: var(--font-prompt) !important;
 }
 
-/* Card hover effects */
-.card-hover {
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-prompt) !important;
+}
+
+input, textarea, select, button {
+  font-family: var(--font-prompt) !important;
+}
+
+/* Light AUTOID Style Utilities */
+.autoid-gradient {
+  background: linear-gradient(135deg, var(--pure-white) 0%, var(--light-gray) 50%, var(--medium-gray) 100%);
+}
+
+.autoid-text-gradient {
+  background: linear-gradient(135deg, var(--pure-black) 0%, var(--charcoal) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Hide scrollbars for mobile brand slider */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Light AUTOID Card Effects */
+.autoid-card {
   transition: all 0.3s ease;
+  border: 1px solid var(--medium-gray);
+  background: var(--pure-white);
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.autoid-card:hover {
+  transform: scale(1.05);
+  border-color: var(--dark-gray);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Custom utilities */
@@ -66,15 +105,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Hide scrollbar for mobile carousel */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.scrollbar-hide::-webkit-scrollbar { 
-  display: none;  /* Safari and Chrome */
-}
+/* Hide scrollbar for mobile carousel - already defined above */
 
 /* Custom focus states for accessibility */
 .focus-visible:focus {

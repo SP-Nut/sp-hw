@@ -24,10 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body className={`${prompt.variable} font-sans antialiased`}>
+      <body className={`${prompt.variable} font-prompt antialiased`}>
         <CartProvider>
           <Header />
-          <main>{children}</main>
+          {children}
           <Footer />
         </CartProvider>
       </body>

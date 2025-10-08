@@ -263,7 +263,7 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white pt-20">
         <div className="container mx-auto px-4 py-16 max-w-7xl">
           <div className="max-w-md mx-auto text-center">
             <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -285,7 +285,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pt-20">
       {/* Header */}
       <div className="bg-[#1E2E4F] text-white">
         <div className="container mx-auto px-4 py-12 max-w-7xl">
