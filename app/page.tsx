@@ -4,11 +4,8 @@ import React, { useState, useEffect } from "react";
 import { 
   ChevronLeft,
   ChevronRight,
-  Home as HomeIcon,
-  Wrench,
   Package,
-  Star,
-  Lightbulb
+  Star
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -89,13 +86,7 @@ export default function Home() {
 
 
 
-  // Icon mapping for promotional cards
-  const iconMap = {
-    "กันสาดทึบแสง": HomeIcon,
-    "เครื่องมือช่าง": Wrench,
-    "สี & วัสดุทาสี": Lightbulb,
-    "อุปกรณ์ติดตั้ง": Package
-  };
+
 
   // Hero touch handlers for swipe navigation
   const handleHeroTouchStart = (e: React.TouchEvent) => {
@@ -195,32 +186,301 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Category Navigation - Full Width */}
-      <div className="py-6 bg-white">
-        <div className="px-4 sm:px-8 max-w-full">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-            {promotionalCards.map((card, index) => (
-              <Link key={index} href={card.link} className="group">
-                <div className="relative h-28 sm:h-36 overflow-hidden bg-white border border-gray-200 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 shadow-sm hover:shadow-md">
+      {/* Category Navigation - BMW Style Layout (2+1 Cards) */}
+      <div className="py-8 bg-gray-100">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-full w-full">
+          {/* Mobile: Stack all cards vertically */}
+          <div className="lg:hidden grid grid-cols-1 gap-4">
+            {promotionalCards.slice(0, 3).map((card, index) => {
+              const isExternalLink = card.link.startsWith('http');
+              
+              if (isExternalLink) {
+                return (
+                  <a key={index} href={card.link} target="_blank" rel="noopener noreferrer" className="group">
+                    <div className="relative h-64 overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                   {/* Background Image */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200">
-                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                      {React.createElement(iconMap[card.title as keyof typeof iconMap], { className: "h-8 w-8 sm:h-10 sm:w-10 text-gray-300" })}
+                  <Image
+                    src={`/hero-promotion/${index + 1}.png`}
+                    alt={card.title}
+                    fill
+                    className="object-cover"
+                  />
+                  
+                  {/* Dark Overlay */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
+                  
+                  {/* Main Content */}
+                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                    <div className="mb-2">
+                      <p className="text-white/70 text-sm font-bold tracking-[0.3em] uppercase">
+                        {card.subtitle}
+                      </p>
+                    </div>
+                    <div className="mb-3">
+                      <h3 className="text-white font-black text-lg leading-tight tracking-tight drop-shadow-2xl">
+                        {card.title.toUpperCase()}
+                      </h3>
+                    </div>
+                    <div className="mb-4">
+                      <p className="text-white/90 text-sm font-medium leading-relaxed">
+                        {card.description}
+                      </p>
                     </div>
                   </div>
                   
-                  {/* Content Overlay */}
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
-                  
-                  {/* Category Title */}
-                  <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
-                    <h3 className="text-white font-bold text-center text-xs sm:text-sm drop-shadow-lg">
-                      {card.title}
-                    </h3>
-                  </div>
+                  {/* Hover Effect Overlay */}
+                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
                 </div>
-              </Link>
-            ))}
+              </a>
+            );
+              }
+              
+              return (
+                <Link key={index} href={card.link} className="group">
+                  <div className="relative h-64 overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
+                    {/* Background Image */}
+                    <Image
+                      src={`/hero-promotion/${index + 1}.png`}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                    />
+                    
+                    {/* Dark Overlay */}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
+                    
+                    {/* Main Content */}
+                    <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                      <div className="mb-2">
+                        <p className="text-white/70 text-sm font-bold tracking-[0.3em] uppercase">
+                          {card.subtitle}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <h3 className="text-white font-black text-lg leading-tight tracking-tight drop-shadow-2xl">
+                          {card.title.toUpperCase()}
+                        </h3>
+                      </div>
+                      <div className="mb-4">
+                        <p className="text-white/90 text-sm font-medium leading-relaxed">
+                          {card.description}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Hover Effect Overlay */}
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Desktop: 2 small cards on left, 1 large card on right */}
+          <div className="hidden lg:grid lg:grid-cols-2 gap-6 h-[500px] w-full">
+            {/* Left Column: 2 stacked small cards */}
+            <div className="flex flex-col gap-6 w-full">
+              {promotionalCards.slice(0, 2).map((card, index) => {
+                const isExternalLink = card.link.startsWith('http');
+                
+                if (isExternalLink) {
+                  return (
+                    <a key={index} href={card.link} target="_blank" rel="noopener noreferrer" className="group flex-1">
+                  <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
+                    {/* Background Image */}
+                    <Image
+                      src={`/hero-promotion/${index + 1}.png`}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                    />
+                    
+                    {/* Dark Overlay */}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
+                    
+                    {/* Main Content */}
+                    <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                      <div className="mb-2">
+                        <p className="text-white/70 text-xs font-bold tracking-[0.3em] uppercase">
+                          {card.subtitle}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <h3 className="text-white font-black text-xl xl:text-2xl leading-tight tracking-tight drop-shadow-2xl">
+                          {card.title.toUpperCase()}
+                        </h3>
+                      </div>
+                      <div className="mb-4">
+                        <p className="text-white/90 text-sm font-medium leading-relaxed">
+                          {card.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Hover Effect Overlay */}
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
+                    
+                    {/* Corner Accent */}
+                    <div className="absolute top-0 right-0 w-0 h-0 border-l-[30px] border-l-transparent border-t-[30px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
+                  </div>
+                </a>
+              );
+                }
+                
+                return (
+                  <Link key={index} href={card.link} className="group flex-1">
+                    <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
+                      {/* Background Image */}
+                      <Image
+                        src={`/hero-promotion/${index + 1}.png`}
+                        alt={card.title}
+                        fill
+                        className="object-cover"
+                      />
+                      
+                      {/* Dark Overlay */}
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
+                      
+                      {/* Main Content */}
+                      <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                        <div className="mb-2">
+                          <p className="text-white/70 text-xs font-bold tracking-[0.3em] uppercase">
+                            {card.subtitle}
+                          </p>
+                        </div>
+                        <div className="mb-3">
+                          <h3 className="text-white font-black text-xl xl:text-2xl leading-tight tracking-tight drop-shadow-2xl">
+                            {card.title.toUpperCase()}
+                          </h3>
+                        </div>
+                        <div className="mb-4">
+                          <p className="text-white/90 text-sm font-medium leading-relaxed">
+                            {card.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Hover Effect Overlay */}
+                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
+                      
+                      {/* Corner Accent */}
+                      <div className="absolute top-0 right-0 w-0 h-0 border-l-[30px] border-l-transparent border-t-[30px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Right Column: 1 large card */}
+            <div className="w-full">
+              {promotionalCards.slice(2, 3).map((card, index) => {
+                const isExternalLink = card.link.startsWith('http');
+                
+                if (isExternalLink) {
+                  return (
+                    <a key={index + 2} href={card.link} target="_blank" rel="noopener noreferrer" className="group block h-full">
+                  <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
+                    {/* Background Image */}
+                    <Image
+                      src={`/hero-promotion/3.png`}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                    />
+                    
+                    {/* Dark Overlay */}
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
+                    
+                    {/* Main Content */}
+                    <div className="absolute inset-0 flex flex-col justify-center items-center p-8 text-center">
+                      <div className="mb-4">
+                        <p className="text-white/70 text-base font-bold tracking-[0.3em] uppercase">
+                          {card.subtitle}
+                        </p>
+                      </div>
+                      <div className="mb-6">
+                        <h3 className="text-white font-black text-3xl xl:text-4xl leading-tight tracking-tight drop-shadow-2xl">
+                          {card.title.toUpperCase()}
+                        </h3>
+                      </div>
+                      <div className="mb-8">
+                        <p className="text-white/90 text-lg font-medium leading-relaxed max-w-md">
+                          {card.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Hover Effect Overlay */}
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
+                    
+                    {/* Corner Accents */}
+                    <div className="absolute top-0 right-0 w-0 h-0 border-l-[60px] border-l-transparent border-t-[60px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
+                    <div className="absolute bottom-0 left-0 w-0 h-0 border-r-[60px] border-r-transparent border-b-[60px] border-b-white/10 group-hover:border-b-white/20 transition-all duration-300" />
+                  </div>
+                </a>
+              );
+                }
+                
+                return (
+                  <Link key={index + 2} href={card.link} className="group block h-full">
+                    <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
+                      {/* Background Image */}
+                      <Image
+                        src={`/hero-promotion/3.png`}
+                        alt={card.title}
+                        fill
+                        className="object-cover"
+                      />
+                      
+                      {/* Dark Overlay */}
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
+                      
+                      {/* Main Content */}
+                      <div className="absolute inset-0 flex flex-col justify-center items-center p-8 text-center">
+                        <div className="mb-4">
+                          <p className="text-white/70 text-base font-bold tracking-[0.3em] uppercase">
+                            {card.subtitle}
+                          </p>
+                        </div>
+                        <div className="mb-6">
+                          <h3 className="text-white font-black text-3xl xl:text-4xl leading-tight tracking-tight drop-shadow-2xl">
+                            {card.title.toUpperCase()}
+                          </h3>
+                        </div>
+                        <div className="mb-8">
+                          <p className="text-white/90 text-lg font-medium leading-relaxed max-w-md">
+                            {card.description}
+                          </p>
+                        </div>
+                        <div className="bg-red-600 hover:bg-red-500 transition-colors duration-300 px-8 py-4 rounded-lg shadow-lg">
+                          <span className="text-white font-black text-xl tracking-wide">
+                            {card.discount}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Hover Effect Overlay */}
+                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
+                      
+                      {/* Corner Accents */}
+                      <div className="absolute top-0 right-0 w-0 h-0 border-l-[60px] border-l-transparent border-t-[60px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
+                      <div className="absolute bottom-0 left-0 w-0 h-0 border-r-[60px] border-r-transparent border-b-[60px] border-b-white/10 group-hover:border-b-white/20 transition-all duration-300" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Members-Only Club Section */}
+      <div className="py-8" style={{ backgroundColor: '#1e2e4f' }}>
+        <div className="px-4 sm:px-6 lg:px-8 max-w-full w-full">
+          <div className="text-center">
+            <h2 className="text-white font-black text-2xl sm:text-3xl lg:text-4xl tracking-wide italic">
+              SP HARDWARE ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
+            </h2>
           </div>
         </div>
       </div>

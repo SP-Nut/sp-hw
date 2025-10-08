@@ -17,28 +17,32 @@ export const heroImages = [
 
 export const promotionalCards = [
   {
-    title: "กันสาดทึบแสง",
-    description: "เมทัลชีท กระเบื้องลอน ลดสูงสุด 15%",
-    discount: "15%",
-    link: "/categories?cat=opaque-roof"
+    title: "เลือกวัสดุ",
+    description: "เลือกซื้อวัสดุก่อสร้างคุณภาพสูง",
+    discount: "เลือกเลย",
+    link: "/categories",
+    subtitle: "BUILD YOUR ULTIMATE"
   },
   {
-    title: "เครื่องมือช่าง",
-    description: "สว่าน ค้อน เลื่อย ลดสูงสุด 12%",
-    discount: "12%",
-    link: "/categories?cat=tools"
+    title: "ปรึกษาเรา",
+    description: "ปรึกษาเรื่องวัสดุและการก่อสร้าง",
+    discount: "สอบถาม",
+    link: "https://line.me/R/ti/p/@sp-hardware",
+    subtitle: "BUILD YOUR ULTIMATE"
   },
   {
-    title: "สี & วัสดุทาสี",
-    description: "สีทาบ้าน รองพื้น ลดสูงสุด 10%",
-    discount: "10%",
-    link: "/categories?cat=paint"
+    title: "เกี่ยวกับเรา",
+    description: "SP Group ผู้เชี่ยวชาญด้านวัสดุก่อสร้าง",
+    discount: "อ่านเพิ่ม",
+    link: "/about",
+    subtitle: "BUILD YOUR ULTIMATE"
   },
   {
     title: "อุปกรณ์ติดตั้ง",
     description: "สกรู ตะปู น็อต ลดสูงสุด 8%",
     discount: "8%",
-    link: "/categories?cat=installation"
+    link: "/categories?cat=installation",
+    subtitle: "BUILD YOUR ULTIMATE"
   }
 ];
 
