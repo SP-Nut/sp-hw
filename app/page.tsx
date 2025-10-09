@@ -144,7 +144,7 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="absolute bottom-4 sm:bottom-8 left-12 md:left-16 right-4 sm:right-auto z-10 text-left text-white max-w-2xl">
+        <div className="absolute bottom-4 sm:bottom-8 left-4 md:left-16 right-4 sm:right-auto z-10 text-left text-white max-w-2xl">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black mb-2 sm:mb-2 tracking-tight drop-shadow-lg italic">
             SP HARDWARE
           </h1>
@@ -161,13 +161,13 @@ export default function Home() {
         {/* Navigation Controls - Hidden on mobile */}
         <button
           onClick={prevSlide}
-          className="hidden sm:block absolute left-12 md:left-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute left-4 md:left-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
         >
           <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
         <button
           onClick={nextSlide}
-          className="hidden sm:block absolute right-12 md:right-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute right-4 md:right-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
         >
           <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
@@ -190,7 +190,7 @@ export default function Home() {
 
       {/* Category Navigation - BMW Style Layout (2+1 Cards) */}
       <div className="py-8 bg-gray-100">
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           {/* Mobile: Stack all cards vertically */}
           <div className="lg:hidden grid grid-cols-1 gap-4">
             {promotionalCards.slice(0, 3).map((card, index) => {
@@ -473,7 +473,7 @@ export default function Home() {
 
       {/* Members-Only Club Section */}
       <div className="py-8" style={{ backgroundColor: '#1e2e4f' }}>
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="text-center">
             <h2 className="text-white font-black text-2xl sm:text-3xl lg:text-4xl tracking-wide italic">
               SP HARDWARE ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
@@ -484,7 +484,7 @@ export default function Home() {
 
       {/* Popular Products Section - Light AUTOID Style */}
       <div className="py-16 bg-gray-100">
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="flex items-center justify-between mb-8">
             <div className="text-left">
               <h2 className="text-3xl sm:text-5xl font-black text-gray-900 mb-2">
@@ -635,7 +635,7 @@ export default function Home() {
 
       {/* Trusted Brands Section - Light AUTOID Style */}
       <div className="py-16 bg-white">
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
               PARTNER
@@ -674,7 +674,7 @@ export default function Home() {
 
       {/* Customer Reviews Section - Light AUTOID Style */}
       <div className="py-16 bg-gray-50">
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="mb-12">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
               รีวิวจากลูกค้า
@@ -809,7 +809,7 @@ export default function Home() {
 
       {/* Contact & Location Section */}
       <div className="py-12 bg-gray-50">
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Contact Form */}
             <div className="lg:col-span-3">
@@ -1036,7 +1036,7 @@ export default function Home() {
 
       {/* Footer CTA - Light AUTOID Style */}
       <div className="py-24 bg-white">
-        <div className="container mx-auto px-12 md:px-16 max-w-full text-center">
+        <div className="container mx-auto px-4 md:px-16 max-w-full text-center">
           <h2 className="text-4xl sm:text-6xl font-black text-gray-900 mb-8">
             THE #1 EXPERTS IN<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-900">

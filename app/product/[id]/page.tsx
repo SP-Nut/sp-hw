@@ -51,7 +51,7 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-gray-100 pt-24">
-      <div className="container mx-auto px-12 md:px-16 max-w-full py-6">
+      <div className="container mx-auto px-4 md:px-16 max-w-full py-6">
         {/* Back Button */}
         <button 
           onClick={() => router.back()}

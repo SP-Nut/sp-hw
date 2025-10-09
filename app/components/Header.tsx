@@ -66,7 +66,7 @@ export default function Header() {
           ? 'transform translate-y-0 opacity-100' 
           : 'transform -translate-y-full opacity-0 pointer-events-none'
       }`} style={{backgroundColor: '#1e2e4f'}}>
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2 text-xs md:text-sm font-medium">
               <span className="font-bold italic transition-all duration-500 opacity-100 text-center">
@@ -88,13 +88,13 @@ export default function Header() {
           ? 'border-b border-gray-200' 
           : 'border-b border-transparent'
       }`}>
-        <div className="container mx-auto px-12 md:px-16 max-w-full">
+        <div className="container mx-auto px-4 md:px-16 max-w-full">
           <div className="flex items-center justify-between">
             {/* Left Section - Logo */}
             <div className="flex items-center">
               {/* Mobile menu button */}
               <button
-                className={`lg:hidden transition-colors mr-3 md:mr-4 ${
+                className={`lg:hidden transition-colors mr-2 md:mr-4 ${
                   isScrolled || !isHomePage 
                     ? 'text-gray-900 hover:text-gray-600' 
                     : 'text-white hover:text-gray-200'
@@ -106,7 +106,7 @@ export default function Header() {
 
               {/* Logo */}
               <Link href="/" className="flex items-center group">
-                <div className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 transition-transform group-hover:scale-105">
+                <div className="w-16 h-10 sm:w-24 sm:h-16 md:w-32 md:h-20 transition-transform group-hover:scale-105">
                   <Image
                     src="/logo.png"
                     alt="SP Hardware Logo"
@@ -173,7 +173,7 @@ export default function Header() {
             </nav>
 
             {/* Right Section - Icons */}
-            <div className="flex items-center space-x-3 md:space-x-4">
+            <div className="flex items-center space-x-3">
               {/* Contact Info - Desktop only */}
               <div className={`hidden xl:flex items-center space-x-1 text-sm ${
                 isScrolled || !isHomePage 
@@ -190,7 +190,7 @@ export default function Header() {
                   ? 'text-gray-900 hover:text-blue-600' 
                   : 'text-white hover:text-gray-200'
               }`}>
-                <ShoppingCart className="h-6 w-6 md:h-5 md:w-5" />
+                <ShoppingCart className="h-5 w-5 md:h-5 md:w-5" />
                 {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
                     {cartCount > 99 ? '99+' : cartCount}
@@ -207,7 +207,7 @@ export default function Header() {
       {/* Mobile Menu - SP Hardware Style */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200">
-          <div className="container mx-auto px-4 md:px-8 py-4 md:py-6 max-w-7xl">
+          <div className="container mx-auto px-4 md:px-8 py-4 md:py-6 max-w-full">
             <nav className="space-y-2 md:space-y-4">
               <Link
                 href="/categories?cat=opaque-roof"

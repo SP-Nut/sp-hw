@@ -129,7 +129,7 @@ function CategoriesContent() {
     <div className="min-h-screen bg-gray-100 pt-20">
       {/* Header */}
       <div className="bg-gray-200 text-gray-900">
-        <div className="container mx-auto px-12 md:px-16 max-w-full py-8 lg:py-12">
+        <div className="container mx-auto px-4 md:px-16 max-w-full py-8 lg:py-12">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3">
             {selectedCategory === 'all' ? 'SHOP CATEGORIES' : 
              categories.find(cat => cat.id === selectedCategory)?.name || 'SHOP CATEGORIES'}
@@ -138,7 +138,7 @@ function CategoriesContent() {
         </div>
       </div>
 
-      <div className="container mx-auto px-12 md:px-16 max-w-full py-8 relative">
+      <div className="container mx-auto px-4 md:px-16 max-w-full py-8 relative">
         {/* Mobile Filter Backdrop */}
         {showMobileFilters && (
           <div 

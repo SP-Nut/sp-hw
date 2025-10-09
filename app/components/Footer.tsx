@@ -5,7 +5,7 @@ import { Phone, MapPin, Mail } from "lucide-react";
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: '#1e2e4f' }} className="text-white">
-      <div className="container mx-auto px-12 md:px-16 max-w-full py-12">
+      <div className="container mx-auto px-4 md:px-16 max-w-full py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>

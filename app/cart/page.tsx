@@ -264,7 +264,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-white pt-20">
-        <div className="container mx-auto px-12 md:px-16 max-w-full py-16">
+        <div className="container mx-auto px-4 md:px-16 max-w-full py-16">
           <div className="max-w-md mx-auto text-center">
             <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
               <ShoppingBag className="h-12 w-12 text-gray-400" />
@@ -288,7 +288,7 @@ export default function Cart() {
     <div className="min-h-screen bg-white pt-20">
       {/* Header */}
       <div className="bg-[#1E2E4F] text-white">
-        <div className="container mx-auto px-12 md:px-16 max-w-full py-12">
+        <div className="container mx-auto px-4 md:px-16 max-w-full py-12">
           <h1 className="text-4xl font-bold text-white mb-3">ตะกร้าสินค้า</h1>
           <p className="text-lg text-[#8FB3E2]">
             {items.length} รายการ ({items.reduce((sum, item) => sum + item.quantity, 0)} ชิ้น) - จัดการสินค้าในตะกร้าของคุณ
@@ -296,7 +296,7 @@ export default function Cart() {
         </div>
       </div>
 
-      <div className="container mx-auto px-12 md:px-16 max-w-full py-8">
+      <div className="container mx-auto px-4 md:px-16 max-w-full py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
