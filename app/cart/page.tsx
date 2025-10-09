@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ShoppingBag, CreditCard, Truck, ArrowLeft } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, CreditCard, Truck, ArrowLeft, Shield, Link as LinkIcon } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
 
 interface LineUser {
@@ -36,7 +36,7 @@ export default function Cart() {
 
       // แสดงข้อความต้อนรับ
       setTimeout(() => {
-        alert(`🎉 เชื่อมต่อ LINE สำเร็จ!\n\nสวัสดี ${displayName}\nตอนนี้คุณจะได้รับแจ้งเตือนออเดอร์ผ่าน LINE โดยตรง`);
+        alert(`เชื่อมต่อ LINE สำเร็จ!\n\nสวัสดี ${displayName}\nตอนนี้คุณจะได้รับแจ้งเตือนออเดอร์ผ่าน LINE โดยตรง`);
       }, 500);
     }
   }, []);
@@ -82,25 +82,25 @@ export default function Cart() {
 
       if (result.success) {
         // สำเร็จ - แสดงข้อความและเปิด LINE
-        let message = '🎉 ส่งออเดอร์เรียบร้อยแล้ว!\n\n';
+        let message = 'ส่งออเดอร์เรียบร้อยแล้ว!\n\n';
         
         if (result.results.adminNotified) {
-          message += '📢 แอดมินได้รับแจ้งเตือนแล้ว\n';
+          message += 'แอดมินได้รับแจ้งเตือนแล้ว\n';
         }
         
         if (result.results.customerNotified) {
           if (lineUser) {
-            message += '💬 ส่งข้อความถึงคุณใน LINE แล้ว\n';
+            message += 'ส่งข้อความถึงคุณใน LINE แล้ว\n';
           } else {
-            message += '📤 ส่งข้อความไปยัง LINE OA แล้ว\n';
-            message += '💡 หากคุณเพิ่ม @spkansard เป็นเพื่อนแล้ว จะเห็นข้อความออเดอร์\n';
+            message += 'ส่งข้อความไปยัง LINE OA แล้ว\n';
+            message += 'หากคุณเพิ่ม @spkansard เป็นเพื่อนแล้ว จะเห็นข้อความออเดอร์\n';
           }
         }
         
-        message += '\n🔄 กำลังเปิด LINE OA @spkansard\n';
+        message += '\nกำลังเปิด LINE OA @spkansard\n';
         message += lineUser 
-          ? '💬 ตรวจสอบข้อความในแชท LINE ของคุณ' 
-          : '💬 เพิ่มเป็นเพื่อนแล้วส่งข้อความ "สวัสดี" เพื่อเริ่มคุยกับแอดมิน';
+          ? 'ตรวจสอบข้อความในแชท LINE ของคุณ' 
+          : 'เพิ่มเป็นเพื่อนแล้วส่งข้อความ "สวัสดี" เพื่อเริ่มคุยกับแอดมิน';
         
         alert(message);
         
@@ -135,7 +135,7 @@ export default function Cart() {
     
     try {
       await navigator.clipboard.writeText(orderSummary);
-      alert(`⚠️ ระบบส่งออโต้มีปัญหา กลับไปใช้วิธีเดิม\n\n✅ คัดลอกข้อความสรุปออเดอร์แล้ว!\n🔄 กำลังเปิด LINE OA @spkansard\n📋 กรุณาวางข้อความในแชทแล้วกดส่ง`);
+      alert(`ระบบส่งออโต้มีปัญหา กลับไปใช้วิธีเดิม\n\nคัดลอกข้อความสรุปออเดอร์แล้ว!\nกำลังเปิด LINE OA @spkansard\nกรุณาวางข้อความในแชทแล้วกดส่ง`);
       
       const lineOAId = "spkansard";
       const lineUrl = `https://line.me/R/ti/p/@${lineOAId}`;
@@ -175,7 +175,7 @@ export default function Cart() {
     
     content.innerHTML = `
       <h3 style="margin-bottom: 20px; color: #1E2E4F; font-size: 20px; font-weight: bold;">
-        📋 ข้อความสรุปออเดอร์
+        ข้อความสรุปออเดอร์
       </h3>
       <textarea 
         id="orderMessage" 
@@ -187,23 +187,23 @@ export default function Cart() {
           onclick="document.getElementById('orderMessage').select(); document.execCommand('copy'); alert('คัดลอกแล้ว!'); document.body.removeChild(document.body.lastChild);"
           style="background: #1E2E4F; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px; cursor: pointer;"
         >
-          📋 คัดลอกข้อความ
+          คัดลอกข้อความ
         </button>
         <button 
           onclick="window.open('https://line.me/R/ti/p/@spkansard', '_blank'); document.body.removeChild(document.body.lastChild);"
           style="background: #00B900; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px; cursor: pointer;"
         >
-          📱 เปิด LINE OA
+          เปิด LINE OA
         </button>
         <button 
           onclick="document.body.removeChild(document.body.lastChild);"
           style="background: #666; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;"
         >
-          ❌ ปิด
+          ปิด
         </button>
       </div>
       <p style="margin-top: 15px; color: #666; font-size: 14px; text-align: center;">
-        ⚠️ ระบบส่งออโต้มีปัญหา กรุณาทำตามขั้นตอนเดิม:<br>
+        ระบบส่งออโต้มีปัญหา กรุณาทำตามขั้นตอนเดิม:<br>
         1. กดปุ่ม "คัดลอกข้อความ" หรือเลือกข้อความแล้ว Ctrl+C<br>
         2. กดปุ่ม "เปิด LINE OA" เพื่อไปหาแชท @spkansard<br> 
         3. วางข้อความ (Ctrl+V) และกดส่ง
@@ -223,32 +223,32 @@ export default function Cart() {
       minute: '2-digit'
     });
 
-    let message = `🛒 สั่งซื้อสินค้า - SP Hardware\n`;
-    message += `📅 ${currentDate}\n\n`;
+    let message = `สั่งซื้อสินค้า - SP Hardware\n`;
+    message += `วันที่: ${currentDate}\n\n`;
     
-    message += `📋 รายการสินค้า:\n`;
+    message += `รายการสินค้า:\n`;
     message += `${'='.repeat(30)}\n`;
     
     items.forEach((item, index) => {
       message += `${index + 1}. ${item.name}\n`;
-      message += `   🏭 ${item.brand}\n`;
-      message += `   💰 ${item.price.toLocaleString()} บาท x ${item.quantity} ชิ้น\n`;
-      message += `   💵 รวม: ${(item.price * item.quantity).toLocaleString()} บาท\n\n`;
+      message += `   แบรนด์: ${item.brand}\n`;
+      message += `   ราคา: ${item.price.toLocaleString()} บาท x ${item.quantity} ชิ้น\n`;
+      message += `   รวม: ${(item.price * item.quantity).toLocaleString()} บาท\n\n`;
     });
     
     message += `${'='.repeat(30)}\n`;
-    message += `💰 ราคาสินค้า: ${subtotal.toLocaleString()} บาท\n`;
+    message += `ราคาสินค้า: ${subtotal.toLocaleString()} บาท\n`;
     
     if (savings > 0) {
-      message += `🎉 ส่วนลดจากสินค้า: -${savings.toLocaleString()} บาท\n`;
+      message += `ส่วนลดจากสินค้า: -${savings.toLocaleString()} บาท\n`;
     }
     
-    message += `🚚 ค่าจัดส่ง: ${shipping === 0 ? 'ฟรี' : `${shipping.toLocaleString()} บาท`}\n`;
+    message += `ค่าจัดส่ง: ${shipping === 0 ? 'ฟรี' : `${shipping.toLocaleString()} บาท`}\n`;
     message += `${'='.repeat(30)}\n`;
-    message += `💎 รวมทั้งสิ้น: ${total.toLocaleString()} บาท\n\n`;
+    message += `รวมทั้งสิ้น: ${total.toLocaleString()} บาท\n\n`;
     
-    message += `📞 กรุณาติดต่อกลับเพื่อยืนยันออเดอร์\n`;
-    message += `🙏 ขอบคุณที่เลือกใช้บริการ SP Hardware`;
+    message += `กรุณาติดต่อกลับเพื่อยืนยันออเดอร์\n`;
+    message += `ขอบคุณที่เลือกใช้บริการ SP Hardware`;
     
     return message;
   };
@@ -264,7 +264,7 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-white pt-20">
-        <div className="container mx-auto px-4 py-16 max-w-7xl">
+        <div className="container mx-auto px-12 md:px-16 max-w-full py-16">
           <div className="max-w-md mx-auto text-center">
             <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
               <ShoppingBag className="h-12 w-12 text-gray-400" />
@@ -288,7 +288,7 @@ export default function Cart() {
     <div className="min-h-screen bg-white pt-20">
       {/* Header */}
       <div className="bg-[#1E2E4F] text-white">
-        <div className="container mx-auto px-4 py-12 max-w-7xl">
+        <div className="container mx-auto px-12 md:px-16 max-w-full py-12">
           <h1 className="text-4xl font-bold text-white mb-3">ตะกร้าสินค้า</h1>
           <p className="text-lg text-[#8FB3E2]">
             {items.length} รายการ ({items.reduce((sum, item) => sum + item.quantity, 0)} ชิ้น) - จัดการสินค้าในตะกร้าของคุณ
@@ -296,7 +296,7 @@ export default function Cart() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="container mx-auto px-12 md:px-16 max-w-full py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
@@ -384,7 +384,7 @@ export default function Cart() {
 
                         {!item.inStock && (
                           <div className="mt-2 text-sm text-red-600">
-                            ⚠️ สินค้าหมด จะถูกลบออกจากตะกร้าอัตโนมัติ
+                            สินค้าหมด จะถูกลบออกจากตะกร้าอัตโนมัติ
                           </div>
                         )}
                       </div>
@@ -453,7 +453,7 @@ export default function Cart() {
               {!lineUser && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                   <div className="flex items-center mb-3">
-                    <div className="text-2xl mr-3">💬</div>
+                    <div className="text-2xl mr-3"></div>
                     <div>
                       <h3 className="font-semibold text-green-800">เข้าสู่ระบบ LINE</h3>
                       <p className="text-sm text-green-600">เพื่อรับการติดตามออเดอร์แบบเรียลไทม์</p>
@@ -463,7 +463,8 @@ export default function Cart() {
                     onClick={() => window.location.href = '/api/line/auth?action=login'}
                     className="w-full py-2 px-4 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition flex items-center justify-center"
                   >
-                    🔗 เชื่อมต่อ LINE เพื่อรับแจ้งเตือน
+                    <LinkIcon className="h-4 w-4 mr-2" />
+                    เชื่อมต่อ LINE เพื่อรับแจ้งเตือน
                   </button>
                   <p className="text-xs text-green-600 mt-2 text-center">
                     *ไม่บังคับ - คุณยังสามารถสั่งซื้อได้โดยไม่ต้องเข้าสู่ระบบ
@@ -474,7 +475,7 @@ export default function Cart() {
               {lineUser && (
                 <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div className="flex items-center">
-                    <div className="text-2xl mr-3">✅</div>
+                    <div className="text-2xl mr-3"></div>
                     <div>
                       <h3 className="font-semibold text-blue-800">เชื่อมต่อ LINE แล้ว</h3>
                       <p className="text-sm text-blue-600">สวัสดี {lineUser.displayName}!</p>
@@ -504,11 +505,15 @@ export default function Cart() {
               <div className="mt-6 pt-6 border-t">
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <div className="text-2xl mb-1">🛡️</div>
+                    <div className="flex justify-center mb-1">
+                      <Shield className="h-6 w-6 text-[#31487A]" />
+                    </div>
                     <div className="text-sm text-[#31487A] font-medium">ปลอดภัย 100%</div>
                   </div>
                   <div>
-                    <div className="text-2xl mb-1">🚚</div>
+                    <div className="flex justify-center mb-1">
+                      <Truck className="h-6 w-6 text-[#31487A]" />
+                    </div>
                     <div className="text-sm text-[#31487A] font-medium">ส่งฟรีครบ ฿2,000</div>
                   </div>
                 </div>

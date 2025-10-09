@@ -24,6 +24,55 @@ function CategoriesContent() {
   const itemsPerPage = 8;
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
+  // Helper function to get button classes
+  const getButtonClasses = (product: typeof products[0], isGrid: boolean = true) => {
+    const baseClasses = isGrid 
+      ? "px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium transition-all duration-300"
+      : "px-3 sm:px-4 py-1.5 sm:py-2 font-medium text-xs sm:text-sm transition-all duration-300";
+    
+    if (!product.inStock) {
+      return `${baseClasses} bg-gray-300 text-gray-500 cursor-not-allowed`;
+    }
+    
+    if (addedToCart[product.id]) {
+      return `${baseClasses} bg-green-600 text-white`;
+    }
+    
+    if (isInCart(product.id)) {
+      return `${baseClasses} bg-gray-700 text-white hover:bg-gray-900`;
+    }
+    
+    return `${baseClasses} bg-gray-900 text-white hover:bg-gray-700`;
+  };
+
+  // Helper function to get button content
+  const getButtonContent = (product: typeof products[0], isGrid: boolean = true) => {
+    const iconClasses = isGrid ? "h-3 sm:h-4 w-3 sm:w-4 inline mr-1" : "h-3 sm:h-4 w-3 sm:w-4 inline mr-1 sm:mr-2";
+    
+    if (addedToCart[product.id]) {
+      return <><Check className={iconClasses} />เพิ่มแล้ว</>;
+    }
+    
+    if (isInCart(product.id)) {
+      return isGrid 
+        ? <><Plus className={iconClasses} />เพิ่ม ({getItemQuantity(product.id)})</>
+        : <><Plus className={iconClasses} /><span className="hidden sm:inline">เพิ่มอีก</span><span className="sm:hidden">เพิ่ม</span> ({getItemQuantity(product.id)})</>;
+    }
+    
+    return isGrid
+      ? <><ShoppingCart className={iconClasses} />{product.inStock ? 'เพิ่ม' : 'หมด'}</>
+      : <><ShoppingCart className={iconClasses} /><span className="hidden sm:inline">{product.inStock ? 'เพิ่มลงตะกร้า' : 'สินค้าหมด'}</span><span className="sm:hidden">{product.inStock ? 'เพิ่ม' : 'หมด'}</span></>;
+  };
+
+  // Helper function to reset all filters
+  const resetFilters = () => {
+    setSelectedCategory('all');
+    setPriceRange([0, 10000]);
+    setSelectedBrand('all');
+    setSearchTerm('');
+    setCurrentPage(1);
+  };
+
   const handleAddToCart = (product: typeof products[0]) => {
     const cartItem = {
       id: product.id,
@@ -54,8 +103,6 @@ function CategoriesContent() {
     }
   }, [categoryParam]);
 
-
-
   // Get brand counts
   const brandCounts = getBrandCounts(products);
 
@@ -78,14 +125,11 @@ function CategoriesContent() {
     setCurrentPage(1);
   }, [selectedCategory, selectedBrand, priceRange, sortBy, searchTerm]);
 
-
-
-
   return (
     <div className="min-h-screen bg-gray-100 pt-20">
       {/* Header */}
       <div className="bg-gray-200 text-gray-900">
-        <div className="px-4 sm:px-6 lg:px-8 py-8 lg:py-12 max-w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full py-8 lg:py-12">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3">
             {selectedCategory === 'all' ? 'SHOP CATEGORIES' : 
              categories.find(cat => cat.id === selectedCategory)?.name || 'SHOP CATEGORIES'}
@@ -94,7 +138,7 @@ function CategoriesContent() {
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-full relative">
+      <div className="container mx-auto px-12 md:px-16 max-w-full py-8 relative">
         {/* Mobile Filter Backdrop */}
         {showMobileFilters && (
           <div 
@@ -222,13 +266,7 @@ function CategoriesContent() {
 
               {/* Reset Filters */}
               <button 
-                onClick={() => {
-                  setSelectedCategory('all');
-                  setPriceRange([0, 10000]);
-                  setSelectedBrand('all');
-                  setSearchTerm('');
-                  setCurrentPage(1);
-                }}
+                onClick={resetFilters}
                 className="w-full py-2 text-gray-900 bg-gray-50 hover:bg-gray-900 hover:text-white transition-colors font-medium text-sm"
               >
                 ล้างตัวกรอง
@@ -363,11 +401,7 @@ function CategoriesContent() {
               {/* Mobile Reset Filters */}
               <button 
                 onClick={() => {
-                  setSelectedCategory('all');
-                  setPriceRange([0, 10000]);
-                  setSelectedBrand('all');
-                  setSearchTerm('');
-                  setCurrentPage(1);
+                  resetFilters();
                   setShowMobileFilters(false);
                 }}
                 className="w-full py-2 text-gray-900 bg-gray-50 hover:bg-gray-900 hover:text-white transition-colors font-bold text-sm"
@@ -429,13 +463,13 @@ function CategoriesContent() {
             {viewMode === 'grid' ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {currentProducts.map(product => (
-                  <Link key={product.id} href={`/product/${product.id}`}>
-                    <div className="group relative bg-white transition-all duration-300 cursor-pointer overflow-hidden">
+                  <div key={product.id} className="group relative bg-white transition-all duration-300 overflow-hidden">
                     {/* Image Container */}
-                    <div className="relative h-40 sm:h-48 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 overflow-hidden">
-                      <div className="h-full flex items-center justify-center">
-                        <span className="text-gray-400 font-medium text-xs sm:text-sm">รูปสินค้า</span>
-                      </div>
+                    <Link href={`/product/${product.id}`}>
+                      <div className="relative h-40 sm:h-48 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 overflow-hidden cursor-pointer">
+                        <div className="h-full flex items-center justify-center">
+                          <span className="text-gray-400 font-medium text-xs sm:text-sm">รูปสินค้า</span>
+                        </div>
                       
                       {/* Badges */}
                       <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex justify-between items-start">
@@ -458,13 +492,16 @@ function CategoriesContent() {
                         </div>
                       )}
                     </div>
+                    </Link>
                     
                     {/* Content */}
                     <div className="p-3 sm:p-4">
                       {/* Title */}
-                      <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 leading-tight">
-                        {product.name}
-                      </h4>
+                      <Link href={`/product/${product.id}`}>
+                        <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-2 line-clamp-2 leading-tight cursor-pointer hover:text-gray-700">
+                          {product.name}
+                        </h4>
+                      </Link>
                       
                       {/* Description */}
                       <p className="text-xs sm:text-sm text-gray-600 mb-3 line-clamp-2 leading-relaxed">
@@ -487,41 +524,26 @@ function CategoriesContent() {
                             e.stopPropagation();
                             handleAddToCart(product);
                           }}
-                          className={`px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium transition-all duration-300 ${
-                            product.inStock 
-                              ? addedToCart[product.id]
-                                ? 'bg-green-600 text-white'
-                                : isInCart(product.id)
-                                ? 'bg-gray-700 text-white hover:bg-gray-900'
-                                : 'bg-gray-900 text-white hover:bg-gray-700'
-                              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          }`}
+                          className={getButtonClasses(product, true)}
                         >
-                          {addedToCart[product.id] ? (
-                            <><Check className="h-3 sm:h-4 w-3 sm:w-4 inline mr-1" />เพิ่มแล้ว</>
-                          ) : isInCart(product.id) ? (
-                            <><Plus className="h-3 sm:h-4 w-3 sm:w-4 inline mr-1" />เพิ่ม ({getItemQuantity(product.id)})</>
-                          ) : (
-                            <><ShoppingCart className="h-3 sm:h-4 w-3 sm:w-4 inline mr-1" />{product.inStock ? 'เพิ่ม' : 'หมด'}</>
-                          )}
+                          {getButtonContent(product, true)}
                         </button>
                       </div>
                     </div>
                   </div>
-                  </Link>
                 ))}
               </div>
             ) : (
               <div className="space-y-4">
                 {currentProducts.map(product => (
-                  <Link key={product.id} href={`/product/${product.id}`}>
-                    <div className="bg-white transition-all duration-300 cursor-pointer overflow-hidden">
+                    <div key={product.id} className="bg-white transition-all duration-300 overflow-hidden">
                       <div className="flex">
                       {/* Image Section */}
-                      <div className="relative w-32 sm:w-48 h-24 sm:h-32 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex-shrink-0">
-                        <div className="h-full flex items-center justify-center">
-                          <span className="text-gray-400 text-xs sm:text-sm">รูปสินค้า</span>
-                        </div>
+                      <Link href={`/product/${product.id}`}>
+                        <div className="relative w-32 sm:w-48 h-24 sm:h-32 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex-shrink-0 cursor-pointer">
+                          <div className="h-full flex items-center justify-center">
+                            <span className="text-gray-400 text-xs sm:text-sm">รูปสินค้า</span>
+                          </div>
                         
                         {/* Badges */}
                         <div className="absolute top-1 sm:top-2 left-1 sm:left-2 right-1 sm:right-2 flex justify-between">
@@ -542,15 +564,18 @@ function CategoriesContent() {
                             </div>
                           </div>
                         )}
-                      </div>
+                        </div>
+                      </Link>
                       
                       {/* Content Section */}
                       <div className="flex-1 p-3 sm:p-4">
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
-                            <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 leading-tight">
-                              {product.name}
-                            </h4>
+                            <Link href={`/product/${product.id}`}>
+                              <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 leading-tight cursor-pointer hover:text-gray-700">
+                                {product.name}
+                              </h4>
+                            </Link>
                             <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-3">
                               {product.description}
                             </p>
@@ -575,30 +600,15 @@ function CategoriesContent() {
                                 e.stopPropagation();
                                 handleAddToCart(product);
                               }}
-                              className={`px-3 sm:px-4 py-1.5 sm:py-2 font-medium text-xs sm:text-sm transition-all duration-300 ${
-                                product.inStock 
-                                  ? addedToCart[product.id]
-                                    ? 'bg-green-600 text-white'
-                                    : isInCart(product.id)
-                                    ? 'bg-gray-700 text-white hover:bg-gray-900'
-                                    : 'bg-gray-900 text-white hover:bg-gray-700'
-                                  : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                              }`}
+                              className={getButtonClasses(product, false)}
                             >
-                              {addedToCart[product.id] ? (
-                                <><Check className="h-3 sm:h-4 w-3 sm:w-4 inline mr-1 sm:mr-2" />เพิ่มแล้ว</>
-                              ) : isInCart(product.id) ? (
-                                <><Plus className="h-3 sm:h-4 w-3 sm:w-4 inline mr-1 sm:mr-2" /><span className="hidden sm:inline">เพิ่มอีก</span><span className="sm:hidden">เพิ่ม</span> ({getItemQuantity(product.id)})</>
-                              ) : (
-                                <><ShoppingCart className="h-3 sm:h-4 w-3 sm:w-4 inline mr-1 sm:mr-2" /><span className="hidden sm:inline">{product.inStock ? 'เพิ่มลงตะกร้า' : 'สินค้าหมด'}</span><span className="sm:hidden">{product.inStock ? 'เพิ่ม' : 'หมด'}</span></>
-                              )}
+                              {getButtonContent(product, false)}
                             </button>
                           </div>
                         </div>
                       </div>
                       </div>
                     </div>
-                  </Link>
                 ))}
               </div>
             )}
@@ -612,13 +622,7 @@ function CategoriesContent() {
                 <h3 className="text-xl font-black text-gray-900 mb-3">ไม่พบสินค้าที่ตรงกับเงื่อนไข</h3>
                 <p className="text-gray-600 mb-6">ลองปรับเปลี่ยนตัวกรองหรือค้นหาด้วยคำอื่น</p>
                 <button 
-                  onClick={() => {
-                    setSelectedCategory('all');
-                    setPriceRange([0, 10000]);
-                    setSelectedBrand('all');
-                    setSearchTerm('');
-                    setCurrentPage(1);
-                  }}
+                  onClick={resetFilters}
                   className="bg-gray-900 text-white px-6 py-2 hover:bg-gray-700 transition-colors font-bold"
                 >
                   ล้างตัวกรองทั้งหมด

@@ -66,7 +66,7 @@ export default function Header() {
           ? 'transform translate-y-0 opacity-100' 
           : 'transform -translate-y-full opacity-0 pointer-events-none'
       }`} style={{backgroundColor: '#1e2e4f'}}>
-        <div className="container mx-auto px-4 md:px-8 max-w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2 text-xs md:text-sm font-medium">
               <span className="font-bold italic transition-all duration-500 opacity-100 text-center">
@@ -88,7 +88,7 @@ export default function Header() {
           ? 'border-b border-gray-200' 
           : 'border-b border-transparent'
       }`}>
-        <div className="container mx-auto px-4 md:px-8 max-w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           <div className="flex items-center justify-between">
             {/* Left Section - Logo */}
             <div className="flex items-center">
@@ -207,7 +207,7 @@ export default function Header() {
       {/* Mobile Menu - SP Hardware Style */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200">
-          <div className="container mx-auto px-4 md:px-8 py-4 md:py-6 max-w-full">
+          <div className="container mx-auto px-4 md:px-8 py-4 md:py-6 max-w-7xl">
             <nav className="space-y-2 md:space-y-4">
               <Link
                 href="/categories?cat=opaque-roof"

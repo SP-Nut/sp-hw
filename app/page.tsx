@@ -84,10 +84,6 @@ export default function Home() {
     });
   };
 
-
-
-
-
   // Hero touch handlers for swipe navigation
   const handleHeroTouchStart = (e: React.TouchEvent) => {
     setHeroTouchEnd(0);
@@ -148,7 +144,7 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="absolute bottom-4 sm:bottom-8 left-4 sm:left-8 right-4 sm:right-auto z-10 text-left text-white max-w-2xl">
+        <div className="absolute bottom-4 sm:bottom-8 left-12 md:left-16 right-4 sm:right-auto z-10 text-left text-white max-w-2xl">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black mb-2 sm:mb-2 tracking-tight drop-shadow-lg italic">
             SP HARDWARE
           </h1>
@@ -165,13 +161,13 @@ export default function Home() {
         {/* Navigation Controls - Hidden on mobile */}
         <button
           onClick={prevSlide}
-          className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute left-12 md:left-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
         >
           <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
         <button
           onClick={nextSlide}
-          className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute right-12 md:right-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
         >
           <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
@@ -194,7 +190,7 @@ export default function Home() {
 
       {/* Category Navigation - BMW Style Layout (2+1 Cards) */}
       <div className="py-8 bg-gray-100">
-        <div className="px-4 sm:px-6 lg:px-8 max-w-full w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           {/* Mobile: Stack all cards vertically */}
           <div className="lg:hidden grid grid-cols-1 gap-4">
             {promotionalCards.slice(0, 3).map((card, index) => {
@@ -477,7 +473,7 @@ export default function Home() {
 
       {/* Members-Only Club Section */}
       <div className="py-8" style={{ backgroundColor: '#1e2e4f' }}>
-        <div className="px-4 sm:px-6 lg:px-8 max-w-full w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           <div className="text-center">
             <h2 className="text-white font-black text-2xl sm:text-3xl lg:text-4xl tracking-wide italic">
               SP HARDWARE ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
@@ -488,7 +484,7 @@ export default function Home() {
 
       {/* Popular Products Section - Light AUTOID Style */}
       <div className="py-16 bg-gray-100">
-        <div className="container mx-auto px-8 max-w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           <div className="flex items-center justify-between mb-8">
             <div className="text-left">
               <h2 className="text-3xl sm:text-5xl font-black text-gray-900 mb-2">
@@ -639,7 +635,7 @@ export default function Home() {
 
       {/* Trusted Brands Section - Light AUTOID Style */}
       <div className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-8 max-w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
               PARTNER
@@ -678,7 +674,7 @@ export default function Home() {
 
       {/* Customer Reviews Section - Light AUTOID Style */}
       <div className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-8 max-w-full">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
           <div className="mb-12">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
               รีวิวจากลูกค้า
@@ -813,10 +809,10 @@ export default function Home() {
 
       {/* Contact & Location Section */}
       <div className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="container mx-auto px-12 md:px-16 max-w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Contact Form */}
-            <div>
+            <div className="lg:col-span-3">
               <div className="mb-6">
                 <span className="text-blue-600 text-xs font-bold uppercase tracking-wider">CONTACT US</span>
                 <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-2 mb-3 tracking-wide">
@@ -880,12 +876,12 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      ก่อยู่
+                      บริษัท/หน่วยงาน
                     </label>
                     <input 
                       type="text" 
                       className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
-                      placeholder="ก่อยู่หน้างานติดดิ้ง"
+                      placeholder="บริษัท/หน่วยงาน"
                     />
                   </div>
                   <div>
@@ -900,35 +896,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Services Checkboxes */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    บริการที่สนใจ
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <label className="flex items-center space-x-2 text-sm">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span>วัสดุก่อแสง</span>
-                    </label>
-                    <label className="flex items-center space-x-2 text-sm">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span>วัสดุปรับแสง</span>
-                    </label>
-                    <label className="flex items-center space-x-2 text-sm">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span>ระแนง/ฟ้า</span>
-                    </label>
-                    <label className="flex items-center space-x-2 text-sm">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span>หลังคาโรงรถ</span>
-                    </label>
-                    <label className="flex items-center space-x-2 text-sm">
-                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                      <span>อื่นๆ</span>
-                    </label>
-                  </div>
-                </div>
-                
                 {/* Message */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -952,7 +919,7 @@ export default function Home() {
             </div>
 
             {/* Contact Information */}
-            <div>
+            <div className="lg:col-span-2">
               <h3 className="text-xl font-black text-gray-900 mb-6 tracking-wide">Contact Information</h3>
               
               <p className="text-gray-600 text-base mb-8 leading-relaxed">
@@ -971,8 +938,8 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-base">Call Us</h4>
-                    <p className="text-gray-600 text-base">02-123-4567</p>
-                    <p className="text-gray-600 text-base">089-123-4567</p>
+                    <p className="text-gray-600 text-base">02-936-8841-2</p>
+                    <p className="text-gray-600 text-base">084-909-7777</p>
                   </div>
                 </div>
 
@@ -986,7 +953,8 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-base">Email Us</h4>
-                    <p className="text-gray-600 text-base">info@sp-hardware.com</p>
+                    <p className="text-gray-600 text-base">spkansards@gmail.com</p>
+                    <p className="text-gray-600 text-base">FAX: 02-936-8843</p>
                   </div>
                 </div>
 
@@ -999,7 +967,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-base">Website</h4>
-                    <p className="text-gray-600 text-base">www.sp-hardware.com</p>
+                    <p className="text-gray-600 text-base">www.spkansard.com</p>
                   </div>
                 </div>
 
@@ -1012,7 +980,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 text-base">Address</h4>
-                    <p className="text-gray-600 text-base">123/45 ถนนรามคำแหง แขวงมีนบุรี<br />เขตมีนบุรี กรุงเทพฯ 10510</p>
+                    <p className="text-gray-600 text-base">เลขที่ 28/101 ถ.รัชดา-รามอินทรา<br />แขวงคลองกุ่ม เขตบึงกุ่ม กทม. 10230</p>
                   </div>
                 </div>
               </div>
@@ -1053,14 +1021,14 @@ export default function Home() {
         <div className="overflow-hidden">
           <div className="h-64 md:h-80 lg:h-96">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.5392127563613!2d100.64351721529313!3d13.743624990350315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQ0JzM3LjAiTiAxMDDCsDM4JzQxLjciRQ!5e0!3m2!1sth!2sth!4v1697701234567!5m2!1sth!2sth"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.948627582844!2d100.6539081!3d13.8193919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d6257c238b67d:0xee9648c1a7c7c912!2sSP%20Kansard%20%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%A9%E0%B8%B1%E0%B8%97%20%E0%B9%80%E0%B8%AD%E0%B8%AA%E0%B8%9E%E0%B8%B5%20%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%94%20%E0%B8%88%E0%B8%B3%E0%B8%81%E0%B8%B1%E0%B8%94!5e0!3m2!1sth!2sth!4v1697701234567!5m2!1sth!2sth"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="SP Hardware Location"
+              title="SP Kansard Location"
             />
           </div>
         </div>
@@ -1068,7 +1036,7 @@ export default function Home() {
 
       {/* Footer CTA - Light AUTOID Style */}
       <div className="py-24 bg-white">
-        <div className="container mx-auto px-8 max-w-full text-center">
+        <div className="container mx-auto px-12 md:px-16 max-w-full text-center">
           <h2 className="text-4xl sm:text-6xl font-black text-gray-900 mb-8">
             THE #1 EXPERTS IN<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-900">

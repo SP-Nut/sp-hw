@@ -49,13 +49,9 @@ export async function GET(request: NextRequest) {
     // กรณีที่เป็น callback จาก LINE
     if (action === 'callback') {
       const code = searchParams.get('code');
-      const state = searchParams.get('state');
       const error = searchParams.get('error');
       
       // ตรวจสอบ state เพื่อป้องกัน CSRF (ในการใช้งานจริง)
-      if (state) {
-        console.log('Received state:', state);
-      }
 
       if (error) {
         return NextResponse.json(

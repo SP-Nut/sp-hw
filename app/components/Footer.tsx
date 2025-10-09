@@ -5,7 +5,7 @@ import { Phone, MapPin, Mail } from "lucide-react";
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: '#1e2e4f' }} className="text-white">
-      <div className="container mx-auto px-4 py-12 max-w-7xl">
+      <div className="container mx-auto px-12 md:px-16 max-w-full py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
@@ -23,19 +23,19 @@ export default function Footer() {
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2 text-white" />
                 <div>
-                  <a href="tel:02-123-4567" className="hover:text-gray-300 transition-colors block">02-123-4567</a>
-                  <a href="tel:089-123-4567" className="hover:text-gray-300 transition-colors">089-123-4567</a>
+                  <a href="tel:02-936-8841-2" className="hover:text-gray-300 transition-colors block">02-936-8841-2</a>
+                  <a href="tel:084-909-7777" className="hover:text-gray-300 transition-colors">084-909-7777</a>
                 </div>
               </div>
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2 text-white" />
-                <a href="mailto:info@sp-hardware.com" className="hover:text-gray-300 transition-colors">
-                  info@sp-hardware.com
+                <a href="mailto:spkansards@gmail.com" className="hover:text-gray-300 transition-colors">
+                  spkansards@gmail.com
                 </a>
               </div>
               <div className="flex items-start">
                 <MapPin className="h-4 w-4 mr-2 mt-1 text-white flex-shrink-0" />
-                <span className="text-gray-300">123/45 ถนนรามคำแหง แขวงมีนบุรี<br />เขตมีนบุรี กรุงเทพฯ 10510</span>
+                <span className="text-gray-300">เลขที่ 28/101 ถ.รัชดา-รามอินทรา<br />แขวงคลองกุ่ม เขตบึงกุ่ม กทม. 10230</span>
               </div>
             </div>
           </div>
@@ -45,28 +45,28 @@ export default function Footer() {
             <h5 className="font-semibold mb-4">หมวดหมู่สินค้า</h5>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <Link href="/categories" className="hover:text-white transition-colors">
-                  วัสดุกันสาด
+                <Link href="/categories?cat=opaque-roof" className="hover:text-white transition-colors">
+                  กันสาดทึบแสง
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:text-white transition-colors">
-                  วัสดุปรับแสง
+                <Link href="/categories?cat=translucent-roof" className="hover:text-white transition-colors">
+                  กันสาดโปร่งแสง
                 </Link>
               </li>
               <li>
-                <Link href="/categories" className="hover:text-white transition-colors">
-                  ระแนง/ฟ้า
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="hover:text-white transition-colors">
-                  หลังคาโรงรถ
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories" className="hover:text-white transition-colors">
+                <Link href="/categories?cat=installation" className="hover:text-white transition-colors">
                   อุปกรณ์ติดตั้ง
+                </Link>
+              </li>
+              <li>
+                <Link href="/categories?cat=tools" className="hover:text-white transition-colors">
+                  เครื่องมือช่าง
+                </Link>
+              </li>
+              <li>
+                <Link href="/categories?cat=paint" className="hover:text-white transition-colors">
+                  สี & วัสดุทาสี
                 </Link>
               </li>
             </ul>
@@ -78,12 +78,12 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               <li>
                 <Link href="/categories" className="hover:text-white transition-colors">
-                  เลือกวัสดุ
+                  เลือกวัสดุกันสาด
                 </Link>
               </li>
               <li>
                 <a href="https://line.me/R/ti/p/@sp-hardware" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  ปรึกษาเรา
+                  ปรึกษาทาง LINE
                 </a>
               </li>
               <li>
@@ -92,25 +92,31 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  บริการติดตั้ง
+                <Link href="/cart" className="hover:text-white transition-colors">
+                  ตะกร้าสินค้า
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white transition-colors">
-                  หลังการขาย
-                </Link>
+                <span className="text-gray-400">
+                  บริการติดตั้งโดยช่าง
+                </span>
               </li>
             </ul>
           </div>
 
-          {/* Quick Links */}
+          {/* Contact Info */}
           <div>
             <h5 className="font-semibold mb-4">ติดต่อเรา</h5>
             <ul className="space-y-2 text-gray-300">
               <li>
                 <span className="text-white font-medium">Website:</span><br />
-                <span>www.sp-hardware.com</span>
+                <a href="https://www.spkansard.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  www.spkansard.com
+                </a>
+              </li>
+              <li>
+                <span className="text-white font-medium">FAX:</span><br />
+                <span>02-936-8843</span>
               </li>
               <li>
                 <span className="text-white font-medium">เวลาทำการ:</span><br />

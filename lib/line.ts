@@ -101,7 +101,6 @@ export const sendOrderToLine = async (orderData: OrderData, targetUserId?: strin
         type: 'text',
         text: message
       });
-      console.log(`✅ ส่งออเดอร์ไปยัง LINE User ID: ${targetUserId} สำเร็จ`);
       return true;
     }
 
@@ -131,7 +130,6 @@ export const sendBroadcastMessage = async (orderData: OrderData): Promise<boolea
         type: 'text',
         text: message
       });
-      console.log(`✅ ส่งออเดอร์ไปยัง LINE Group: ${groupId} สำเร็จ`);
       return true;
     }
 
@@ -140,29 +138,23 @@ export const sendBroadcastMessage = async (orderData: OrderData): Promise<boolea
         type: 'text',
         text: message
       });
-      console.log(`✅ ส่งออเดอร์ไปยัง LINE Room: ${roomId} สำเร็จ`);
       return true;
     }
 
     // ถ้าไม่มี Group/Room ID ให้ส่ง Broadcast (ส่งให้ทุกคนที่เป็นเพื่อน)
     // หมายเหตุ: Broadcast Message มีข้อจำกัดในการใช้งาน
-    console.log('⚠️ ไม่พบ Group ID หรือ Room ID - จะใช้วิธี Broadcast');
     
     await client.broadcast({
       type: 'text',
       text: `📢 ออเดอร์ใหม่จาก SP Hardware!\n\n${message}\n\n💬 ตอบกลับข้อความนี้เพื่อสอบถามรายละเอียดเพิ่มเติม`
     });
 
-    console.log('✅ ส่ง Broadcast Message สำเร็จ');
     return true;
 
   } catch (error) {
     console.error('❌ เกิดข้อผิดพลาดในการส่ง Broadcast:', error);
     
     // ถ้า Broadcast ไม่ได้ให้แสดงข้อผิดพลาดที่ช่วยได้
-    if ((error as Error).message?.includes('Invalid reply token')) {
-      console.log('💡 แนะนำ: ตั้งค่า LINE_GROUP_ID หรือ LINE_ROOM_ID ในไฟล์ .env.local');
-    }
     
     return false;
   }
@@ -185,7 +177,6 @@ export const notifyAdminNewOrder = async (orderData: OrderData): Promise<boolean
       text: message
     });
 
-    console.log(`✅ แจ้งเตือนแอดมิน LINE User ID: ${adminUserId} สำเร็จ`);
     return true;
 
   } catch (error) {
@@ -232,7 +223,6 @@ export const checkLineConnection = async (): Promise<boolean> => {
     const client = createLineClient();
     // ลองดึงข้อมูล Bot Profile เพื่อตรวจสอบการเชื่อมต่อ
     await client.getBotInfo();
-    console.log('✅ การเชื่อมต่อ LINE Bot สำเร็จ');
     return true;
   } catch (error) {
     console.error('❌ ไม่สามารถเชื่อมต่อ LINE Bot ได้:', error);
