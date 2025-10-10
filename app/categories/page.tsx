@@ -39,10 +39,10 @@ function CategoriesContent() {
     }
     
     if (isInCart(product.id)) {
-      return `${baseClasses} bg-gray-700 text-white hover:bg-gray-900`;
+      return `${baseClasses} bg-[#31487a] text-white hover:bg-[#192338]`;
     }
     
-    return `${baseClasses} bg-gray-900 text-white hover:bg-gray-700`;
+    return `${baseClasses} bg-[#1e2e4f] text-white hover:bg-[#31487a]`;
   };
 
   // Helper function to get button content
@@ -128,13 +128,13 @@ function CategoriesContent() {
   return (
     <div className="min-h-screen bg-gray-100 pt-20">
       {/* Header */}
-      <div className="bg-gray-200 text-gray-900">
+      <div className="bg-[#1e2e4f] text-white">
         <div className="container mx-auto px-4 md:px-16 max-w-full py-8 lg:py-12">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-3">
             {selectedCategory === 'all' ? 'SHOP CATEGORIES' : 
              categories.find(cat => cat.id === selectedCategory)?.name || 'SHOP CATEGORIES'}
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 font-light">เลือกซื้อวัสดุก่อสร้างคุณภาพสูง</p>
+          <p className="text-base sm:text-lg text-gray-300 font-light">เลือกซื้อวัสดุก่อสร้างคุณภาพสูง</p>
         </div>
       </div>
 
@@ -152,7 +152,7 @@ function CategoriesContent() {
           <div className="lg:hidden mb-4">
             <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white px-4 py-3 font-bold transition-colors hover:bg-gray-700"
+              className="w-full flex items-center justify-center gap-2 bg-[#1e2e4f] text-white px-4 py-3 font-bold transition-colors hover:bg-[#31487a]"
             >
               <Filter className="h-4 w-4" />
               {showMobileFilters ? 'ซ่อนตัวกรอง' : 'แสดงตัวกรอง'}
@@ -198,7 +198,7 @@ function CategoriesContent() {
                       onClick={() => setSelectedCategory(category.id)}
                       className={`w-full text-left px-2 py-1.5 transition-colors font-medium text-sm ${
                         selectedCategory === category.id
-                          ? 'bg-gray-900 text-white'
+                          ? 'bg-[#1e2e4f] text-white'
                           : 'text-gray-900 hover:bg-gray-50'
                       }`}
                     >
@@ -267,7 +267,7 @@ function CategoriesContent() {
               {/* Reset Filters */}
               <button 
                 onClick={resetFilters}
-                className="w-full py-2 text-gray-900 bg-gray-50 hover:bg-gray-900 hover:text-white transition-colors font-medium text-sm"
+                className="w-full py-2 text-gray-900 bg-gray-50 hover:bg-[#1e2e4f] hover:text-white transition-colors font-medium text-sm"
               >
                 ล้างตัวกรอง
               </button>
@@ -324,7 +324,7 @@ function CategoriesContent() {
                       onClick={() => setSelectedCategory(category.id)}
                       className={`w-full text-left px-3 py-2 transition-colors font-medium text-sm ${
                         selectedCategory === category.id
-                          ? 'bg-gray-900 text-white'
+                          ? 'bg-[#1e2e4f] text-white'
                           : 'text-gray-900 hover:bg-gray-50'
                       }`}
                     >
@@ -393,7 +393,7 @@ function CategoriesContent() {
               {/* Mobile Apply Button */}
               <button 
                 onClick={() => setShowMobileFilters(false)}
-                className="w-full py-3 bg-gray-900 text-white hover:bg-gray-700 transition-colors font-bold text-sm mb-3"
+                className="w-full py-3 bg-[#1e2e4f] text-white hover:bg-[#31487a] transition-colors font-bold text-sm mb-3"
               >
                 ปิดตัวกรอง
               </button>
@@ -404,7 +404,7 @@ function CategoriesContent() {
                   resetFilters();
                   setShowMobileFilters(false);
                 }}
-                className="w-full py-2 text-gray-900 bg-gray-50 hover:bg-gray-900 hover:text-white transition-colors font-bold text-sm"
+                className="w-full py-2 text-gray-900 bg-gray-50 hover:bg-[#1e2e4f] hover:text-white transition-colors font-bold text-sm"
               >
                 ล้างตัวกรอง
               </button>
@@ -444,13 +444,13 @@ function CategoriesContent() {
                   <div className="flex">
                     <button
                       onClick={() => setViewMode('grid')}
-                      className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                      className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-[#1e2e4f] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                     >
                       <Grid className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => setViewMode('list')}
-                      className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                      className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-[#1e2e4f] text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                     >
                       <List className="h-4 w-4" />
                     </button>
@@ -473,7 +473,7 @@ function CategoriesContent() {
                       
                       {/* Badges */}
                       <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex justify-between items-start">
-                        <div className="bg-gray-900 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
+                        <div className="bg-[#1e2e4f] text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
                           {product.brand}
                         </div>
                         {product.originalPrice > product.price && (
@@ -547,7 +547,7 @@ function CategoriesContent() {
                         
                         {/* Badges */}
                         <div className="absolute top-1 sm:top-2 left-1 sm:left-2 right-1 sm:right-2 flex justify-between">
-                          <div className="bg-gray-900 text-white px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
+                          <div className="bg-[#1e2e4f] text-white px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
                             {product.brand}
                           </div>
                           {product.originalPrice > product.price && (
@@ -623,7 +623,7 @@ function CategoriesContent() {
                 <p className="text-gray-600 mb-6">ลองปรับเปลี่ยนตัวกรองหรือค้นหาด้วยคำอื่น</p>
                 <button 
                   onClick={resetFilters}
-                  className="bg-gray-900 text-white px-6 py-2 hover:bg-gray-700 transition-colors font-bold"
+                  className="bg-[#1e2e4f] text-white px-6 py-2 hover:bg-[#31487a] transition-colors font-bold"
                 >
                   ล้างตัวกรองทั้งหมด
                 </button>
@@ -656,7 +656,7 @@ function CategoriesContent() {
                           onClick={() => setCurrentPage(page)}
                           className={`px-3 py-2 transition-colors font-bold ${
                             page === currentPage
-                              ? 'bg-gray-900 text-white'
+                              ? 'bg-[#1e2e4f] text-white'
                               : 'bg-white hover:bg-gray-50 text-gray-900'
                           }`}
                         >
