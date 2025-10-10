@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { CartProvider } from "./contexts/CartContext";
+import { Analytics } from "@vercel/analytics/react";
 
 const prompt = Prompt({
   subsets: ["latin", "thai"],
@@ -30,6 +31,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );
