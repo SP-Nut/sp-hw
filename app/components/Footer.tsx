@@ -69,6 +69,11 @@ export default function Footer() {
                   สี & วัสดุทาสี
                 </Link>
               </li>
+              <li>
+                <Link href="/categories?cat=others" className="hover:text-white transition-colors">
+                  อื่นๆ
+                </Link>
+              </li>
             </ul>
           </div>
 

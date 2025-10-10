@@ -20,6 +20,7 @@ import { installationProducts } from './products-installation';
 import { toolsProducts } from './products-tools';
 import { hardwareProducts } from './products-hardware';
 import { paintProducts } from './products-paint';
+import { othersProducts } from './products-others';
 
 // รวมสินค้าทั้งหมด
 export const products: Product[] = [
@@ -28,7 +29,8 @@ export const products: Product[] = [
   ...installationProducts,
   ...toolsProducts,
   ...hardwareProducts,
-  ...paintProducts
+  ...paintProducts,
+  ...othersProducts
 ];
 
 // Export แยกตามหมวดหมู่สำหรับใช้งานเฉพาะ
@@ -38,5 +40,6 @@ export {
   installationProducts,
   toolsProducts,
   hardwareProducts,
-  paintProducts
+  paintProducts,
+  othersProducts
 };
