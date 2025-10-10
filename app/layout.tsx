@@ -16,14 +16,16 @@ export const metadata: Metadata = {
   title: "SP Hardware - ศูนย์รวมฮาร์ดแวร์และวัสดุก่อสร้างครบวงจร",
   description: "SP Hardware ร้านขายฮาร์ดแวร์และวัสดุก่อสร้างออนไลน์ คุณภาพสูง ราคาดี กันสาด หลังคา เมทัลชีท อุปกรณ์ไฟฟ้า ส่งฟรีทั่วประเทศ",
   keywords: "SP Hardware, ฮาร์ดแวร์, วัสดุก่อสร้าง, กันสาด, หลังคา, เมทัลชีท, ท่อ PVC, สีทาอาคาร, อุปกรณ์ไฟฟ้า",
-  icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
-    other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/logo.png',
-    },
+  metadataBase: new URL('http://localhost:3000'),
+  icons: [
+    { rel: 'icon', url: '/favicon.ico', sizes: 'any' },
+    { rel: 'icon', url: '/icon.png', type: 'image/png', sizes: '32x32' },
+    { rel: 'apple-touch-icon', url: '/apple-icon.png', sizes: '180x180' },
+  ],
+  manifest: '/manifest.json',
+  other: {
+    'msapplication-TileColor': '#1e2e4f',
+    'theme-color': '#1e2e4f',
   },
 };
 
@@ -34,11 +36,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <head>
-        <link rel="icon" href="/logo.png" sizes="any" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-      </head>
       <body className={`${prompt.variable} font-prompt antialiased`}>
         <CartProvider>
           <Header />
