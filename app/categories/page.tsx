@@ -437,7 +437,6 @@ function CategoriesContent() {
                     <option value="name">เรียงตามชื่อ</option>
                     <option value="price-low">ราคาต่ำ - สูง</option>
                     <option value="price-high">ราคาสูง - ต่ำ</option>
-                    <option value="rating">คะแนนสูงสุด</option>
                   </select>
 
                   {/* View Toggle */}
@@ -579,9 +578,6 @@ function CategoriesContent() {
                             <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-3">
                               {product.description}
                             </p>
-                            <span className="text-xs sm:text-sm text-gray-500">
-                              ({product.reviews} รีวิว)
-                            </span>
                           </div>
                           
                           {/* Price and Button Section */}
