@@ -5,10 +5,88 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Grid, List, ShoppingCart, Search, Check, Plus, Filter, X } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
-import { categories } from "../data/categories";
-import { brands } from "../data/brands";
-import { products } from "../data/products";
-import { filterProducts, sortProducts, paginateProducts, getBrandCounts } from "../data/utils";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice: number | null;
+  brand: string | null;
+  category: string | null;
+  rating: number | null;
+  reviews: number | null;
+  image: string | null;
+  inStock: boolean | null;
+  description: string | null;
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface Brand {
+  id: string;
+  name: string;
+}
+
+// Utility functions moved to component
+const filterProducts = (products: Product[], filters: {
+  category: string;
+  brand: string;
+  priceRange: [number, number];
+  searchTerm: string;
+}) => {
+  return products.filter(product => {
+    const matchesCategory = filters.category === 'all' || product.category === filters.category;
+    const matchesBrand = filters.brand === 'all' || product.brand === filters.brand;
+    const matchesPrice = product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
+    const matchesSearch = filters.searchTerm === '' || 
+      product.name.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
+      (product.description && product.description.toLowerCase().includes(filters.searchTerm.toLowerCase()));
+    
+    return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
+  });
+};
+
+const sortProducts = (products: Product[], sortBy: string) => {
+  const sorted = [...products];
+  switch (sortBy) {
+    case 'price-low':
+      return sorted.sort((a, b) => a.price - b.price);
+    case 'price-high':
+      return sorted.sort((a, b) => b.price - a.price);
+    case 'rating':
+      return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    case 'name':
+    default:
+      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+  }
+};
+
+const paginateProducts = (products: Product[], currentPage: number, itemsPerPage: number) => {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = products.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+  
+  return {
+    products: paginatedProducts,
+    totalPages,
+    startIndex: startIndex + 1,
+    endIndex: Math.min(endIndex, products.length)
+  };
+};
+
+const getBrandCounts = (products: Product[]) => {
+  const counts: Record<string, number> = {};
+  products.forEach(product => {
+    if (product.brand) {
+      counts[product.brand] = (counts[product.brand] || 0) + 1;
+    }
+  });
+  return counts;
+};
 
 // Component ที่ใช้ useSearchParams
 function CategoriesContent() {
@@ -21,11 +99,42 @@ function CategoriesContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 8;
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
+  // Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes, brandsRes] = await Promise.all([
+          fetch('/api/products'),
+          fetch('/api/categories'),
+          fetch('/api/brands')
+        ]);
+
+        const productsData = await productsRes.json();
+        const categoriesData = await categoriesRes.json();
+        const brandsData = await brandsRes.json();
+
+        setProducts(productsData || []);
+        setCategories(categoriesData?.filter((cat: Category) => cat.id !== 'all') || []);
+        setBrands(brandsData?.filter((brand: Brand) => brand.id !== 'all') || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   // Helper function to get button classes
-  const getButtonClasses = (product: typeof products[0], isGrid: boolean = true) => {
+  const getButtonClasses = (product: Product, isGrid: boolean = true) => {
     const baseClasses = isGrid 
       ? "px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium transition-all duration-300"
       : "px-3 sm:px-4 py-1.5 sm:py-2 font-medium text-xs sm:text-sm transition-all duration-300";
@@ -46,7 +155,7 @@ function CategoriesContent() {
   };
 
   // Helper function to get button content
-  const getButtonContent = (product: typeof products[0], isGrid: boolean = true) => {
+  const getButtonContent = (product: Product, isGrid: boolean = true) => {
     const iconClasses = isGrid ? "h-3 sm:h-4 w-3 sm:w-4 inline mr-1" : "h-3 sm:h-4 w-3 sm:w-4 inline mr-1 sm:mr-2";
     
     if (addedToCart[product.id]) {
@@ -73,15 +182,15 @@ function CategoriesContent() {
     setCurrentPage(1);
   };
 
-  const handleAddToCart = (product: typeof products[0]) => {
+  const handleAddToCart = (product: Product) => {
     const cartItem = {
       id: product.id,
       name: product.name,
       price: product.price,
-      originalPrice: product.originalPrice,
-      brand: product.brand,
-      image: product.image,
-      inStock: product.inStock
+      originalPrice: product.originalPrice || undefined,
+      brand: product.brand || '',
+      image: product.image || '',
+      inStock: product.inStock || false,
     };
     
     addToCart(cartItem);
@@ -106,6 +215,19 @@ function CategoriesContent() {
   // Get brand counts
   const brandCounts = getBrandCounts(products);
 
+  // Get category counts
+  const getCategoryCounts = () => {
+    const counts: Record<string, number> = {};
+    products.forEach(product => {
+      if (product.category) {
+        counts[product.category] = (counts[product.category] || 0) + 1;
+      }
+    });
+    return counts;
+  };
+
+  const categoryCounts = getCategoryCounts();
+
   // Apply filters and sorting
   const filteredProducts = filterProducts(products, {
     category: selectedCategory,
@@ -124,6 +246,17 @@ function CategoriesContent() {
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, selectedBrand, priceRange, sortBy, searchTerm]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1e2e4f] mx-auto mb-4"></div>
+          <p className="text-gray-600">กำลังโหลดข้อมูล...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 pt-20">
@@ -208,7 +341,7 @@ function CategoriesContent() {
                           selectedCategory === category.id 
                             ? 'text-gray-300' 
                             : 'text-gray-500'
-                        }`}>({category.count})</span>
+                        }`}>({categoryCounts[category.name] || 0})</span>
                       </div>
                     </button>
                   ))}
@@ -330,11 +463,11 @@ function CategoriesContent() {
                     >
                       <div className="flex justify-between items-center">
                         <span>{category.name}</span>
-                        <span className={`text-xs ${
+                        <span className={`text-sm ${
                           selectedCategory === category.id 
                             ? 'text-gray-300' 
                             : 'text-gray-500'
-                        }`}>({category.count})</span>
+                        }`}>({categoryCounts[category.name] || 0})</span>
                       </div>
                     </button>
                   ))}
@@ -475,7 +608,7 @@ function CategoriesContent() {
                         <div className="bg-[#1e2e4f] text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
                           {product.brand}
                         </div>
-                        {product.originalPrice > product.price && (
+                        {product.originalPrice && product.originalPrice > product.price && (
                           <div className="bg-red-500 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
                             -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                           </div>
@@ -511,7 +644,7 @@ function CategoriesContent() {
                       <div className="flex items-center justify-between pt-2 sm:pt-3">
                         <div className="flex flex-col">
                           <span className="text-base sm:text-lg font-bold text-gray-900">฿{product.price.toLocaleString()}</span>
-                          {product.originalPrice > product.price && (
+                          {product.originalPrice && product.originalPrice > product.price && (
                             <span className="text-xs sm:text-sm text-gray-500 line-through">
                               ฿{product.originalPrice.toLocaleString()}
                             </span>
@@ -549,7 +682,7 @@ function CategoriesContent() {
                           <div className="bg-[#1e2e4f] text-white px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
                             {product.brand}
                           </div>
-                          {product.originalPrice > product.price && (
+                          {product.originalPrice && product.originalPrice > product.price && (
                             <div className="bg-red-500 text-white px-1 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
                               -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                             </div>
@@ -585,7 +718,7 @@ function CategoriesContent() {
                             <div className="text-lg sm:text-xl font-bold text-gray-900 mb-1">
                               ฿{product.price.toLocaleString()}
                             </div>
-                            {product.originalPrice > product.price && (
+                            {product.originalPrice && product.originalPrice > product.price && (
                               <div className="text-xs sm:text-sm text-gray-500 line-through mb-3">
                                 ฿{product.originalPrice.toLocaleString()}
                               </div>

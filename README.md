@@ -1,33 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏪 SP Hardware - E-commerce Platform
 
-## Getting Started
+ระบบร้านค้าออนไลน์สำหรับวัสดุก่อสร้างและฮาร์ดแวร์ พร้อม LINE Integration
 
-First, run the development server:
+## ✨ คุณสมบัติหลัก
+
+- 🛍️ ระบบตะกร้าสินค้าและการสั่งซื้อ
+- 🔍 ค้นหาและกรองสินค้า (หมวดหมู่, แบรนด์, ราคา)
+- 📱 LINE Integration (LINE Login + Order Notifications)
+- 👨‍💼 ระบบจัดการผู้ดูแล
+- 🎨 Responsive Design ด้วย Tailwind CSS
+- ⚡ Next.js 15 with App Router
+- 🗄️ Supabase Database
+
+## 🚀 การติดตั้งและใช้งาน
+
+### 1. Clone และติดตั้ง Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
+cd sphw
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. ตั้งค่า Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+คัดลอกไฟล์ `.env.local.example` เป็น `.env.local` และกรอกข้อมูล:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 
-## Learn More
+# LINE Integration
+LINE_CHANNEL_ACCESS_TOKEN=your-line-access-token
+LINE_CHANNEL_SECRET=your-line-channel-secret
+LINE_ADMIN_USER_ID=your-admin-user-id
 
-To learn more about Next.js, take a look at the following resources:
+# Admin Authentication
+ADMIN_USERNAME=your-admin-username
+ADMIN_PASSWORD=your-admin-password
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. ตั้งค่า Database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Run database migrations
+npm run db:migrate
+
+# Seed sample data
+npm run db:seed
+```
+
+### 4. เริ่มใช้งาน
+
+```bash
+# Development
+npm run dev
+
+# Production build
+npm run build
+npm start
+```
+
+เปิดเบราว์เซอร์ไปที่ [http://localhost:3000](http://localhost:3000)
+
+## 📚 Documentation
+
+- [โครงสร้างโปรเจค](./docs/PROJECT_STRUCTURE.md)
+- [การตั้งค่า Supabase](./docs/SUPABASE_SETUP.md)
+- [การตั้งค่า LINE Integration](./docs/LINE_INTEGRATION_SETUP.md)
+- [คู่มือลูกค้า LINE](./docs/CUSTOMER_LINE_SETUP.md)
+
+## 🛠️ เทคโนโลยีที่ใช้
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS 4
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Custom Admin Auth + LINE Login
+- **Icons**: Lucide React
+- **Analytics**: Vercel Analytics
+
+## 📁 โครงสร้างโปรเจค
+
+```
+├── app/                    # Next.js App Router
+│   ├── api/               # API Routes
+│   ├── components/        # React Components
+│   ├── contexts/          # React Contexts
+│   └── data/             # Static data files
+├── docs/                  # Documentation
+├── hooks/                 # Custom React Hooks
+├── lib/                   # Utilities & Services
+├── public/               # Static assets
+├── scripts/              # Database scripts
+└── supabase/             # Supabase configuration
+    └── migrations/       # Database migrations
+```
+
+## 🤝 การพัฒนา
+
+### Commands ที่สำคัญ
+
+```bash
+npm run dev          # เริ่ม development server
+npm run build        # Build for production
+npm run lint         # ตรวจสอบ code style
+npm run db:seed      # Seed database with sample data
+```
+
+### Code Style
+
+โปรเจคใช้ ESLint และ Prettier สำหรับการจัดรูปแบบโค้ด
+ทำการ lint ก่อน commit เสมอ
 
 ## Deploy on Vercel
 

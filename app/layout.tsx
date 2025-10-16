@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Prompt } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop";
-import ContactButtons from "./components/ContactButtons";
+import ConditionalLayout from "./components/ConditionalLayout";
 import { CartProvider } from "./contexts/CartContext";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -29,11 +26,9 @@ export default function RootLayout({
     <html lang="th">
       <body className={`${prompt.variable} font-prompt antialiased`}>
         <CartProvider>
-          <Header />
-          {children}
-          <Footer />
-          <ScrollToTop />
-          <ContactButtons />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </CartProvider>
         <Analytics />
       </body>

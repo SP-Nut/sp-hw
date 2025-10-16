@@ -4,24 +4,25 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ShoppingCart, Check, Plus, ArrowLeft } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
-import { categories } from "../../data/categories";
-import { products } from "../../data/products";
+import { useProduct, useCategories } from "../../../hooks/useApi";
 
 export default function ProductDetail() {
   const params = useParams();
   const router = useRouter();
   const productId = parseInt(params.id as string);
-  const product = products.find(p => p.id === productId);
+  
+  const { product, loading: productLoading, error: productError } = useProduct(productId);
+  const { categories } = useCategories();
   
   const [addedToCart, setAddedToCart] = useState(false);
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
-  // ถ้าไม่เจอสินค้า redirect กลับไปหน้า categories
+  // ถ้าไม่เจอสินค้าและโหลดเสร็จแล้ว redirect กลับไปหน้า categories
   useEffect(() => {
-    if (!product) {
+    if (!productLoading && productError) {
       router.push('/categories');
     }
-  }, [product, router]);
+  }, [productLoading, productError, router]);
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -30,10 +31,10 @@ export default function ProductDetail() {
       id: product.id,
       name: product.name,
       price: product.price,
-      originalPrice: product.originalPrice,
-      brand: product.brand,
-      image: product.image,
-      inStock: product.inStock
+      originalPrice: product.originalPrice || undefined,
+      brand: product.brand || '',
+      image: product.image || '',
+      inStock: product.inStock || false
     };
     
     addToCart(cartItem);
@@ -45,8 +46,31 @@ export default function ProductDetail() {
     }, 2000);
   };
 
-  if (!product) {
-    return <div>Loading...</div>;
+  if (productLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 pt-20 sm:pt-24 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1e2e4f] mx-auto mb-4"></div>
+          <p className="text-gray-600">กำลังโหลดข้อมูลสินค้า...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (productError || !product) {
+    return (
+      <div className="min-h-screen bg-gray-100 pt-20 sm:pt-24 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">ไม่พบสินค้าที่ค้นหา</p>
+          <button 
+            onClick={() => router.back()}
+            className="bg-[#1e2e4f] text-white px-4 py-2 rounded hover:bg-[#31487a]"
+          >
+            กลับไปหน้าก่อน
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -67,7 +91,22 @@ export default function ProductDetail() {
             {/* Main Image */}
             <div className="relative bg-white shadow-sm hover:shadow-md transition-all duration-300 rounded-lg overflow-hidden">
               <div className="aspect-[3/2] bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex items-center justify-center">
-                <span className="text-gray-400 text-sm sm:text-base font-light">รูปสินค้า</span>
+                {product.image && product.image !== '' && !product.image.includes('placeholder') ? (
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.log('Image failed to load:', product.image);
+                      const target = e.currentTarget;
+                      target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
+                    }}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                    <span className="text-gray-500 text-sm sm:text-base font-medium">{product.name || 'รูปสินค้า'}</span>
+                  </div>
+                )}
               </div>
               
               {/* Badges */}
@@ -75,7 +114,7 @@ export default function ProductDetail() {
                 <div className="bg-[#1e2e4f] text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
                   {product.brand}
                 </div>
-                {product.originalPrice > product.price && (
+                {product.originalPrice && product.originalPrice > product.price && (
                   <div className="bg-red-500 text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
                     -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                   </div>
@@ -92,13 +131,24 @@ export default function ProductDetail() {
             </div>
 
             {/* Thumbnail Gallery */}
-            <div className="grid grid-cols-4 gap-1">
-              {[1, 2, 3, 4].map((_, index) => (
-                <div key={index} className="aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 flex items-center justify-center rounded-md">
-                  <span className="text-gray-400 text-xs font-medium">รูป {index + 1}</span>
+            {product.image && (
+              <div className="grid grid-cols-4 gap-1">
+                {/* Main image thumbnail */}
+                <div className="aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 overflow-hidden rounded-md">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              ))}
-            </div>
+                {/* Placeholder thumbnails for future multiple images */}
+                {[2, 3, 4].map((_, index) => (
+                  <div key={index} className="aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 flex items-center justify-center rounded-md">
+                    <span className="text-gray-400 text-xs font-medium">รูป {index + 2}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Details */}
@@ -116,13 +166,13 @@ export default function ProductDetail() {
             <div className="mb-4 sm:mb-6">
               <div className="flex flex-col sm:flex-row sm:items-baseline sm:space-x-4 mb-2">
                 <span className="text-2xl sm:text-3xl font-black text-gray-900">฿{product.price.toLocaleString()}</span>
-                {product.originalPrice > product.price && (
+                {product.originalPrice && product.originalPrice > product.price && (
                   <span className="text-base sm:text-lg text-gray-500 line-through font-medium mt-1 sm:mt-0">
                     ฿{product.originalPrice.toLocaleString()}
                   </span>
                 )}
               </div>
-              {product.originalPrice > product.price && (
+              {product.originalPrice && product.originalPrice > product.price && (
                 <div className="text-base sm:text-lg text-green-600 font-bold">
                   ประหยัด ฿{(product.originalPrice - product.price).toLocaleString()}
                 </div>

@@ -6,11 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:migrate": "echo 'Run migrations manually via Supabase CLI or Dashboard'"
   },
   "dependencies": {
     "@line/bot-sdk": "^10.3.0",
+    "@supabase/supabase-js": "^2.75.0",
     "@vercel/analytics": "^1.5.0",
+    "dotenv": "^17.2.3",
     "lucide-react": "^0.544.0",
     "next": "15.5.4",
     "react": "19.1.0",
@@ -25,6 +31,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }
