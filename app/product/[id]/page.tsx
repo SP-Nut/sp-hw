@@ -15,7 +15,20 @@ export default function ProductDetail() {
   const { categories } = useCategories();
   
   const [addedToCart, setAddedToCart] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addToCart, isInCart, getItemQuantity } = useCart();
+
+  // Debug log
+  useEffect(() => {
+    if (product) {
+      console.log('🔥 PRODUCT DETAIL DEBUG - Product ID:', product.id);
+      console.log('🔥 Product name:', product.name);
+      console.log('🔥 Single image:', product.image);
+      console.log('🔥 Images array:', product.images);
+      console.log('🔥 Images count:', product.images?.length || 0);
+      console.log('🔥 Has images array?', !!(product.images && product.images.length > 0));
+    }
+  }, [product]);
 
   // ถ้าไม่เจอสินค้าและโหลดเสร็จแล้ว redirect กลับไปหน้า categories
   useEffect(() => {
@@ -27,13 +40,17 @@ export default function ProductDetail() {
   const handleAddToCart = () => {
     if (!product) return;
     
+    // Get the current selected image or fallback to first available image
+    const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+    const currentImage = productImages[selectedImageIndex] || productImages[0] || '';
+    
     const cartItem = {
       id: product.id,
       name: product.name,
       price: product.price,
       originalPrice: product.originalPrice || undefined,
       brand: product.brand || '',
-      image: product.image || '',
+      image: currentImage,
       inStock: product.inStock || false
     };
     
@@ -91,28 +108,44 @@ export default function ProductDetail() {
             {/* Main Image */}
             <div className="relative bg-white shadow-sm hover:shadow-md transition-all duration-300 rounded-lg overflow-hidden">
               <div className="aspect-[3/2] bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex items-center justify-center">
-                {product.image && product.image !== '' && !product.image.includes('placeholder') ? (
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      console.log('Image failed to load:', product.image);
-                      const target = e.currentTarget;
-                      target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
-                    }}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                    <span className="text-gray-500 text-sm sm:text-base font-medium">{product.name || 'รูปสินค้า'}</span>
-                  </div>
-                )}
+                {(() => {
+                  // Get images array or fallback to single image
+                  const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+                  const currentImage = productImages[selectedImageIndex] || productImages[0];
+                  
+                  return currentImage && currentImage !== '' && !currentImage.includes('placeholder') ? (
+                    <img 
+                      src={currentImage} 
+                      alt={`${product.name} - รูปที่ ${selectedImageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        console.log('Image failed to load:', currentImage);
+                        const target = e.currentTarget;
+                        target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                      <span className="text-gray-500 text-sm sm:text-base font-medium">{product.name || 'รูปสินค้า'}</span>
+                    </div>
+                  );
+                })()}
               </div>
               
               {/* Badges */}
               <div className="absolute top-2 left-2 right-2 flex justify-between">
-                <div className="bg-[#1e2e4f] text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
-                  {product.brand}
+                <div className="flex space-x-2">
+                  <div className="bg-[#1e2e4f] text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
+                    {product.brand}
+                  </div>
+                  {(() => {
+                    const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+                    return productImages.length > 1 && (
+                      <div className="bg-green-600 text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
+                        📸 {productImages.length}
+                      </div>
+                    );
+                  })()}
                 </div>
                 {product.originalPrice && product.originalPrice > product.price && (
                   <div className="bg-red-500 text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
@@ -131,24 +164,63 @@ export default function ProductDetail() {
             </div>
 
             {/* Thumbnail Gallery */}
-            {product.image && (
-              <div className="grid grid-cols-4 gap-1">
-                {/* Main image thumbnail */}
-                <div className="aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 overflow-hidden rounded-md">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                {/* Placeholder thumbnails for future multiple images */}
-                {[2, 3, 4].map((_, index) => (
-                  <div key={index} className="aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 flex items-center justify-center rounded-md">
-                    <span className="text-gray-400 text-xs font-medium">รูป {index + 2}</span>
-                  </div>
-                ))}
+            <div className="mt-4">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-semibold text-gray-900">รูปสินค้า</h3>
+                {product.images && product.images.length > 0 && (
+                  <span className="text-sm text-green-600">📸 {product.images.length} รูป</span>
+                )}
               </div>
-            )}
+              
+              {(() => {
+                // Get images array or fallback to single image
+                const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+                
+                console.log('🔥 THUMBNAIL GALLERY DEBUG:');
+                console.log('🔥 Product images array:', product.images);
+                console.log('🔥 Product images count:', product.images?.length || 0);
+                console.log('🔥 Single image:', product.image);
+                console.log('🔥 Final productImages:', productImages);
+                console.log('🔥 Final productImages length:', productImages.length);
+                console.log('🔥 Will show gallery?', productImages.length > 0);
+                
+                return productImages.length > 0 ? (
+                <div className="grid grid-cols-4 gap-2 mt-2">
+                  {/* Show actual images */}
+                  {productImages.slice(0, 4).map((image, index) => (
+                    <div 
+                      key={index} 
+                      className={`aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 overflow-hidden rounded-md ${
+                        selectedImageIndex === index ? 'ring-2 ring-[#1e2e4f]' : ''
+                      }`}
+                      onClick={() => setSelectedImageIndex(index)}
+                    >
+                      <img 
+                        src={image} 
+                        alt={`${product.name} - รูปที่ ${index + 1}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.src = `https://via.placeholder.com/100x100/f3f4f6/6b7280?text=${index + 1}`;
+                        }}
+                      />
+                    </div>
+                  ))}
+                  
+                  {/* Placeholder thumbnails if less than 4 images */}
+                  {Array.from({ length: Math.max(0, 4 - productImages.length) }, (_, index) => (
+                    <div key={`placeholder-${index}`} className="aspect-square bg-white shadow-sm flex items-center justify-center rounded-md border-2 border-dashed border-gray-300">
+                      <span className="text-gray-400 text-xs font-medium">รูป {productImages.length + index + 1}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center text-gray-500 py-4">
+                  ไม่มีรูปสินค้า
+                </div>
+              );
+            })()}
+            </div>
           </div>
 
           {/* Product Details */}

@@ -52,6 +52,7 @@ export async function GET(
       rating: data.rating || 0,
       reviews: data.reviews || 0,
       image: data.image || undefined,
+      images: data.images || [], // Enable images array
       in_stock: data.in_stock !== null ? data.in_stock : true,
       description: data.description || undefined,
       // Legacy fields for backward compatibility
@@ -110,6 +111,7 @@ export async function PUT(
     if (body.rating !== undefined) updateData.rating = body.rating
     if (body.reviews !== undefined) updateData.reviews = body.reviews
     if (body.image !== undefined) updateData.image = body.image
+    if (body.images !== undefined) updateData.images = body.images || []
     if (body.in_stock !== undefined) updateData.in_stock = body.in_stock
     if (body.description !== undefined) updateData.description = body.description
 

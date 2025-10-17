@@ -16,6 +16,7 @@ interface Product {
   rating: number | null;
   reviews: number | null;
   image: string | null;
+  images?: string[];
   inStock: boolean | null;
   description: string | null;
 }
@@ -119,6 +120,18 @@ function CategoriesContent() {
         const productsData = await productsRes.json();
         const categoriesData = await categoriesRes.json();
         const brandsData = await brandsRes.json();
+
+        console.log('Categories Page - Frontend Data Received:');
+        console.log('Products:', productsData?.length || 0, 'items');
+        if (productsData && productsData.length > 0) {
+          console.log('First product:', productsData[0]);
+          console.log('Image URLs check:', productsData.map((p: Product) => ({ 
+            id: p.id, 
+            name: p.name, 
+            image: p.image, 
+            hasImage: !!p.image 
+          })).slice(0, 3));
+        }
 
         setProducts(productsData || []);
         setCategories(categoriesData?.filter((cat: Category) => cat.id !== 'all') || []);
@@ -599,31 +612,81 @@ function CategoriesContent() {
                     {/* Image Container */}
                     <Link href={`/product/${product.id}`}>
                       <div className="relative h-40 sm:h-48 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 overflow-hidden cursor-pointer">
-                        <div className="h-full flex items-center justify-center">
-                          <span className="text-gray-400 font-medium text-xs sm:text-sm">รูปสินค้า</span>
+                        {(() => {
+                          // Use images array first (prioritize), fallback to single image
+                          const imageUrl = (product.images && product.images.length > 0) 
+                            ? product.images[0] 
+                            : product.image;
+                          const totalImages = product.images?.length || 0;
+                          
+                          return imageUrl && imageUrl.trim() !== '' ? (
+                            <>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img 
+                                src={imageUrl} 
+                                alt={product.name}
+                                className="w-full h-full object-cover"
+                                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                                  console.error('❌ Image failed to load for product:', product.id, imageUrl);
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  const fallback = target.nextElementSibling as HTMLElement;
+                                  if (fallback) {
+                                    fallback.style.display = 'flex';
+                                    fallback.classList.remove('hidden');
+                                  }
+                                }}
+                                onLoad={() => {
+                                  console.log('✅ Image loaded successfully for product:', product.id, imageUrl, `(${totalImages} total images)`);
+                                }}
+                              />
+                              
+                              {/* Multiple Images Indicator */}
+                              {totalImages > 1 && (
+                                <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                                  📸 {totalImages}
+                                </div>
+                              )}
+                              
+                              <div className="h-full hidden items-center justify-center bg-gray-200">
+                                <div className="text-center p-4">
+                                  <div className="text-gray-400 font-medium text-xs sm:text-sm mb-2">รูปโหลดไม่ได้</div>
+                                  <div className="text-gray-300 text-xs">ID: {product.id}</div>
+                                  <div className="text-gray-300 text-xs">Images: {totalImages}</div>
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="h-full flex items-center justify-center bg-gray-200">
+                              <div className="text-center p-4">
+                                <div className="text-gray-400 font-medium text-xs sm:text-sm mb-2">ไม่มีรูปสินค้า</div>
+                                <div className="text-gray-300 text-xs">ID: {product.id}</div>
+                              </div>
+                            </div>
+                          );
+                        })()}
+                        
+                        {/* Badges */}
+                        <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex justify-between items-start">
+                          <div className="bg-[#1e2e4f] text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
+                            {product.brand}
+                          </div>
+                          {product.originalPrice && product.originalPrice > product.price && (
+                            <div className="bg-red-500 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
+                              -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                            </div>
+                          )}
                         </div>
-                      
-                      {/* Badges */}
-                      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex justify-between items-start">
-                        <div className="bg-[#1e2e4f] text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
-                          {product.brand}
-                        </div>
-                        {product.originalPrice && product.originalPrice > product.price && (
-                          <div className="bg-red-500 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs font-bold">
-                            -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                        
+                        {/* Stock Status */}
+                        {!product.inStock && (
+                          <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
+                            <div className="bg-white text-gray-900 px-4 py-2 font-bold text-sm">
+                              สินค้าหมด
+                            </div>
                           </div>
                         )}
                       </div>
-                      
-                      {/* Stock Status */}
-                      {!product.inStock && (
-                        <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
-                          <div className="bg-white text-gray-900 px-4 py-2 font-bold text-sm">
-                            สินค้าหมด
-                          </div>
-                        </div>
-                      )}
-                    </div>
                     </Link>
                     
                     {/* Content */}

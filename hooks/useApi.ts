@@ -11,6 +11,7 @@ interface Product {
   rating: number | null
   reviews: number | null
   image: string | null
+  images?: string[]
   inStock: boolean | null
   description: string | null
 }
@@ -42,6 +43,11 @@ export function useProducts() {
         }
         
         const data = await response.json()
+        console.log('useProducts hook - API response:', data?.length || 0, 'products')
+        if (data && data.length > 0) {
+          console.log('First product from API:', data[0])
+          console.log('Image data sample:', data.map((p: Product) => ({ id: p.id, image: p.image, hasImage: !!p.image })).slice(0, 3))
+        }
         setProducts(data)
         setError(null)
       } catch (err) {

@@ -89,11 +89,11 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
-    if (selectedFiles.length + files.length > 4) {
-      alert('สามารถเลือกรูปภาพได้สูงสุด 4 รูป')
+    if (selectedFiles.length + files.length > 5) {
+      alert('สามารถเลือกรูปภาพได้สูงสุด 5 รูป')
       return
     }
-    setSelectedFiles(prev => [...prev, ...files].slice(0, 4))
+    setSelectedFiles(prev => [...prev, ...files].slice(0, 5))
   }
 
   const removeSelectedImage = (index: number) => {
@@ -123,17 +123,20 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
     try {
       // Upload new images if selected
-      let imageUrl = ''
+      const imageUrls: string[] = []
       if (selectedFiles.length > 0) {
         setUploadingImages(true)
         const productId = `product_${product.id}_${Date.now()}`
         
         try {
-          const file = selectedFiles[0] // Use first selected image
-          imageUrl = await uploadProductImage(file, productId, 0) || ''
+          // Upload all selected images
+          for (let i = 0; i < selectedFiles.length; i++) {
+            const url = await uploadProductImage(selectedFiles[i], productId, i)
+            if (url) imageUrls.push(url)
+          }
         } catch (uploadError) {
-          console.error('Error uploading image:', uploadError)
-          // Continue without image if upload fails
+          console.error('Error uploading images:', uploadError)
+          // Continue without images if upload fails
         } finally {
           setUploadingImages(false)
         }
@@ -143,7 +146,10 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         ...formData,
         price: parseFloat(formData.price) || 0,
         original_price: formData.original_price ? parseFloat(formData.original_price) : undefined,
-        ...(imageUrl && { image: imageUrl }) // Only include image if new one was uploaded
+        ...(imageUrls.length > 0 && { 
+          image: imageUrls[0], // First image as main image
+          images: imageUrls   // Enable images array
+        })
       }
 
       const response = await fetch(`/api/products/${product.id}`, {
@@ -363,7 +369,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
             {/* Image Upload */}
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                รูปภาพสินค้า (สูงสุด 4 รูป) - อัปโหลดใหม่เท่านั้น
+                รูปภาพสินค้า (สูงสุด 5 รูป) - อัปโหลดใหม่เท่านั้น
               </label>
               
               {/* File Input */}
@@ -385,10 +391,11 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
               {/* Selected Images Preview */}
               {selectedFiles.length > 0 && (
-                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-4">
                   {selectedFiles.map((file, index) => (
                     <div key={index} className="relative group">
                       <div className="aspect-square bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={URL.createObjectURL(file)}
                           alt={`Preview ${index + 1}`}

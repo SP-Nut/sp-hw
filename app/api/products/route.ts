@@ -22,6 +22,7 @@ export async function GET() {
         rating,
         reviews,
         image,
+        images,
         in_stock,
         description
       `)
@@ -33,6 +34,14 @@ export async function GET() {
     }
 
     console.log('Public Products from DB:', data?.length || 0, 'items')
+    if (data && data.length > 0) {
+      console.log('Sample product with image:', {
+        id: data[0].id,
+        name: data[0].name,
+        image: data[0].image,
+        hasImage: !!data[0].image
+      })
+    }
     
     // Map to consistent format (same as admin)
     const products = (data || []).map(product => ({
@@ -45,6 +54,7 @@ export async function GET() {
       rating: product.rating || 0,
       reviews: product.reviews || 0,
       image: product.image || undefined,
+      images: product.images || [],
       in_stock: product.in_stock !== null ? product.in_stock : true,
       description: product.description || undefined,
       // Legacy fields for backward compatibility
@@ -76,6 +86,7 @@ export async function POST(request: Request) {
       brand_id, 
       category_id, 
       image,
+      images, // Enable images array
       in_stock, 
       description 
     } = body
@@ -97,6 +108,7 @@ export async function POST(request: Request) {
         brand_id,
         category_id,
         image: image || null,
+        images: images || [], // Enable images array
         in_stock: in_stock !== undefined ? in_stock : true,
         description: description || null
       })
@@ -122,6 +134,7 @@ export async function POST(request: Request) {
             brand_id,
             category_id,
             image: image || null,
+            // images: images || [], // Temporarily disabled until column is added
             in_stock: in_stock !== undefined ? in_stock : true,
             description: description || null
           })
@@ -166,7 +179,8 @@ export async function PUT(request: Request) {
       category_id, 
       rating, 
       reviews, 
-      image, 
+      image,
+      // images, // Temporarily disabled until column is added
       in_stock, 
       description 
     } = body
@@ -190,6 +204,7 @@ export async function PUT(request: Request) {
         rating: rating ? parseFloat(rating) : 0,
         reviews: reviews ? parseInt(reviews) : 0,
         image: image || null,
+        // images: images || [], // Temporarily disabled until column is added
         in_stock: in_stock !== undefined ? in_stock : true,
         description: description || null
       })

@@ -57,11 +57,11 @@ export default function NewProduct() {
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (selectedFiles.length + files.length > 4) {
-      alert('สามารถเลือกรูปภาพได้สูงสุด 4 รูป');
+    if (selectedFiles.length + files.length > 5) {
+      alert('สามารถเลือกรูปภาพได้สูงสุด 5 รูป');
       return;
     }
-    setSelectedFiles(prev => [...prev, ...files].slice(0, 4));
+    setSelectedFiles(prev => [...prev, ...files].slice(0, 5));
   };
 
   const removeSelectedImage = (index: number) => {
@@ -136,7 +136,9 @@ export default function NewProduct() {
         price: parseFloat(formData.price) || 0,
         original_price: formData.original_price ? parseFloat(formData.original_price) : null,
         // Use first uploaded image as main image
-        image: imageUrls[0] || ''
+        image: imageUrls[0] || '',
+        // Send all images array
+        images: imageUrls
       };
 
       const response = await fetch('/api/products', {
@@ -314,7 +316,7 @@ export default function NewProduct() {
             {/* Image Upload */}
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                รูปภาพสินค้า (สูงสุด 4 รูป)
+                รูปภาพสินค้า (สูงสุด 5 รูป)
               </label>
               
               {/* File Input */}
@@ -349,10 +351,11 @@ export default function NewProduct() {
 
               {/* Selected Images Preview */}
               {selectedFiles.length > 0 && (
-                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-4">
                   {selectedFiles.map((file, index) => (
                     <div key={index} className="relative group">
                       <div className="aspect-square bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={URL.createObjectURL(file)}
                           alt={`Preview ${index + 1}`}
