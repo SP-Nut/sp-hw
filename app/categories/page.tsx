@@ -121,18 +121,6 @@ function CategoriesContent() {
         const categoriesData = await categoriesRes.json();
         const brandsData = await brandsRes.json();
 
-        console.log('Categories Page - Frontend Data Received:');
-        console.log('Products:', productsData?.length || 0, 'items');
-        if (productsData && productsData.length > 0) {
-          console.log('First product:', productsData[0]);
-          console.log('Image URLs check:', productsData.map((p: Product) => ({ 
-            id: p.id, 
-            name: p.name, 
-            image: p.image, 
-            hasImage: !!p.image 
-          })).slice(0, 3));
-        }
-
         setProducts(productsData || []);
         setCategories(categoriesData?.filter((cat: Category) => cat.id !== 'all') || []);
         setBrands(brandsData?.filter((brand: Brand) => brand.id !== 'all') || []);
@@ -627,7 +615,6 @@ function CategoriesContent() {
                                 alt={product.name}
                                 className="w-full h-full object-cover"
                                 onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                                  console.error('❌ Image failed to load for product:', product.id, imageUrl);
                                   const target = e.target as HTMLImageElement;
                                   target.style.display = 'none';
                                   const fallback = target.nextElementSibling as HTMLElement;
@@ -635,9 +622,6 @@ function CategoriesContent() {
                                     fallback.style.display = 'flex';
                                     fallback.classList.remove('hidden');
                                   }
-                                }}
-                                onLoad={() => {
-                                  console.log('✅ Image loaded successfully for product:', product.id, imageUrl, `(${totalImages} total images)`);
                                 }}
                               />
                               

@@ -1,0 +1,17 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["sin1"],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "LINE_CHANNEL_ACCESS_TOKEN": "@line_channel_access_token",
+    "LINE_CHANNEL_SECRET": "@line_channel_secret",
+    "LINE_ADMIN_USER_ID": "@line_admin_user_id",
+    "LINE_LOGIN_CHANNEL_ID": "@line_login_channel_id",
+    "LINE_LOGIN_CHANNEL_SECRET": "@line_login_channel_secret",
+    "NEXTAUTH_SECRET": "@nextauth_secret"
+  }
+}

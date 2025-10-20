@@ -70,11 +70,9 @@ export default function NewProduct() {
 
   const uploadImages = async (): Promise<string[]> => {
     if (selectedFiles.length === 0) {
-      console.log('No files selected for upload');
       return [];
     }
 
-    console.log(`Starting upload of ${selectedFiles.length} files...`);
     setUploadingImages(true);
     const uploadedUrls: string[] = [];
     const productId = `product_${Date.now()}`;
@@ -82,18 +80,12 @@ export default function NewProduct() {
     try {
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
-        console.log(`Uploading file ${i + 1}/${selectedFiles.length}:`, file.name, `(${file.size} bytes)`);
         
         const url = await uploadProductImage(file, productId, i);
         if (url) {
-          console.log(`✅ Upload ${i + 1} successful:`, url);
           uploadedUrls.push(url);
-        } else {
-          console.error(`❌ Upload ${i + 1} failed`);
         }
       }
-      
-      console.log(`Upload complete. ${uploadedUrls.length}/${selectedFiles.length} files uploaded successfully`);
     } catch (error) {
       console.error('Error uploading images:', error);
     } finally {

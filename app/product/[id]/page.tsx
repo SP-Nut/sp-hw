@@ -18,17 +18,7 @@ export default function ProductDetail() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
-  // Debug log
-  useEffect(() => {
-    if (product) {
-      console.log('🔥 PRODUCT DETAIL DEBUG - Product ID:', product.id);
-      console.log('🔥 Product name:', product.name);
-      console.log('🔥 Single image:', product.image);
-      console.log('🔥 Images array:', product.images);
-      console.log('🔥 Images count:', product.images?.length || 0);
-      console.log('🔥 Has images array?', !!(product.images && product.images.length > 0));
-    }
-  }, [product]);
+
 
   // ถ้าไม่เจอสินค้าและโหลดเสร็จแล้ว redirect กลับไปหน้า categories
   useEffect(() => {
@@ -114,12 +104,12 @@ export default function ProductDetail() {
                   const currentImage = productImages[selectedImageIndex] || productImages[0];
                   
                   return currentImage && currentImage !== '' && !currentImage.includes('placeholder') ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img 
                       src={currentImage} 
                       alt={`${product.name} - รูปที่ ${selectedImageIndex + 1}`}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        console.log('Image failed to load:', currentImage);
                         const target = e.currentTarget;
                         target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
                       }}
@@ -176,14 +166,6 @@ export default function ProductDetail() {
                 // Get images array or fallback to single image
                 const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
                 
-                console.log('🔥 THUMBNAIL GALLERY DEBUG:');
-                console.log('🔥 Product images array:', product.images);
-                console.log('🔥 Product images count:', product.images?.length || 0);
-                console.log('🔥 Single image:', product.image);
-                console.log('🔥 Final productImages:', productImages);
-                console.log('🔥 Final productImages length:', productImages.length);
-                console.log('🔥 Will show gallery?', productImages.length > 0);
-                
                 return productImages.length > 0 ? (
                 <div className="grid grid-cols-4 gap-2 mt-2">
                   {/* Show actual images */}
@@ -195,6 +177,7 @@ export default function ProductDetail() {
                       }`}
                       onClick={() => setSelectedImageIndex(index)}
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={image} 
                         alt={`${product.name} - รูปที่ ${index + 1}`}

@@ -21,10 +21,11 @@ export default function Header() {
   // Topbar messages
   const topbarMessages = [
     "★★★★★ RATED 4.85 / 5 BY 2,300+ REVIEWS",
-    "ฟรีค่าจัดส่งสำหรับออเดอร์เกิน 2,000 บาท",
-    "ส่งเร็วทั่วประเทศ ภายใน 1-3 วัน",
-    "ผู้นำด้านฮาร์ดแวร์มากกว่า 15 ปี",
-    "สอบถามข้อมูลผ่าน LINE: @spkansard"
+    "บริษัท เอสพี กันสาด จำกัด - ผู้เชี่ยวชาญด้านวัสดุกันสาดและฮาร์ดแวร์",
+    "ศูนย์รวมวัสดุกันสาดครบวงจร มาตรฐานคุณภาพระดับมืออาชีพ",
+    "ประสบการณ์กว่า 15 ปี ในธุรกิจวัสดุก่อสร้างและฮาร์ดแวร์",
+    "บริการจัดส่งทั่วประเทศ พร้อมทีมงานให้คำปรึกษา",
+    "ติดต่อสอบถาม: 084-909-7777 | LINE: @spkansard"
   ];
 
   useEffect(() => {
@@ -181,7 +182,7 @@ export default function Header() {
                   : 'text-white'
               }`}>
                 <Phone className="h-4 w-4" />
-                <span className="font-medium">089-123-4567</span>
+                <span className="font-medium">084-909-7777</span>
               </div>
 
               {/* Cart */}
@@ -270,7 +271,7 @@ export default function Header() {
               <div className="pt-4 md:pt-6 mt-4 md:mt-6 border-t border-gray-200 text-center">
                 <div className="flex items-center justify-center space-x-2 text-gray-900 mb-2">
                   <Phone className="h-4 w-4" />
-                  <span className="font-medium text-sm md:text-base">089-123-4567</span>
+                  <span className="font-medium text-sm md:text-base">084-909-7777</span>
                 </div>
                 <p className="text-xs md:text-sm text-gray-600">ศูนย์รวมวัสดุก่อสร้าง - บริการครบวงจร</p>
               </div>

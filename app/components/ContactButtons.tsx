@@ -44,7 +44,7 @@ export default function ContactButtons() {
       icon: <Phone className="w-full h-full" />,
       label: "โทร",
       action: () => {
-        window.open("tel:02-936-8841-2", "_self");
+        window.open("tel:084-909-7777", "_self");
         setIsOpen(false);
       },
       bgColor: "bg-blue-500",

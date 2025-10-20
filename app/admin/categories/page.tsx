@@ -23,7 +23,6 @@ export default function AdminCategories() {
   // Fetch categories
   const fetchCategories = async () => {
     try {
-      console.log('Fetching categories from API...')
       const response = await fetch('/api/categories', {
         cache: 'no-store',
         headers: {
@@ -31,20 +30,15 @@ export default function AdminCategories() {
         }
       })
       
-      console.log('Response status:', response.status)
-      
       if (response.ok) {
         const data = await response.json()
-        console.log('Categories data received:', data)
         
         // Filter out 'all' category for admin interface
         const filteredCategories = data.filter((cat: Category) => cat.id !== 'all')
-        console.log('Filtered categories:', filteredCategories)
         
         setCategories(filteredCategories)
       } else {
         const errorText = await response.text()
-        console.error('API Error:', response.status, errorText)
         setError(`API Error: ${response.status} - ${errorText}`)
       }
     } catch (error) {

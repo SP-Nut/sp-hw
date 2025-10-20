@@ -115,28 +115,10 @@ export default function AdminDashboard() {
       const categoriesData = await categoriesRes.json();
       const brandsData = await brandsRes.json();
 
-      // Debug logging
-      console.log('Admin Dashboard - API Response Data:');
-      console.log('Products:', productsData?.length || 0, 'items');
-      console.log('Categories:', categoriesData?.length || 0, 'items');
-      console.log('Brands:', brandsData?.length || 0, 'items');
-      console.log('Sample Product:', productsData?.[0]);
-      console.log('Sample Category:', categoriesData?.[0]);
-      console.log('Sample Brand:', brandsData?.[0]);
-
       // Validate data structure
       const validProducts = Array.isArray(productsData) ? productsData : [];
       const validCategories = Array.isArray(categoriesData) ? categoriesData.filter((cat: Category) => cat.id !== 'all') : [];
       const validBrands = Array.isArray(brandsData) ? brandsData.filter((brand: Brand) => brand.id !== 'all') : [];
-
-      console.log('Admin Dashboard - Processed Data:');
-      console.log('Valid Products:', validProducts.length);
-      console.log('Valid Categories:', validCategories.length);
-      console.log('Valid Brands:', validBrands.length);
-
-      if (validProducts.length > 0) {
-        console.log('First product structure:', validProducts[0]);
-      }
 
       setProducts(validProducts);
       setCategories(validCategories);

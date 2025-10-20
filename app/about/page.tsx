@@ -293,10 +293,7 @@ export default function About() {
                 <h3 className="font-bold text-[#1E2E4F] mb-2 sm:mb-3 text-base sm:text-lg">โทรศัพท์</h3>
                 <div className="space-y-1 sm:space-y-2 text-gray-700">
                   <p className="font-medium text-sm sm:text-base">
-                    <a href="tel:02-998-5222" className="hover:text-[#1E2E4F] transition-colors">02-998-5222</a>
-                  </p>
-                  <p className="font-medium text-sm sm:text-base">
-                    <a href="tel:089-5324454" className="hover:text-[#1E2E4F] transition-colors">089-5324454</a>
+                    <a href="tel:084-909-7777" className="hover:text-[#1E2E4F] transition-colors">084-909-7777</a>
                   </p>
                 </div>
               </div>
