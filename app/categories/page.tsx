@@ -39,6 +39,7 @@ const filterProducts = (products: Product[], filters: {
   searchTerm: string;
 }) => {
   return products.filter(product => {
+    // Handle category filtering - directly compare with product.category (which is category ID)
     const matchesCategory = filters.category === 'all' || product.category === filters.category;
     const matchesBrand = filters.brand === 'all' || product.brand === filters.brand;
     const matchesPrice = product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
@@ -81,6 +82,9 @@ const paginateProducts = (products: Product[], currentPage: number, itemsPerPage
 
 const getBrandCounts = (products: Product[]) => {
   const counts: Record<string, number> = {};
+  // Count all products for "all" brand
+  counts['all'] = products.length;
+  
   products.forEach(product => {
     if (product.brand) {
       counts[product.brand] = (counts[product.brand] || 0) + 1;
@@ -219,6 +223,9 @@ function CategoriesContent() {
   // Get category counts
   const getCategoryCounts = () => {
     const counts: Record<string, number> = {};
+    // Count all products for "all" category
+    counts['all'] = products.length;
+    
     products.forEach(product => {
       if (product.category) {
         counts[product.category] = (counts[product.category] || 0) + 1;
@@ -326,6 +333,25 @@ function CategoriesContent() {
               <div>
                 <h3 className="font-black text-base text-gray-900 mb-2 pb-2">หมวดหมู่</h3>
                 <div className="space-y-1">
+                  {/* All Categories Option */}
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className={`w-full text-left px-2 py-1.5 transition-colors font-medium text-sm ${
+                      selectedCategory === 'all'
+                        ? 'bg-[#1e2e4f] text-white'
+                        : 'text-gray-900 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span>ทั้งหมด</span>
+                      <span className={`text-sm ${
+                        selectedCategory === 'all' 
+                          ? 'text-gray-300' 
+                          : 'text-gray-500'
+                      }`}>({categoryCounts['all'] || 0})</span>
+                    </div>
+                  </button>
+                  
                   {categories.map(category => (
                     <button
                       key={category.id}
@@ -342,7 +368,7 @@ function CategoriesContent() {
                           selectedCategory === category.id 
                             ? 'text-gray-300' 
                             : 'text-gray-500'
-                        }`}>({categoryCounts[category.name] || 0})</span>
+                        }`}>({categoryCounts[category.id] || 0})</span>
                       </div>
                     </button>
                   ))}
@@ -384,10 +410,9 @@ function CategoriesContent() {
                   onChange={(e) => setSelectedBrand(e.target.value)}
                   className="w-full px-2 py-2 focus:outline-none text-gray-900 bg-white transition-colors font-medium text-sm"
                 >
+                  <option value="all">ทั้งหมด ({brandCounts['all'] || 0})</option>
                   {brands.map(brand => {
-                    const brandCount = brand.id === 'all' 
-                      ? products.length 
-                      : brandCounts[brand.id] || 0;
+                    const brandCount = brandCounts[brand.id] || 0;
                     
                     return (
                       <option key={brand.id} value={brand.id}>
@@ -452,6 +477,25 @@ function CategoriesContent() {
               <div>
                 <h3 className="font-black text-base text-gray-900 mb-3 pb-2">หมวดหมู่</h3>
                 <div className="space-y-1">
+                  {/* All Categories Option */}
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className={`w-full text-left px-3 py-2 transition-colors font-medium text-sm ${
+                      selectedCategory === 'all'
+                        ? 'bg-[#1e2e4f] text-white'
+                        : 'text-gray-900 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span>ทั้งหมด</span>
+                      <span className={`text-sm ${
+                        selectedCategory === 'all' 
+                          ? 'text-gray-300' 
+                          : 'text-gray-500'
+                      }`}>({categoryCounts['all'] || 0})</span>
+                    </div>
+                  </button>
+                  
                   {categories.map(category => (
                     <button
                       key={category.id}
@@ -468,7 +512,7 @@ function CategoriesContent() {
                           selectedCategory === category.id 
                             ? 'text-gray-300' 
                             : 'text-gray-500'
-                        }`}>({categoryCounts[category.name] || 0})</span>
+                        }`}>({categoryCounts[category.id] || 0})</span>
                       </div>
                     </button>
                   ))}
@@ -510,10 +554,9 @@ function CategoriesContent() {
                   onChange={(e) => setSelectedBrand(e.target.value)}
                   className="w-full px-2 py-2 focus:outline-none text-gray-900 bg-white transition-colors font-medium text-sm"
                 >
+                  <option value="all">ทั้งหมด ({brandCounts['all'] || 0})</option>
                   {brands.map(brand => {
-                    const brandCount = brand.id === 'all' 
-                      ? products.length 
-                      : brandCounts[brand.id] || 0;
+                    const brandCount = brandCounts[brand.id] || 0;
                     
                     return (
                       <option key={brand.id} value={brand.id}>

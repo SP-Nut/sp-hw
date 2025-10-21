@@ -21,7 +21,7 @@ export default function Header() {
   // Topbar messages
   const topbarMessages = [
     "★★★★★ RATED 4.85 / 5 BY 2,300+ REVIEWS",
-    "บริษัท เอสพี กันสาด จำกัด - ผู้เชี่ยวชาญด้านวัสดุกันสาดและฮาร์ดแวร์",
+    "บริษัท เอสพี กันสาด จำกัด - ผู้เชี่ยวชาญด้านวัสดุกันสาด",
     "ศูนย์รวมวัสดุกันสาดครบวงจร มาตรฐานคุณภาพระดับมืออาชีพ",
     "ประสบการณ์กว่า 15 ปี ในธุรกิจวัสดุก่อสร้างและฮาร์ดแวร์",
     "บริการจัดส่งทั่วประเทศ พร้อมทีมงานให้คำปรึกษา",
@@ -84,7 +84,7 @@ export default function Header() {
           ? 'top-8 md:top-10 bg-transparent' 
           : 'top-0 bg-white shadow-md'
       }`}>
-      <div className={`py-3 md:py-4 transition-all duration-300 ${
+      <div className={`py-4 md:py-4 transition-all duration-300 ${
         isScrolled || !isHomePage 
           ? 'border-b border-gray-200' 
           : 'border-b border-transparent'
@@ -95,19 +95,19 @@ export default function Header() {
             <div className="flex items-center">
               {/* Mobile menu button */}
               <button
-                className={`lg:hidden transition-colors mr-2 md:mr-4 ${
+                className={`lg:hidden transition-colors mr-3 md:mr-4 p-1 ${
                   isScrolled || !isHomePage 
                     ? 'text-gray-900 hover:text-gray-600' 
                     : 'text-white hover:text-gray-200'
                 }`}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
               </button>
 
               {/* Logo */}
               <Link href="/" className="flex items-center group">
-                <div className="w-16 h-10 sm:w-24 sm:h-16 md:w-32 md:h-20 transition-transform group-hover:scale-105">
+                <div className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 transition-transform group-hover:scale-105">
                   <Image
                     src="/logo.png"
                     alt="SP Hardware Logo"
@@ -186,14 +186,14 @@ export default function Header() {
               </div>
 
               {/* Cart */}
-              <Link href="/cart" className={`relative transition-colors ${
+              <Link href="/cart" className={`relative transition-colors p-1 ${
                 isScrolled || !isHomePage 
                   ? 'text-gray-900 hover:text-blue-600' 
                   : 'text-white hover:text-gray-200'
               }`}>
-                <ShoppingCart className="h-5 w-5 md:h-5 md:w-5" />
+                <ShoppingCart className="h-6 w-6 md:h-5 md:w-5" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold min-w-[20px] h-[20px] flex items-center justify-center rounded-full">
                     {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}

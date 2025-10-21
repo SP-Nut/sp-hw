@@ -83,15 +83,20 @@ export default function Home() {
                 index === currentSlide ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={image.src}
                 alt={image.alt}
-                fill
-                className="object-cover select-none pointer-events-none"
-                priority={index === 0}
+                className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                 draggable={false}
-                quality={100}
-                sizes="100vw"
+                loading={index === 0 ? "eager" : "lazy"}
+                style={{
+                  imageRendering: 'crisp-edges',
+                  filter: 'contrast(1.1) saturate(1.05)',
+                  backfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)',
+                  willChange: 'transform'
+                }}
               />
             </div>
           ))}
