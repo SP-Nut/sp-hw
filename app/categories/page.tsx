@@ -594,7 +594,7 @@ function CategoriesContent() {
 
             {/* Products Grid/List */}
             {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {currentProducts.map(product => (
                   <div key={product.id} className="group relative bg-white transition-all duration-300 overflow-hidden">
                     {/* Image Container */}

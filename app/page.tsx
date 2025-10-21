@@ -154,10 +154,13 @@ export default function Home() {
                     <div className="relative h-64 overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                   {/* Background Image */}
                   <Image
-                    src={`/hero-promotion/${index + 1}.png`}
+                    src={card.image || `/hero-promotion/${index + 1}.png`}
                     alt={card.title}
                     fill
                     className="object-cover"
+                    quality={95}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    priority={index < 3}
                   />
                   
                   {/* Dark Overlay */}
@@ -194,10 +197,13 @@ export default function Home() {
                   <div className="relative h-64 overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                     {/* Background Image */}
                     <Image
-                      src={`/hero-promotion/${index + 1}.png`}
+                      src={card.image || `/hero-promotion/${index + 1}.png`}
                       alt={card.title}
                       fill
                       className="object-cover"
+                      quality={95}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      priority={index < 3}
                     />
                     
                     {/* Dark Overlay */}
@@ -243,10 +249,13 @@ export default function Home() {
                   <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                     {/* Background Image */}
                     <Image
-                      src={`/hero-promotion/${index + 1}.png`}
+                      src={card.image || `/hero-promotion/${index + 1}.png`}
                       alt={card.title}
                       fill
                       className="object-cover"
+                      quality={95}
+                      sizes="(max-width: 1024px) 50vw, 40vw"
+                      priority={true}
                     />
                     
                     {/* Dark Overlay */}
@@ -286,10 +295,13 @@ export default function Home() {
                     <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                       {/* Background Image */}
                       <Image
-                        src={`/hero-promotion/${index + 1}.png`}
+                        src={card.image || `/hero-promotion/${index + 1}.png`}
                         alt={card.title}
                         fill
                         className="object-cover"
+                        quality={95}
+                        sizes="(max-width: 1024px) 50vw, 40vw"
+                        priority={true}
                       />
                       
                       {/* Dark Overlay */}
@@ -336,10 +348,13 @@ export default function Home() {
                   <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                     {/* Background Image */}
                     <Image
-                      src={`/hero-promotion/3.png`}
+                      src={card.image || `/hero-promotion/3.png`}
                       alt={card.title}
                       fill
                       className="object-cover"
+                      quality={95}
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority={true}
                     />
                     
                     {/* Dark Overlay */}
@@ -380,10 +395,13 @@ export default function Home() {
                     <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
                       {/* Background Image */}
                       <Image
-                        src={`/hero-promotion/3.png`}
+                        src={card.image || `/hero-promotion/3.png`}
                         alt={card.title}
                         fill
                         className="object-cover"
+                        quality={95}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        priority={true}
                       />
                       
                       {/* Dark Overlay */}

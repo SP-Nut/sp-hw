@@ -23,6 +23,7 @@ export async function GET() {
         reviews,
         image,
         in_stock,
+        is_popular,
         description
       `)
       .order('id')
@@ -50,12 +51,14 @@ export async function GET() {
       reviews: product.reviews || 0,
       image: product.image || undefined,
       in_stock: product.in_stock !== null ? product.in_stock : true,
+      is_popular: product.is_popular || false,
       description: product.description || undefined,
       // Legacy fields for backward compatibility
       brand: product.brand_id || null,
       category: product.category_id || null,
       originalPrice: product.original_price || null,
-      inStock: product.in_stock !== null ? product.in_stock : true
+      inStock: product.in_stock !== null ? product.in_stock : true,
+      isPopular: product.is_popular || false
     }))
 
     console.log('Final products result:', products.length, 'items')

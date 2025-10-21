@@ -21,21 +21,24 @@ export const promotionalCards = [
     description: "เลือกซื้อวัสดุก่อสร้างคุณภาพสูง",
     discount: "เลือกเลย",
     link: "/categories",
-    subtitle: "BUILD YOUR ULTIMATE"
+    subtitle: "BUILD YOUR ULTIMATE",
+    image: "/bg-incard/เลือกวัสดุ.webp"
   },
   {
     title: "ปรึกษาเรา",
     description: "ปรึกษาเรื่องวัสดุและการก่อสร้าง",
     discount: "สอบถาม",
     link: "https://line.me/R/ti/p/@sp-hardware",
-    subtitle: "BUILD YOUR ULTIMATE"
+    subtitle: "BUILD YOUR ULTIMATE",
+    image: "/bg-incard/ปรึกษา.webp"
   },
   {
     title: "เกี่ยวกับเรา",
     description: "SP Group ผู้เชี่ยวชาญด้านวัสดุก่อสร้าง",
     discount: "อ่านเพิ่ม",
     link: "/about",
-    subtitle: "BUILD YOUR ULTIMATE"
+    subtitle: "BUILD YOUR ULTIMATE",
+    image: "/bg-incard/เกี่ยวกับเรา.webp"
   },
   {
     title: "อุปกรณ์ติดตั้ง",
@@ -43,75 +46,6 @@ export const promotionalCards = [
     discount: "8%",
     link: "/categories?cat=installation",
     subtitle: "BUILD YOUR ULTIMATE"
-  }
-];
-
-export const popularProducts = [
-  {
-    id: 1,
-    name: "เมทัลชีท SCG สีแดง",
-    price: "285",
-    originalPrice: "320",
-    discount: "11% OFF",
-    rating: 4.8,
-    sold: "2.5k+",
-    category: "กันสาดทึบแสง",
-    badge: "ขายดี"
-  },
-  {
-    id: 2,
-    name: "สว่านกระแทก Makita HP2050H",
-    price: "3,850",
-    originalPrice: "4,290",
-    discount: "10% OFF",
-    rating: 4.9,
-    sold: "1.8k+",
-    category: "เครื่องมือช่าง",
-    badge: "โปรพิเศษ"
-  },
-  {
-    id: 3,
-    name: "สีทาบ้าน TOA SuperShield 18L",
-    price: "1,890",
-    originalPrice: "2,100",
-    discount: "10% OFF",
-    rating: 4.7,
-    sold: "950+",
-    category: "สี & วัสดุทาสี",
-    badge: "แนะนำ"
-  },
-  {
-    id: 4,
-    name: "สกรูหลังคา เบอร์ 14 ขนาด 6.3x75mm",
-    price: "12",
-    originalPrice: "15",
-    discount: "20% OFF",
-    rating: 4.6,
-    sold: "5k+",
-    category: "อุปกรณ์ติดตั้ง",
-    badge: "ราคาดี"
-  },
-  {
-    id: 5,
-    name: "ชินโคไลท์ โปร่งแสง 0.5mm",
-    price: "95",
-    originalPrice: "110",
-    discount: "14% OFF",
-    rating: 4.5,
-    sold: "3.2k+",
-    category: "กันสาดโปร่งแสง",
-    badge: "ลดพิเศษ"
-  },
-  {
-    id: 6,
-    name: "ค้อนก้ามกระตุก Vessel หัวยาง",
-    price: "280",
-    originalPrice: "320",
-    discount: "13% OFF",
-    rating: 4.8,
-    sold: "1.5k+",
-    category: "เครื่องมือช่าง",
-    badge: "คุณภาพดี"
   }
 ];
 

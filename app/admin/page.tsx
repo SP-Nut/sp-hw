@@ -16,12 +16,14 @@ interface Product {
   reviews: number;
   image?: string;
   in_stock: boolean;
+  is_popular?: boolean;
   description?: string;
   // Legacy fields for backward compatibility
   brand?: string | null;
   category?: string | null;
   originalPrice?: number | null;
   inStock?: boolean | null;
+  isPopular?: boolean;
 }
 
 interface Category {
@@ -294,6 +296,36 @@ export default function AdminDashboard() {
       alert('เกิดข้อผิดพลาดในการลบสินค้า');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Toggle product popular status
+  const togglePopular = async (productId: number, currentStatus: boolean) => {
+    try {
+      const response = await fetch('/api/admin/products/popular', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: productId,
+          is_popular: !currentStatus
+        }),
+      });
+
+      if (response.ok) {
+        // Update local state
+        setProducts(prev => prev.map(p => 
+          p.id === productId 
+            ? { ...p, is_popular: !currentStatus, isPopular: !currentStatus }
+            : p
+        ));
+      } else {
+        alert('เกิดข้อผิดพลาดในการอัพเดทสถานะ');
+      }
+    } catch (error) {
+      console.error('Error toggling popular:', error);
+      alert('เกิดข้อผิดพลาดในการอัพเดทสถานะ');
     }
   };
 
@@ -753,6 +785,9 @@ export default function AdminDashboard() {
                             <th className="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
                               สถานะ
                             </th>
+                            <th className="px-6 py-4 text-center text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                              ยอดนิยม
+                            </th>
                             <th className="px-6 py-4 text-right text-xs font-semibold text-slate-600 uppercase tracking-wider">
                               การกระทำ
                             </th>
@@ -847,6 +882,20 @@ export default function AdminDashboard() {
                                 }`}></div>
                                 {product.in_stock ? 'มีสินค้า' : 'หมดสต็อก'}
                               </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-center">
+                              <button
+                                onClick={() => togglePopular(product.id, product.is_popular || false)}
+                                className={`inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 ${
+                                  product.is_popular || product.isPopular
+                                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600 shadow-sm'
+                                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                }`}
+                                title={product.is_popular || product.isPopular ? 'ลบออกจากยอดนิยม' : 'ตั้งเป็นยอดนิยม'}
+                              >
+                                <Star className={`h-3 w-3 mr-1 ${product.is_popular || product.isPopular ? 'fill-current' : ''}`} />
+                                {product.is_popular || product.isPopular ? 'ยอดนิยม' : 'ตั้งค่า'}
+                              </button>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <div className="flex justify-end space-x-2">

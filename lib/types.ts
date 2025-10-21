@@ -29,6 +29,7 @@ export interface Product {
   image?: string;
   images?: string[];
   in_stock: boolean;
+  is_popular?: boolean;
   description?: string;
   created_at?: string;
   updated_at?: string;
