@@ -12,6 +12,11 @@ export const heroImages = [
   {
     src: "/hero-promotion/3.png",
     alt: "SP Hardware - เครื่องมือมืออาชีพ"
+  },
+  
+{
+    src: "/hero-promotion/4.png",
+    alt: "SP Hardware - เครื่องมือมืออาชีพ"
   }
 ];
 

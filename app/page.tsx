@@ -90,6 +90,8 @@ export default function Home() {
                 className="object-cover select-none pointer-events-none"
                 priority={index === 0}
                 draggable={false}
+                quality={100}
+                sizes="100vw"
               />
             </div>
           ))}
