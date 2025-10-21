@@ -83,11 +83,29 @@ export default function Home() {
                 index === currentSlide ? 'opacity-100' : 'opacity-0'
               }`}
             >
+              {/* Desktop Image */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={image.src}
                 alt={image.alt}
-                className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+                className="hidden sm:block absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+                draggable={false}
+                loading={index === 0 ? "eager" : "lazy"}
+                style={{
+                  imageRendering: 'crisp-edges',
+                  filter: 'contrast(1.1) saturate(1.05)',
+                  backfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)',
+                  willChange: 'transform'
+                }}
+              />
+              
+              {/* Mobile Image */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={image.srcMobile || image.src}
+                alt={image.alt}
+                className="block sm:hidden absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                 draggable={false}
                 loading={index === 0 ? "eager" : "lazy"}
                 style={{
@@ -166,8 +184,16 @@ export default function Home() {
                     fill
                     className="object-cover"
                     quality={95}
+                    unoptimized={true}
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     priority={index < 3}
+                    style={{
+                      imageRendering: 'crisp-edges',
+                      filter: 'contrast(1.1) saturate(1.05)',
+                      backfaceVisibility: 'hidden',
+                      transform: 'translateZ(0)',
+                      willChange: 'transform'
+                    }}
                   />
                   
                   {/* Dark Overlay */}
@@ -209,8 +235,16 @@ export default function Home() {
                       fill
                       className="object-cover"
                       quality={95}
+                      unoptimized={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       priority={index < 3}
+                      style={{
+                        imageRendering: 'crisp-edges',
+                        filter: 'contrast(1.1) saturate(1.05)',
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)',
+                        willChange: 'transform'
+                      }}
                     />
                     
                     {/* Dark Overlay */}
@@ -261,8 +295,16 @@ export default function Home() {
                       fill
                       className="object-cover"
                       quality={95}
+                      unoptimized={true}
                       sizes="(max-width: 1024px) 50vw, 40vw"
                       priority={true}
+                      style={{
+                        imageRendering: 'crisp-edges',
+                        filter: 'contrast(1.1) saturate(1.05)',
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)',
+                        willChange: 'transform'
+                      }}
                     />
                     
                     {/* Dark Overlay */}
@@ -307,8 +349,16 @@ export default function Home() {
                         fill
                         className="object-cover"
                         quality={95}
+                        unoptimized={true}
                         sizes="(max-width: 1024px) 50vw, 40vw"
                         priority={true}
+                        style={{
+                          imageRendering: 'crisp-edges',
+                          filter: 'contrast(1.1) saturate(1.05)',
+                          backfaceVisibility: 'hidden',
+                          transform: 'translateZ(0)',
+                          willChange: 'transform'
+                        }}
                       />
                       
                       {/* Dark Overlay */}
@@ -360,8 +410,16 @@ export default function Home() {
                       fill
                       className="object-cover"
                       quality={95}
+                      unoptimized={true}
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       priority={true}
+                      style={{
+                        imageRendering: 'crisp-edges',
+                        filter: 'contrast(1.1) saturate(1.05)',
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)',
+                        willChange: 'transform'
+                      }}
                     />
                     
                     {/* Dark Overlay */}
@@ -407,8 +465,16 @@ export default function Home() {
                         fill
                         className="object-cover"
                         quality={95}
+                        unoptimized={true}
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         priority={true}
+                        style={{
+                          imageRendering: 'crisp-edges',
+                          filter: 'contrast(1.1) saturate(1.05)',
+                          backfaceVisibility: 'hidden',
+                          transform: 'translateZ(0)',
+                          willChange: 'transform'
+                        }}
                       />
                       
                       {/* Dark Overlay */}

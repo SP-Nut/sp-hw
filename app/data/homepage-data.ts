@@ -1,21 +1,20 @@
 // Homepage data - extracted to separate file for better organization
+import { HeroImage } from '@/lib/types';
 
-export const heroImages = [
+export const heroImages: HeroImage[] = [
   {
     src: "/hero-promotion/1.png",
+    srcMobile: "/hero-mobile/1.png",
     alt: "SP Hardware - วัสดุก่อสร้างครบวงจร"
   },
   {
     src: "/hero-promotion/2.png",
+    srcMobile: "/hero-mobile/2.png",
     alt: "SP Hardware - คุณภาพระดับพรีเมียม"  
   },
   {
     src: "/hero-promotion/3.png",
-    alt: "SP Hardware - เครื่องมือมืออาชีพ"
-  },
-  
-{
-    src: "/hero-promotion/4.png",
+    srcMobile: "/hero-mobile/3.png",
     alt: "SP Hardware - เครื่องมือมืออาชีพ"
   }
 ];

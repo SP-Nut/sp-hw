@@ -38,6 +38,13 @@ export interface Product {
   category?: Category;
 }
 
+// Hero Image type
+export interface HeroImage {
+  src: string;
+  srcMobile?: string;
+  alt: string;
+}
+
 // Cart and Order types
 export interface CartItem {
   id: number;
