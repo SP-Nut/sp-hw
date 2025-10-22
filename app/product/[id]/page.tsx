@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ShoppingCart, Check, Plus, ArrowLeft } from "lucide-react";
+import { ShoppingCart, Check, Plus, ArrowLeft, X, ZoomIn, Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import { useProduct, useCategories } from "../../../hooks/useApi";
 
@@ -16,6 +16,7 @@ export default function ProductDetail() {
   
   const [addedToCart, setAddedToCart] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
   const { addToCart, isInCart, getItemQuantity } = useCart();
 
 
@@ -52,6 +53,59 @@ export default function ProductDetail() {
       setAddedToCart(false);
     }, 2000);
   };
+
+  const openZoomModal = () => {
+    setIsZoomModalOpen(true);
+  };
+
+  const closeZoomModal = () => {
+    setIsZoomModalOpen(false);
+  };
+
+  const goToPreviousImage = useCallback(() => {
+    const productImages = product?.images && product.images.length > 0 ? product.images : (product?.image ? [product.image] : []);
+    if (productImages.length > 1) {
+      setSelectedImageIndex((prev) => prev === 0 ? productImages.length - 1 : prev - 1);
+    }
+  }, [product]);
+
+  const goToNextImage = useCallback(() => {
+    const productImages = product?.images && product.images.length > 0 ? product.images : (product?.image ? [product.image] : []);
+    if (productImages.length > 1) {
+      setSelectedImageIndex((prev) => prev === productImages.length - 1 ? 0 : prev + 1);
+    }
+  }, [product]);
+
+  // Handle keyboard events for zoom modal
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isZoomModalOpen) return;
+      
+      switch (event.key) {
+        case 'Escape':
+          closeZoomModal();
+          break;
+        case 'ArrowLeft':
+          event.preventDefault();
+          goToPreviousImage();
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          goToNextImage();
+          break;
+      }
+    };
+
+    if (isZoomModalOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isZoomModalOpen, goToPreviousImage, goToNextImage]);
 
   if (productLoading) {
     return (
@@ -97,23 +151,41 @@ export default function ProductDetail() {
           <div className="space-y-1 sm:space-y-2">
             {/* Main Image */}
             <div className="relative bg-white shadow-sm hover:shadow-md transition-all duration-300 rounded-lg overflow-hidden">
-              <div className="aspect-[3/2] bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex items-center justify-center">
+              <div 
+                className="aspect-[3/2] bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex items-center justify-center cursor-pointer group"
+                onClick={openZoomModal}
+              >
                 {(() => {
                   // Get images array or fallback to single image
                   const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
                   const currentImage = productImages[selectedImageIndex] || productImages[0];
                   
                   return currentImage && currentImage !== '' && !currentImage.includes('placeholder') ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img 
-                      src={currentImage} 
-                      alt={`${product.name} - รูปที่ ${selectedImageIndex + 1}`}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
-                      }}
-                    />
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={currentImage} 
+                        alt={`${product.name} - รูปที่ ${selectedImageIndex + 1}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
+                        }}
+                      />
+                      {/* Zoom Icon Overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg">
+                          <ZoomIn className="h-6 w-6 text-gray-900" />
+                        </div>
+                      </div>
+                      
+                      {/* Click to zoom hint */}
+                      <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="bg-black/70 text-white text-xs px-2 py-1 rounded backdrop-blur-sm">
+                          คลิกเพื่อซูม
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
                       <span className="text-gray-500 text-sm sm:text-base font-medium">{product.name || 'รูปสินค้า'}</span>
@@ -131,8 +203,9 @@ export default function ProductDetail() {
                   {(() => {
                     const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
                     return productImages.length > 1 && (
-                      <div className="bg-green-600 text-white px-2 py-1 text-xs font-bold shadow-sm rounded">
-                        📸 {productImages.length}
+                      <div className="bg-green-600 text-white px-2 py-1 text-xs font-bold shadow-sm rounded flex items-center">
+                        <Camera className="h-3 w-3 mr-1" />
+                        {productImages.length}
                       </div>
                     );
                   })()}
@@ -158,7 +231,10 @@ export default function ProductDetail() {
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-semibold text-gray-900">รูปสินค้า</h3>
                 {product.images && product.images.length > 0 && (
-                  <span className="text-sm text-green-600">📸 {product.images.length} รูป</span>
+                  <span className="text-sm text-green-600 flex items-center">
+                    <Camera className="h-4 w-4 mr-1" />
+                    {product.images.length} รูป
+                  </span>
                 )}
               </div>
               
@@ -310,6 +386,126 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
+      {/* Zoom Modal */}
+      {isZoomModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={closeZoomModal}
+        >
+          <div className="relative max-w-full max-h-full">
+            {/* Close Button */}
+            <button
+              onClick={closeZoomModal}
+              className="absolute top-4 right-4 z-10 text-white p-2 hover:text-gray-300 transition-all duration-300"
+            >
+              <X className="h-8 w-8" />
+            </button>
+
+            {/* Navigation Arrows - Only show if multiple images */}
+            {(() => {
+              const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+              
+              return productImages.length > 1 && (
+                <>
+                  {/* Previous Image Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToPreviousImage();
+                    }}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 text-white p-2 hover:text-gray-300 transition-all duration-300"
+                  >
+                    <ChevronLeft className="h-10 w-10" />
+                  </button>
+
+                  {/* Next Image Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToNextImage();
+                    }}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 text-white p-2 hover:text-gray-300 transition-all duration-300"
+                  >
+                    <ChevronRight className="h-10 w-10" />
+                  </button>
+                </>
+              );
+            })()}
+
+            {/* Image Counter */}
+            {(() => {
+              const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+              
+              return productImages.length > 1 && (
+                <div className="absolute top-4 left-4 z-10 text-white text-lg font-semibold">
+                  {selectedImageIndex + 1} / {productImages.length}
+                </div>
+              );
+            })()}
+
+            {/* Zoomed Image */}
+            <div className="relative max-w-[90vw] max-h-[90vh] overflow-auto">
+              {(() => {
+                const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+                const currentImage = productImages[selectedImageIndex] || productImages[0];
+                
+                return currentImage && currentImage !== '' && !currentImage.includes('placeholder') ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img 
+                    src={currentImage} 
+                    alt={`${product.name} - รูปที่ ${selectedImageIndex + 1} (ซูม)`}
+                    className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                    onClick={(e) => e.stopPropagation()}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      target.src = `https://via.placeholder.com/800x600/f3f4f6/6b7280?text=${encodeURIComponent(product.name || 'ไม่พบรูป')}`;
+                    }}
+                  />
+                ) : (
+                  <div className="w-96 h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center rounded-lg">
+                    <span className="text-gray-500 text-lg font-medium">{product.name || 'รูปสินค้า'}</span>
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Image Navigation for Multiple Images */}
+            {(() => {
+              const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+              
+              return productImages.length > 1 && (
+                <>
+                  {/* Dot Navigation */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                    <div className="flex space-x-3 p-2">
+                      {productImages.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedImageIndex(index);
+                          }}
+                          className={`w-4 h-4 rounded-full transition-all duration-300 border-2 ${
+                            selectedImageIndex === index 
+                              ? 'bg-white border-white' 
+                              : 'bg-transparent border-white/70 hover:border-white'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Navigation Hint */}
+                  <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 text-white text-sm text-center">
+                    ใช้ลูกศร ← → หรือคลิกปุ่มเพื่อสลับรูป
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

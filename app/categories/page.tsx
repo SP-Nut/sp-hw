@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Grid, List, ShoppingCart, Search, Check, Plus, Filter, X } from "lucide-react";
+import { Grid, List, ShoppingCart, Search, Check, Plus, Filter, X, Camera } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
 
 interface Product {
@@ -670,8 +670,9 @@ function CategoriesContent() {
                               
                               {/* Multiple Images Indicator */}
                               {totalImages > 1 && (
-                                <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
-                                  📸 {totalImages}
+                                <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium flex items-center">
+                                  <Camera className="h-3 w-3 mr-1" />
+                                  {totalImages}
                                 </div>
                               )}
                               
