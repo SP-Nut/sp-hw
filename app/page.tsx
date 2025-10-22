@@ -121,17 +121,44 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="absolute bottom-4 sm:bottom-8 left-4 md:left-16 right-4 sm:right-auto z-10 text-left text-white max-w-2xl">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black mb-2 sm:mb-2 tracking-tight drop-shadow-lg italic">
-            SP HARDWARE
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-3 sm:mb-4 text-white/90 font-light drop-shadow-md leading-tight">
-            ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
-          </p>
-          <div className="flex">
-            <Link href="/categories" className="bg-white text-gray-900 px-4 sm:px-8 py-2 sm:py-4 text-base sm:text-lg font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 sm:min-w-[200px] shadow-lg">
-              เลือกซื้อสินค้า
-            </Link>
+        <div className="absolute bottom-0 left-0 right-0 z-10">
+          {/* Mobile Layout */}
+          <div className="sm:hidden">
+            <div className="bg-gradient-to-t from-black/60 via-black/40 to-transparent w-full py-6">
+              <div className="px-4 text-left text-white">
+                <h1 className="text-2xl font-black mb-2 tracking-tight drop-shadow-2xl italic text-shadow-lg">
+                  SP HARDWARE
+                </h1>
+                <p className="text-sm mb-3 text-white/95 font-light drop-shadow-xl leading-tight text-shadow">
+                  ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
+                </p>
+                <div className="flex">
+                  <Link href="/categories" className="bg-white text-gray-900 px-4 py-2 text-base font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl">
+                    เลือกซื้อสินค้า
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout - Full Width Black Background */}
+          <div className="hidden sm:block">
+            {/* Full Width Black Background */}
+            <div className="bg-gradient-to-t from-black/70 via-black/50 to-transparent w-full py-8 md:py-12 lg:py-16">
+              <div className="px-4 lg:px-8 xl:px-16 text-left text-white max-w-3xl">
+                <h1 className="text-3xl md:text-5xl lg:text-7xl font-black mb-2 tracking-tight drop-shadow-2xl italic text-shadow-lg">
+                  SP HARDWARE
+                </h1>
+                <p className="text-base md:text-lg lg:text-xl mb-4 text-white/95 font-light drop-shadow-xl leading-tight text-shadow">
+                  ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
+                </p>
+                <div className="flex">
+                  <Link href="/categories" className="bg-white text-gray-900 px-8 py-4 text-lg font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 min-w-[200px] shadow-2xl">
+                    เลือกซื้อสินค้า
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -167,7 +194,7 @@ export default function Home() {
 
       {/* Category Navigation - BMW Style Layout (2+1 Cards) */}
       <div className="py-8 bg-gray-100">
-        <div className="container mx-auto px-4 md:px-16 max-w-full">
+        <div className="px-4 lg:px-8 xl:px-16 max-w-full">
           {/* Mobile: Stack all cards vertically */}
           <div className="lg:hidden grid grid-cols-1 gap-4">
             {promotionalCards.slice(0, 3).map((card, index) => {
@@ -199,8 +226,11 @@ export default function Home() {
                   {/* Dark Overlay */}
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
                   
+                  {/* Gradient Background for Text */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-800/60 to-transparent rounded-2xl" />
+                  
                   {/* Main Content */}
-                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
+                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center z-10">
                     <div className="mb-2">
                       <p className="text-white/70 text-sm font-bold tracking-[0.3em] uppercase">
                         {card.subtitle}
@@ -516,7 +546,7 @@ export default function Home() {
 
       {/* Members-Only Club Section */}
       <div className="py-8" style={{ backgroundColor: '#1e2e4f' }}>
-        <div className="container mx-auto px-4 md:px-16 max-w-full">
+        <div className="px-4 lg:px-8 xl:px-16 max-w-full">
           <div className="text-center">
             <h2 className="text-white font-black text-2xl sm:text-3xl lg:text-4xl tracking-wide italic">
               SP HARDWARE ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
@@ -557,7 +587,7 @@ export default function Home() {
 
       {/* Footer CTA - Light AUTOID Style */}
       <div className="py-24 bg-white">
-        <div className="container mx-auto px-4 md:px-16 max-w-full text-center">
+        <div className="px-4 lg:px-8 xl:px-16 max-w-full text-center">
           <h2 className="text-4xl sm:text-6xl font-black text-gray-900 mb-8">
             THE #1 EXPERTS IN<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-900">
