@@ -1,4 +1,4 @@
-import { Phone, Mail, Clock, Users, Zap, Shield, HandHeart, DollarSign, Building2, Award, Calendar, Facebook, Youtube } from "lucide-react";
+import { Phone, Mail, Clock, Users, Zap, Shield, HandHeart, DollarSign, Building2, Award, Calendar } from "lucide-react";
 
 export default function About() {
   return (
@@ -293,7 +293,7 @@ export default function About() {
                 <h3 className="font-bold text-[#1E2E4F] mb-2 sm:mb-3 text-base sm:text-lg">โทรศัพท์</h3>
                 <div className="space-y-1 sm:space-y-2 text-gray-700">
                   <p className="font-medium text-sm sm:text-base">
-                    <a href="tel:084-909-7777" className="hover:text-[#1E2E4F] transition-colors">084-909-7777</a>
+                    <a href="tel:091-939-7000" className="hover:text-[#1E2E4F] transition-colors">091-939-7000</a>
                   </p>
                 </div>
               </div>
@@ -306,10 +306,7 @@ export default function About() {
                 <h3 className="font-bold text-[#1E2E4F] mb-2 sm:mb-3 text-base sm:text-lg">อีเมล</h3>
                 <div className="space-y-1 sm:space-y-2 text-gray-700">
                   <p className="text-xs sm:text-sm">
-                    <a href="mailto:spgroup555@gmail.com" className="hover:text-[#1E2E4F] underline transition-colors break-all">spgroup555@gmail.com</a>
-                  </p>
-                  <p className="text-xs sm:text-sm">
-                    <a href="mailto:info@spkansard.com" className="hover:text-[#1E2E4F] underline transition-colors break-all">info@spkansard.com</a>
+                    <a href="mailto:sphardware9@gmail.com" className="hover:text-[#1E2E4F] underline transition-colors break-all">sphardware9@gmail.com</a>
                   </p>
                 </div>
               </div>
@@ -321,8 +318,7 @@ export default function About() {
                 </div>
                 <h3 className="font-bold text-[#1E2E4F] mb-2 sm:mb-3 text-base sm:text-lg">เวลาทำการ</h3>
                 <div className="text-gray-700 text-sm sm:text-base space-y-1">
-                  <p><strong>จันทร์-เสาร์:</strong> 8:00-17:00</p>
-                  <p><strong>อาทิตย์:</strong> 9:00-17:00</p>
+                  <p><strong>เปิดทุกวัน:</strong> 8:00-17:00</p>
                 </div>
               </div>
 
@@ -335,60 +331,10 @@ export default function About() {
                 </div>
                 <h3 className="font-bold text-[#1E2E4F] mb-2 sm:mb-3 text-base sm:text-lg">LINE OA</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  <a href="https://line.me/R/ti/p/@566pppph" target="_blank" rel="noopener noreferrer" className="text-[#00B900] hover:text-green-700 underline font-medium transition-colors">
-                    @566pppph
+                  <a href="https://line.me/R/ti/p/@sphardware9" target="_blank" rel="noopener noreferrer" className="text-[#00B900] hover:text-green-700 underline font-medium transition-colors">
+                    @sphardware9
                   </a>
                 </p>
-              </div>
-            </div>
-
-            {/* Secondary Contact Info - Responsive */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-              {/* FAX */}
-              <div className="text-center bg-white p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <svg className="h-7 w-7 sm:h-8 sm:w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <h4 className="font-bold text-[#1E2E4F] mb-2 text-sm sm:text-base">FAX</h4>
-                <p className="text-gray-700 font-medium text-sm sm:text-base">02-936-8843</p>
-              </div>
-
-              {/* Website */}
-              <div className="text-center bg-white p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <svg className="h-7 w-7 sm:h-8 sm:w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                </div>
-                <h4 className="font-bold text-[#1E2E4F] mb-2 text-sm sm:text-base">Website</h4>
-                <p className="text-gray-700 text-sm sm:text-base">
-                  <a href="https://www.spkansard.com" target="_blank" rel="noopener noreferrer" className="text-[#1E2E4F] hover:text-[#31487A] underline font-medium transition-colors break-all">
-                    www.spkansard.com
-                  </a>
-                </p>
-              </div>
-
-              {/* Social Media */}
-              <div className="text-center bg-white p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
-                <div className="flex justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#1877F2] rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                    <Facebook className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                  </div>
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#FF0000] rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                    <Youtube className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                  </div>
-                </div>
-                <h4 className="font-bold text-[#1E2E4F] mb-2 text-sm sm:text-base">ติดตามเรา</h4>
-                <div className="text-gray-700 text-xs sm:text-sm space-y-1">
-                  <p>
-                    <a href="#" className="text-[#1877F2] hover:text-blue-700 underline font-medium transition-colors">SP Group</a>
-                  </p>
-                  <p>
-                    <a href="#" className="text-[#FF0000] hover:text-red-700 underline font-medium transition-colors">SP Channel</a>
-                  </p>
-                </div>
               </div>
             </div>
           </div>

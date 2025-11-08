@@ -33,7 +33,7 @@ export default function ContactButtons() {
       icon: <MessageCircle className="w-full h-full" />,
       label: "LINE",
       action: () => {
-        window.open("https://line.me/R/ti/p/@spkansard", "_blank");
+        window.open("https://line.me/R/ti/p/@sphardware9", "_blank");
         setIsOpen(false);
       },
       bgColor: "bg-green-500",
@@ -44,7 +44,7 @@ export default function ContactButtons() {
       icon: <Phone className="w-full h-full" />,
       label: "โทร",
       action: () => {
-        window.open("tel:084-909-7777", "_self");
+        window.open("tel:091-939-7000", "_self");
         setIsOpen(false);
       },
       bgColor: "bg-blue-500",
@@ -55,7 +55,7 @@ export default function ContactButtons() {
       icon: <Mail className="w-full h-full" />,
       label: "อีเมลล์",
       action: () => {
-        window.open("mailto:spkansards@gmail.com", "_self");
+        window.open("mailto:sphardware9@gmail.com", "_self");
         setIsOpen(false);
       },
       bgColor: "bg-red-500",

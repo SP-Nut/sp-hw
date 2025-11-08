@@ -23,13 +23,13 @@ export default function Footer() {
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2 text-white" />
                 <div>
-                  <a href="tel:084-909-7777" className="hover:text-gray-300 transition-colors">084-909-7777</a>
+                  <a href="tel:091-939-7000" className="hover:text-gray-300 transition-colors">091-939-7000</a>
                 </div>
               </div>
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2 text-white" />
-                <a href="mailto:spkansards@gmail.com" className="hover:text-gray-300 transition-colors">
-                  spkansards@gmail.com
+                <a href="mailto:sphardware9@gmail.com" className="hover:text-gray-300 transition-colors">
+                  sphardware9@gmail.com
                 </a>
               </div>
               <div className="flex items-start">
@@ -86,7 +86,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://line.me/R/ti/p/@sp-hardware" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a href="https://line.me/R/ti/p/@sphardware9" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   ปรึกษาทาง LINE
                 </a>
               </li>
@@ -113,26 +113,17 @@ export default function Footer() {
             <h5 className="font-semibold mb-4">ติดต่อเรา</h5>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <span className="text-white font-medium">Website:</span><br />
-                <a href="https://www.spkansard.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  www.spkansard.com
-                </a>
-              </li>
-              <li>
                 <span className="text-white font-medium">FAX:</span><br />
                 <span>02-936-8843</span>
               </li>
               <li>
                 <span className="text-white font-medium">เวลาทำการ:</span><br />
-                <span>จันทร์ - เสาร์: 8:00 - 18:00</span><br />
-                <span>อาทิตย์: 9:00 - 17:00</span>
+                <span>เปิดทุกวัน: 8:00 - 17:00</span>
               </li>
               <li className="pt-2">
                 <span className="text-white font-medium">ติดตามเรา:</span><br />
                 <div className="flex space-x-4 mt-2">
-                  <a href="#" className="hover:text-white transition-colors">Facebook</a>
-                  <a href="https://line.me/R/ti/p/@sp-hardware" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LINE</a>
-                  <a href="#" className="hover:text-white transition-colors">YouTube</a>
+                  <a href="https://line.me/R/ti/p/@sphardware9" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LINE</a>
                 </div>
               </li>
             </ul>

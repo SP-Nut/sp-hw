@@ -93,11 +93,11 @@ export default function Cart() {
             message += 'ส่งข้อความถึงคุณใน LINE แล้ว\n';
           } else {
             message += 'ส่งข้อความไปยัง LINE OA แล้ว\n';
-            message += 'หากคุณเพิ่ม @spkansard เป็นเพื่อนแล้ว จะเห็นข้อความออเดอร์\n';
+            message += 'หากคุณเพิ่ม @sphardware9 เป็นเพื่อนแล้ว จะเห็นข้อความออเดอร์\n';
           }
         }
         
-        message += '\nกำลังเปิด LINE OA @spkansard\n';
+        message += '\nกำลังเปิด LINE OA @sphardware9\n';
         message += lineUser 
           ? 'ตรวจสอบข้อความในแชท LINE ของคุณ' 
           : 'เพิ่มเป็นเพื่อนแล้วส่งข้อความ "สวัสดี" เพื่อเริ่มคุยกับแอดมิน';
@@ -105,7 +105,7 @@ export default function Cart() {
         alert(message);
         
         // เปิด LINE OA
-        const lineOAId = "spkansard";
+        const lineOAId = "sphardware9";
         const lineUrl = `https://line.me/R/ti/p/@${lineOAId}`;
         window.open(lineUrl, '_blank');
         
@@ -135,9 +135,9 @@ export default function Cart() {
     
     try {
       await navigator.clipboard.writeText(orderSummary);
-      alert(`ระบบส่งออโต้มีปัญหา กลับไปใช้วิธีเดิม\n\nคัดลอกข้อความสรุปออเดอร์แล้ว!\nกำลังเปิด LINE OA @spkansard\nกรุณาวางข้อความในแชทแล้วกดส่ง`);
+      alert(`ระบบส่งออโต้มีปัญหา กลับไปใช้วิธีเดิม\n\nคัดลอกข้อความสรุปออเดอร์แล้ว!\nกำลังเปิด LINE OA @sphardware9\nกรุณาวางข้อความในแชทแล้วกดส่ง`);
       
-      const lineOAId = "spkansard";
+      const lineOAId = "sphardware9";
       const lineUrl = `https://line.me/R/ti/p/@${lineOAId}`;
       window.open(lineUrl, '_blank');
       
@@ -190,7 +190,7 @@ export default function Cart() {
           คัดลอกข้อความ
         </button>
         <button 
-          onclick="window.open('https://line.me/R/ti/p/@spkansard', '_blank'); document.body.removeChild(document.body.lastChild);"
+          onclick="window.open('https://line.me/R/ti/p/@sphardware9', '_blank'); document.body.removeChild(document.body.lastChild);"
           style="background: #00B900; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px; cursor: pointer;"
         >
           เปิด LINE OA
@@ -205,7 +205,7 @@ export default function Cart() {
       <p style="margin-top: 15px; color: #666; font-size: 14px; text-align: center;">
         ระบบส่งออโต้มีปัญหา กรุณาทำตามขั้นตอนเดิม:<br>
         1. กดปุ่ม "คัดลอกข้อความ" หรือเลือกข้อความแล้ว Ctrl+C<br>
-        2. กดปุ่ม "เปิด LINE OA" เพื่อไปหาแชท @spkansard<br> 
+        2. กดปุ่ม "เปิด LINE OA" เพื่อไปหาแชท @sphardware9<br> 
         3. วางข้อความ (Ctrl+V) และกดส่ง
       </p>
     `;
