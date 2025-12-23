@@ -33,7 +33,7 @@ export default function ContactButtons() {
       icon: <MessageCircle className="w-full h-full" />,
       label: "LINE",
       action: () => {
-        window.open("https://line.me/R/ti/p/@sphardware9", "_blank");
+        window.open("https://line.me/R/ti/p/@576kulwa", "_blank");
         setIsOpen(false);
       },
       bgColor: "bg-green-500",

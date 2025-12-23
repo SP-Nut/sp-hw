@@ -32,7 +32,7 @@ export const promotionalCards = [
     title: "ปรึกษาเรา",
     description: "ปรึกษาเรื่องวัสดุและการก่อสร้าง",
     discount: "สอบถาม",
-    link: "https://line.me/R/ti/p/@sphardware9",
+    link: "https://line.me/R/ti/p/@576kulwa",
     subtitle: "BUILD YOUR ULTIMATE",
     image: "/bg-incard/ปรึกษา.webp"
   },

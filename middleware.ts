@@ -6,7 +6,6 @@ const RATE_LIMITS = {
   general: { maxRequests: 60, windowMs: 60000 },      // 60 req/min (browse หน้าเว็บ)
   api: { maxRequests: 20, windowMs: 60000 },          // 20 req/min (API ทั่วไป)
   apiAdmin: { maxRequests: 10, windowMs: 60000 },     // 10 req/min (Admin API - เข้มงวด)
-  apiLine: { maxRequests: 5, windowMs: 60000 },       // 5 req/min (LINE API - จำกัดมาก)
 } as const;
 
 // In-memory rate limit store (โปรดักชันควรใช้ Redis/Upstash)
@@ -16,9 +15,7 @@ const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 function checkRateLimit(ip: string, pathname: string): { allowed: boolean; remaining: number; limit: number } {
   // เลือก limit ตาม route type
   let limit;
-  if (pathname.startsWith('/api/line/')) {
-    limit = RATE_LIMITS.apiLine;
-  } else if (pathname.startsWith('/api/admin/')) {
+  if (pathname.startsWith('/api/admin/')) {
     limit = RATE_LIMITS.apiAdmin;
   } else if (pathname.startsWith('/api/')) {
     limit = RATE_LIMITS.api;

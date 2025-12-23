@@ -13,7 +13,6 @@
     "db:migrate": "echo 'Run migrations manually via Supabase CLI or Dashboard'"
   },
   "dependencies": {
-    "@line/bot-sdk": "^10.3.0",
     "@supabase/supabase-js": "^2.75.0",
     "@vercel/analytics": "^1.5.0",
     "dotenv": "^17.2.3",

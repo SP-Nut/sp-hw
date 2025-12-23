@@ -86,7 +86,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://line.me/R/ti/p/@sphardware9" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <a href="https://line.me/R/ti/p/@576kulwa" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   ปรึกษาทาง LINE
                 </a>
               </li>
@@ -123,7 +123,7 @@ export default function Footer() {
               <li className="pt-2">
                 <span className="text-white font-medium">ติดตามเรา:</span><br />
                 <div className="flex space-x-4 mt-2">
-                  <a href="https://line.me/R/ti/p/@sphardware9" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LINE</a>
+                  <a href="https://line.me/R/ti/p/@576kulwa" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LINE</a>
                 </div>
               </li>
             </ul>

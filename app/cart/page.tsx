@@ -1,45 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ShoppingBag, CreditCard, Truck, ArrowLeft, Shield, Link as LinkIcon } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Shield } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
-
-interface LineUser {
-  userId: string;
-  displayName: string;
-  pictureUrl?: string;
-}
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [lineUser, setLineUser] = useState<LineUser | null>(null);
-
-  // ตรวจสอบ LINE Login status จาก URL parameters
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const lineLogin = urlParams.get('lineLogin');
-    const userId = urlParams.get('userId');
-    const displayName = urlParams.get('displayName');
-
-    if (lineLogin === 'success' && userId && displayName) {
-      setLineUser({
-        userId,
-        displayName,
-        pictureUrl: undefined
-      });
-
-      // ลบ parameters ออกจาก URL
-      const newUrl = window.location.pathname;
-      window.history.replaceState({}, document.title, newUrl);
-
-      // แสดงข้อความต้อนรับ
-      setTimeout(() => {
-        alert(`เชื่อมต่อ LINE สำเร็จ!\n\nสวัสดี ${displayName}\nตอนนี้คุณจะได้รับแจ้งเตือนออเดอร์ผ่าน LINE โดยตรง`);
-      }, 500);
-    }
-  }, []);
 
   const handleQuantityChange = (productId: number, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -49,206 +17,60 @@ export default function Cart() {
     }
   };
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     setIsCheckingOut(true);
     
     try {
-      // เตรียมข้อมูลสำหรับส่งไป API
-      const orderData = {
-        items: items,
-        subtotal: subtotal,
-        savings: savings,
-        shipping: shipping,
-        total: total,
-        customerInfo: lineUser ? {
-          name: lineUser.displayName,
-          lineUserId: lineUser.userId
-        } : undefined,
-        sendToAdmin: true,  // ส่งแจ้งเตือนไปแอดมินเสมอ
-        sendToCustomer: true,  // พยายามส่งไปลูกค้าเสมอ (ทั้งกรณีมี User ID และไม่มี)
-        sendToGroup: !lineUser  // ถ้าไม่มี User ID ให้ส่งไปกลุ่ม/OA
-      };
-
-      // ส่งข้อมูลไป API
-      const response = await fetch('/api/line/send-cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData)
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        // สำเร็จ - แสดงข้อความและเปิด LINE
-        let message = 'ส่งออเดอร์เรียบร้อยแล้ว!\n\n';
-        
-        if (result.results.adminNotified) {
-          message += 'แอดมินได้รับแจ้งเตือนแล้ว\n';
-        }
-        
-        if (result.results.customerNotified) {
-          if (lineUser) {
-            message += 'ส่งข้อความถึงคุณใน LINE แล้ว\n';
-          } else {
-            message += 'ส่งข้อความไปยัง LINE OA แล้ว\n';
-            message += 'หากคุณเพิ่ม @sphardware9 เป็นเพื่อนแล้ว จะเห็นข้อความออเดอร์\n';
-          }
-        }
-        
-        message += '\nกำลังเปิด LINE OA @sphardware9\n';
-        message += lineUser 
-          ? 'ตรวจสอบข้อความในแชท LINE ของคุณ' 
-          : 'เพิ่มเป็นเพื่อนแล้วส่งข้อความ "สวัสดี" เพื่อเริ่มคุยกับแอดมิน';
-        
-        alert(message);
-        
-        // เปิด LINE OA
-        const lineOAId = "sphardware9";
-        const lineUrl = `https://line.me/R/ti/p/@${lineOAId}`;
-        window.open(lineUrl, '_blank');
-        
-        // ล้างตะกร้าหลังจากส่งออเดอร์สำเร็จ
-        setTimeout(() => {
-          clearCart();
-        }, 2000);
-
-      } else {
-        // ไม่สำเร็จ - แสดง fallback (copy ข้อความแบบเดิม)
-        console.error('API Error:', result);
-        await handleFallbackCheckout();
-      }
+      // สร้างข้อความออเดอร์
+      const orderMessage = generateOrderMessage();
+      
+      // LINE OA ID
+      const lineOAId = "576kulwa";
+      
+      // เข้ารหัสข้อความสำหรับ URL
+      const encodedMessage = encodeURIComponent(orderMessage);
+      
+      // สร้าง LINE URL ที่เปิดแชทพร้อมข้อความ
+      const lineUrl = `https://line.me/R/oaMessage/@${lineOAId}/?${encodedMessage}`;
+      
+      // เปิด LINE
+      window.open(lineUrl, '_blank');
+      
+      // แสดงข้อความแนะนำ
+      alert('กำลังเปิด LINE...\n\nข้อความออเดอร์จะถูกพิมพ์ไว้ให้แล้ว\nกรุณากดปุ่ม "ส่ง" ใน LINE เพื่อส่งออเดอร์ให้แอดมิน');
+      
+      // ล้างตะกร้าหลังจากเปิด LINE
+      setTimeout(() => {
+        clearCart();
+      }, 3000);
 
     } catch (error) {
       console.error('Checkout Error:', error);
-      // เกิดข้อผิดพลาด - ใช้วิธีเดิม (copy ข้อความ)
-      await handleFallbackCheckout();
+      alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
     } finally {
       setIsCheckingOut(false);
     }
   };
 
-  // Fallback method (วิธีเดิม) เมื่อ API ไม่ทำงาน
-  const handleFallbackCheckout = async () => {
-    const orderSummary = generateOrderMessage();
-    
-    try {
-      await navigator.clipboard.writeText(orderSummary);
-      alert(`ระบบส่งออโต้มีปัญหา กลับไปใช้วิธีเดิม\n\nคัดลอกข้อความสรุปออเดอร์แล้ว!\nกำลังเปิด LINE OA @sphardware9\nกรุณาวางข้อความในแชทแล้วกดส่ง`);
-      
-      const lineOAId = "sphardware9";
-      const lineUrl = `https://line.me/R/ti/p/@${lineOAId}`;
-      window.open(lineUrl, '_blank');
-      
-    } catch {
-      // ถ้า clipboard ก็ไม่ทำงาน ให้แสดงข้อความแบบ modal
-      showFallbackModal(orderSummary);
-    }
-  };
-
-  // แสดง modal สำหรับ copy ข้อความ (เมื่อ clipboard ไม่ทำงาน)
-  const showFallbackModal = (orderSummary: string) => {
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    `;
-    
-    const content = document.createElement('div');
-    content.style.cssText = `
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      max-width: 90%;
-      max-height: 80%;
-      overflow: auto;
-    `;
-    
-    content.innerHTML = `
-      <h3 style="margin-bottom: 20px; color: #1E2E4F; font-size: 20px; font-weight: bold;">
-        ข้อความสรุปออเดอร์
-      </h3>
-      <textarea 
-        id="orderMessage" 
-        style="width: 100%; height: 300px; padding: 15px; border: 2px solid #8FB3E2; border-radius: 8px; font-family: monospace; font-size: 14px; resize: none;"
-        readonly
-      >${orderSummary}</textarea>
-      <div style="margin-top: 20px; text-align: center;">
-        <button 
-          onclick="document.getElementById('orderMessage').select(); document.execCommand('copy'); alert('คัดลอกแล้ว!'); document.body.removeChild(document.body.lastChild);"
-          style="background: #1E2E4F; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px; cursor: pointer;"
-        >
-          คัดลอกข้อความ
-        </button>
-        <button 
-          onclick="window.open('https://line.me/R/ti/p/@sphardware9', '_blank'); document.body.removeChild(document.body.lastChild);"
-          style="background: #00B900; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; margin-right: 10px; cursor: pointer;"
-        >
-          เปิด LINE OA
-        </button>
-        <button 
-          onclick="document.body.removeChild(document.body.lastChild);"
-          style="background: #666; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;"
-        >
-          ปิด
-        </button>
-      </div>
-      <p style="margin-top: 15px; color: #666; font-size: 14px; text-align: center;">
-        ระบบส่งออโต้มีปัญหา กรุณาทำตามขั้นตอนเดิม:<br>
-        1. กดปุ่ม "คัดลอกข้อความ" หรือเลือกข้อความแล้ว Ctrl+C<br>
-        2. กดปุ่ม "เปิด LINE OA" เพื่อไปหาแชท @sphardware9<br> 
-        3. วางข้อความ (Ctrl+V) และกดส่ง
-      </p>
-    `;
-    
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-  };
-
   const generateOrderMessage = () => {
     const currentDate = new Date().toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'long', 
       day: 'numeric',
+      month: 'short',
+      year: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
     });
 
-    let message = `สั่งซื้อสินค้า - SP Hardware\n`;
-    message += `วันที่: ${currentDate}\n\n`;
-    
-    message += `รายการสินค้า:\n`;
-    message += `${'='.repeat(30)}\n`;
+    let message = `🛒 สั่งซื้อสินค้า\n`;
+    message += `📅 ${currentDate}\n\n`;
     
     items.forEach((item, index) => {
       message += `${index + 1}. ${item.name}\n`;
-      message += `   แบรนด์: ${item.brand}\n`;
-      message += `   ราคา: ${item.price.toLocaleString()} บาท x ${item.quantity} ชิ้น\n`;
-      message += `   รวม: ${(item.price * item.quantity).toLocaleString()} บาท\n\n`;
+      message += `   ${item.brand} | ฿${item.price.toLocaleString()} x ${item.quantity}\n\n`;
     });
     
-    message += `${'='.repeat(30)}\n`;
-    message += `ราคาสินค้า: ${subtotal.toLocaleString()} บาท\n`;
-    
-    if (savings > 0) {
-      message += `ส่วนลดจากสินค้า: -${savings.toLocaleString()} บาท\n`;
-    }
-    
-    message += `ค่าจัดส่ง: ${shipping === 0 ? 'ฟรี' : `${shipping.toLocaleString()} บาท`}\n`;
-    message += `${'='.repeat(30)}\n`;
-    message += `รวมทั้งสิ้น: ${total.toLocaleString()} บาท\n\n`;
-    
-    message += `กรุณาติดต่อกลับเพื่อยืนยันออเดอร์\n`;
-    message += `ขอบคุณที่เลือกใช้บริการ SP Hardware`;
+    message += `💰 รวม: ฿${subtotal.toLocaleString()}`;
+    message += `\n\n✅ แอดมินจะติดต่อกลับเพื่อยืนยันออเดอร์`;
     
     return message;
   };
@@ -258,8 +80,6 @@ export default function Cart() {
     const originalPrice = item.originalPrice || item.price;
     return sum + ((originalPrice - item.price) * item.quantity);
   }, 0);
-  const shipping = subtotal >= 2000 ? 0 : 150;
-  const total = subtotal + shipping;
 
   if (items.length === 0) {
     return (
@@ -425,67 +245,19 @@ export default function Cart() {
                   </div>
                 )}
 
-                <div className="flex justify-between text-sm sm:text-base">
-                  <span className="text-gray-600 flex items-center">
-                    <Truck className="h-4 w-4 mr-1" />
-                    ค่าจัดส่ง
-                  </span>
-                  <span className={shipping === 0 ? "text-green-600" : ""}>
-                    {shipping === 0 ? "ฟรี" : `฿${shipping.toLocaleString()}`}
-                  </span>
+                <div className="text-xs sm:text-sm text-[#31487A] bg-[#8FB3E2]/10 p-2 sm:p-3 rounded-lg">
+                  💬 ค่าจัดส่งคุยกับแอดมินทีหลังได้เลย
                 </div>
-
-                {subtotal < 2000 && (
-                  <div className="text-xs sm:text-sm text-[#31487A] bg-[#8FB3E2]/10 p-2 sm:p-3 rounded-lg">
-                    ซื้อเพิ่ม ฿{(2000 - subtotal).toLocaleString()} เพื่อได้รับส่งฟรี!
-                  </div>
-                )}
               </div>
 
               <div className="border-t pt-3 sm:pt-4 mb-4 sm:mb-6">
                 <div className="flex justify-between items-center text-lg sm:text-xl font-bold">
                   <span className="text-[#1E2E4F]">รวมทั้งสิ้น</span>
-                  <span className="text-[#1E2E4F]">฿{total.toLocaleString()}</span>
+                  <span className="text-[#1E2E4F]">฿{subtotal.toLocaleString()}</span>
                 </div>
               </div>
 
-              {/* LINE Login Section */}
-              {!lineUser && (
-                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center mb-2 sm:mb-3">
-                    <div className="text-xl sm:text-2xl mr-2 sm:mr-3">📱</div>
-                    <div>
-                      <h3 className="font-semibold text-green-800 text-sm sm:text-base">เข้าสู่ระบบ LINE</h3>
-                      <p className="text-xs sm:text-sm text-green-600">เพื่อรับการติดตามออเดอร์แบบเรียลไทม์</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => window.location.href = '/api/line/auth?action=login'}
-                    className="w-full py-2 px-4 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition flex items-center justify-center text-sm sm:text-base"
-                  >
-                    <LinkIcon className="h-4 w-4 mr-2" />
-                    เชื่อมต่อ LINE เพื่อรับแจ้งเตือน
-                  </button>
-                  <p className="text-xs text-green-600 mt-2 text-center">
-                    *ไม่บังคับ - คุณยังสามารถสั่งซื้อได้โดยไม่ต้องเข้าสู่ระบบ
-                  </p>
-                </div>
-              )}
-
-              {lineUser && (
-                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <div className="flex items-center">
-                    <div className="text-xl sm:text-2xl mr-2 sm:mr-3">✅</div>
-                    <div>
-                      <h3 className="font-semibold text-blue-800 text-sm sm:text-base">เชื่อมต่อ LINE แล้ว</h3>
-                      <p className="text-xs sm:text-sm text-blue-600">สวัสดี {lineUser.displayName}!</p>
-                      <p className="text-xs text-blue-500">จะได้รับแจ้งเตือนผ่าน LINE โดยตรง</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Checkout Options */}
+              {/* Checkout Button */}
               <div className="space-y-3">
                 <button
                   onClick={handleCheckout}
@@ -493,28 +265,25 @@ export default function Cart() {
                   className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium transition flex items-center justify-center text-sm sm:text-base ${
                     isCheckingOut
                       ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                      : 'bg-[#1E2E4F] text-white hover:bg-[#31487A]'
+                      : 'bg-[#00B900] text-white hover:bg-green-600'
                   }`}
                 >
-                  <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-                  {isCheckingOut ? 'กำลังส่งออเดอร์...' : (lineUser ? 'ส่งออเดอร์ผ่าน LINE' : 'สั่งซื้อผ่าน LINE OA')}
+                  <ShoppingBag className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                  {isCheckingOut ? 'กำลังเปิด LINE...' : 'สั่งซื้อผ่าน LINE'}
                 </button>
+                <p className="text-xs text-gray-500 text-center">
+                  กดปุ่มแล้วจะเปิด LINE พร้อมข้อความออเดอร์ให้กดส่ง
+                </p>
               </div>
 
               {/* Trust Badges */}
               <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t">
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 text-center">
-                  <div>
+                <div className="flex justify-center">
+                  <div className="text-center">
                     <div className="flex justify-center mb-1">
                       <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-[#31487A]" />
                     </div>
                     <div className="text-xs sm:text-sm text-[#31487A] font-medium">ปลอดภัย 100%</div>
-                  </div>
-                  <div>
-                    <div className="flex justify-center mb-1">
-                      <Truck className="h-5 w-5 sm:h-6 sm:w-6 text-[#31487A]" />
-                    </div>
-                    <div className="text-xs sm:text-sm text-[#31487A] font-medium">ส่งฟรีครบ ฿2,000</div>
                   </div>
                 </div>
               </div>

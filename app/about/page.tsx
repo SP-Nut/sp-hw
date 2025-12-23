@@ -331,8 +331,8 @@ export default function About() {
                 </div>
                 <h3 className="font-bold text-[#1E2E4F] mb-2 sm:mb-3 text-base sm:text-lg">LINE OA</h3>
                 <p className="text-gray-700 text-sm sm:text-base">
-                  <a href="https://line.me/R/ti/p/@sphardware9" target="_blank" rel="noopener noreferrer" className="text-[#00B900] hover:text-green-700 underline font-medium transition-colors">
-                    @sphardware9
+                  <a href="https://line.me/R/ti/p/@576kulwa" target="_blank" rel="noopener noreferrer" className="text-[#00B900] hover:text-green-700 underline font-medium transition-colors">
+                    @576kulwa
                   </a>
                 </p>
               </div>

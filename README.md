@@ -78,13 +78,6 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-key
 
-# LINE Integration (Optional)
-LINE_CHANNEL_ACCESS_TOKEN=your-line-token
-LINE_CHANNEL_SECRET=your-line-secret
-LINE_ADMIN_USER_ID=your-admin-user-id
-LINE_LOGIN_CHANNEL_ID=your-login-channel-id
-LINE_LOGIN_CHANNEL_SECRET=your-login-channel-secret
-
 # NextAuth
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your-random-secret
@@ -171,12 +164,6 @@ GET  /api/admin/products    # ดึงสินค้าทั้งหมด (
 POST /api/products          # เพิ่มสินค้า
 PUT  /api/products/[id]     # แก้ไขสินค้า
 DELETE /api/products/[id]   # ลบสินค้า
-```
-
-### LINE APIs
-```
-POST /api/line/send-cart    # ส่งตะกร้าไป LINE
-GET  /api/line/auth         # LINE Login
 ```
 
 ## 🚀 Deployment
