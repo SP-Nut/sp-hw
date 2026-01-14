@@ -15,6 +15,14 @@ export const metadata: Metadata = {
   title: "SP Hardware - ศูนย์รวมฮาร์ดแวร์และวัสดุก่อสร้างครบวงจร",
   description: "SP Hardware ร้านขายฮาร์ดแวร์และวัสดุก่อสร้างออนไลน์ คุณภาพสูง ราคาดี กันสาด หลังคา เมทัลชีท อุปกรณ์ไฟฟ้า ส่งฟรีทั่วประเทศ",
   keywords: "SP Hardware, ฮาร์ดแวร์, วัสดุก่อสร้าง, กันสาด, หลังคา, เมทัลชีท, ท่อ PVC, สีทาอาคาร, อุปกรณ์ไฟฟ้า",
+  icons: {
+    icon: [
+      { url: '/icon/iconweb.png', type: 'image/png' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    shortcut: '/icon/iconweb.png',
+    apple: '/icon/iconweb.png',
+  },
 };
 
 export default function RootLayout({

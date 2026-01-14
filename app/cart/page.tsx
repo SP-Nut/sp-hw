@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, Shield } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
 
@@ -137,8 +138,18 @@ export default function Cart() {
                   <div key={item.id} className="p-3 sm:p-4 md:p-6">
                     <div className="flex gap-3 sm:gap-4">
                       {/* Product Image */}
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="text-gray-400 text-xs">รูป</span>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden relative">
+                        {item.image ? (
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
+                          />
+                        ) : (
+                          <span className="text-gray-400 text-xs">ไม่มีรูป</span>
+                        )}
                       </div>
 
                       {/* Product Info */}

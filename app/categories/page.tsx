@@ -272,10 +272,10 @@ function CategoriesContent() {
       <div className="bg-[#1e2e4f] text-white">
         <div className="container mx-auto px-4 md:px-16 max-w-full py-8 lg:py-12">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-3">
-            {selectedCategory === 'all' ? 'SHOP CATEGORIES' : 
-             categories.find(cat => cat.id === selectedCategory)?.name || 'SHOP CATEGORIES'}
+            {selectedCategory === 'all' ? 'วัสดุของเรา' : 
+             categories.find(cat => cat.id === selectedCategory)?.name || 'วัสดุของเรา'}
           </h1>
-          <p className="text-base sm:text-lg text-gray-300 font-light">เลือกซื้อวัสดุก่อสร้างคุณภาพสูง</p>
+          <p className="text-base sm:text-lg text-gray-300 font-light">เลือกซื้อวัสดุก่อสร้างคุณภาพสูง จากแบรนด์ชั้นนำ</p>
         </div>
       </div>
 
@@ -293,7 +293,7 @@ function CategoriesContent() {
           <div className="lg:hidden mb-4">
             <button
               onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="w-full flex items-center justify-center gap-2 bg-[#1e2e4f] text-white px-4 py-3 font-bold transition-colors hover:bg-[#31487a]"
+              className="w-full flex items-center justify-center gap-2 bg-[#1e2e4f] text-white px-4 py-3 font-bold transition-colors hover:bg-[#31487a] rounded-lg"
             >
               <Filter className="h-4 w-4" />
               {showMobileFilters ? 'ซ่อนตัวกรอง' : 'แสดงตัวกรอง'}
@@ -303,7 +303,7 @@ function CategoriesContent() {
 
           {/* Desktop Sidebar Filters */}
           <div className="hidden lg:block lg:w-1/5">
-            <div className="bg-white p-4 space-y-4 sticky top-24">
+            <div className="bg-white p-4 space-y-4 sticky top-24 rounded-lg shadow-sm">
 
               {/* Search */}
               <div>

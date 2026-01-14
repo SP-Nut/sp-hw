@@ -38,10 +38,10 @@ export default function CustomerReviews() {
   };
 
   return (
-    <div className="py-16 bg-gray-50">
+    <div className="py-16 bg-gray-100">
       <div className="container mx-auto px-4 md:px-16 max-w-full">
         <div className="mb-12">
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 tracking-wide">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1e2e4f] mb-4">
             รีวิวจากลูกค้า
           </h2>
           
@@ -49,13 +49,10 @@ export default function CustomerReviews() {
           <div className="flex items-center space-x-4 mb-6">
             <div className="flex items-center space-x-1">
               {[1, 2, 3, 4, 5].map((star) => (
-                <Star key={star} className="h-5 w-5 text-blue-500 fill-current" />
+                <Star key={star} className="h-5 w-5 text-yellow-500 fill-current" />
               ))}
             </div>
             <span className="text-sm text-gray-600">2,449 รีวิว</span>
-            <Link href="/reviews" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-              ดูรีวิวทั้งหมด
-            </Link>
           </div>
         </div>
 
@@ -68,14 +65,14 @@ export default function CustomerReviews() {
             }}
           >
             {customerReviews.map((review) => (
-              <div key={review.id} className="bg-white p-6 flex-shrink-0 w-1/4">
+              <div key={review.id} className="bg-white p-6 flex-shrink-0 w-1/4 rounded-lg shadow-sm">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <p className="text-sm text-gray-500">{review.date}</p>
                     <p className="text-sm font-medium text-gray-900">
                       {review.name} {review.verified && (
-                        <span className="text-xs text-gray-500">○ ลูกค้าที่ยืนยันแล้ว</span>
+                        <span className="text-xs text-green-600">✓ ยืนยันแล้ว</span>
                       )}
                     </p>
                   </div>
@@ -88,7 +85,7 @@ export default function CustomerReviews() {
                       key={star} 
                       className={`h-4 w-4 ${
                         star <= review.rating 
-                          ? 'text-blue-500 fill-current' 
+                          ? 'text-yellow-500 fill-current' 
                           : 'text-gray-300'
                       }`} 
                     />
@@ -113,14 +110,14 @@ export default function CustomerReviews() {
         <div className="md:hidden overflow-x-auto scrollbar-hide">
           <div className="flex space-x-4 pb-4">
             {customerReviews.map((review) => (
-              <div key={review.id} className="bg-white p-4 flex-shrink-0 w-80">
+              <div key={review.id} className="bg-white p-4 flex-shrink-0 w-80 rounded-lg shadow-sm">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <p className="text-xs text-gray-500">{review.date}</p>
                     <p className="text-sm font-medium text-gray-900">
                       {review.name} {review.verified && (
-                        <span className="text-xs text-gray-500">○ ลูกค้าที่ยืนยันแล้ว</span>
+                        <span className="text-xs text-green-600">✓ ยืนยันแล้ว</span>
                       )}
                     </p>
                   </div>
@@ -133,7 +130,7 @@ export default function CustomerReviews() {
                       key={star} 
                       className={`h-4 w-4 ${
                         star <= review.rating 
-                          ? 'text-blue-500 fill-current' 
+                          ? 'text-yellow-500 fill-current' 
                           : 'text-gray-300'
                       }`} 
                     />
@@ -158,13 +155,13 @@ export default function CustomerReviews() {
         <div className="hidden md:flex justify-center mt-8 space-x-4">
           <button 
             onClick={prevReviewSlide}
-            className="p-2 bg-white border border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 transition-all duration-300"
+            className="p-2 bg-white hover:bg-[#1e2e4f] text-[#1e2e4f] hover:text-white border border-gray-300 hover:border-[#1e2e4f] transition-all duration-300 rounded-lg"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button 
             onClick={nextReviewSlide}
-            className="p-2 bg-white border border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 transition-all duration-300"
+            className="p-2 bg-white hover:bg-[#1e2e4f] text-[#1e2e4f] hover:text-white border border-gray-300 hover:border-[#1e2e4f] transition-all duration-300 rounded-lg"
           >
             <ChevronRight className="h-5 w-5" />
           </button>

@@ -2,17 +2,17 @@
 
 export default function ContactSection() {
   return (
-    <div className="py-12 bg-gray-50">
+    <div className="py-16 bg-white">
       <div className="container mx-auto px-4 md:px-16 max-w-full">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact Form */}
           <div className="lg:col-span-3">
             <div className="mb-6">
-              <span className="text-blue-600 text-xs font-bold uppercase tracking-wider">CONTACT US</span>
-              <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-2 mb-3 tracking-wide">
-                Get In Touch
+              <span className="text-[#31487a] text-sm font-bold uppercase tracking-wider">ติดต่อเรา</span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1e2e4f] mt-2 mb-3">
+                สอบถามข้อมูลเพิ่มเติม
               </h2>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-base leading-relaxed">
                 ติดต่อเราสำหรับคำปรึกษาเกี่ยวกับวัสดุก่อสร้าง หรือสอบถามข้อมูลสินค้า
               </p>
             </div>
@@ -26,7 +26,7 @@ export default function ContactSection() {
                   </label>
                   <input 
                     type="text" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all text-sm"
                     placeholder="ชื่อ"
                   />
                 </div>
@@ -36,7 +36,7 @@ export default function ContactSection() {
                   </label>
                   <input 
                     type="text" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all text-sm"
                     placeholder="นามสกุล"
                   />
                 </div>
@@ -50,7 +50,7 @@ export default function ContactSection() {
                   </label>
                   <input 
                     type="tel" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all text-sm"
                     placeholder="เบอร์โทร"
                   />
                 </div>
@@ -60,7 +60,7 @@ export default function ContactSection() {
                   </label>
                   <input 
                     type="email" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all text-sm"
                     placeholder="Email Address"
                   />
                 </div>
@@ -74,7 +74,7 @@ export default function ContactSection() {
                   </label>
                   <input 
                     type="text" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all text-sm"
                     placeholder="บริษัท/หน่วยงาน"
                   />
                 </div>
@@ -84,7 +84,7 @@ export default function ContactSection() {
                   </label>
                   <input 
                     type="text" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all text-sm"
                     placeholder="ID LINE"
                   />
                 </div>
@@ -97,15 +97,14 @@ export default function ContactSection() {
                 </label>
                 <textarea 
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-vertical text-sm"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e2e4f] focus:border-transparent outline-none transition-all resize-vertical text-sm"
                   placeholder="รายละเอียด"
                 />
               </div>
 
               <button 
                 type="submit"
-                className="text-white font-bold py-2.5 px-8 rounded transition-all duration-300 text-sm tracking-wide hover:opacity-90"
-                style={{ backgroundColor: '#1e2e4f' }}
+                className="bg-[#1e2e4f] text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-sm tracking-wide hover:bg-[#31487a]"
               >
                 ส่งข้อมูล
               </button>
@@ -114,7 +113,7 @@ export default function ContactSection() {
 
           {/* Contact Information */}
           <div className="lg:col-span-2">
-            <h3 className="text-xl font-black text-gray-900 mb-6 tracking-wide">Contact Information</h3>
+            <h3 className="text-xl font-black text-[#1e2e4f] mb-6">ข้อมูลติดต่อ</h3>
             
             <p className="text-gray-600 text-base mb-8 leading-relaxed">
               ติดต่อเราสำหรับคำปรึกษาเกี่ยวกับวัสดุก่อสร้าง หรือสอบถามข้อมูลสินค้า 
@@ -125,53 +124,53 @@ export default function ContactSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
               {/* Call Us */}
               <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#1e2e4f]/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-[#1e2e4f]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">Call Us</h4>
+                  <h4 className="font-bold text-gray-900 text-base">โทรศัพท์</h4>
                   <p className="text-gray-600 text-base">091-939-7000</p>
                 </div>
               </div>
 
               {/* Email Us */}
               <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#1e2e4f]/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-[#1e2e4f]" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">Email Us</h4>
+                  <h4 className="font-bold text-gray-900 text-base">อีเมล</h4>
                   <p className="text-gray-600 text-base">sphardware9@gmail.com</p>
                 </div>
               </div>
 
               {/* Working Hours */}
               <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#1e2e4f]/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-[#1e2e4f]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">Working Hours</h4>
+                  <h4 className="font-bold text-gray-900 text-base">เวลาทำการ</h4>
                   <p className="text-gray-600 text-base">เปิดทุกวัน: 08:00-17:00</p>
                 </div>
               </div>
 
               {/* Address */}
               <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#1e2e4f]/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg className="w-5 h-5 text-[#1e2e4f]" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">Address</h4>
+                  <h4 className="font-bold text-gray-900 text-base">ที่อยู่</h4>
                   <p className="text-gray-600 text-base">เลขที่ 28/101 ถ.รัชดา-รามอินทรา<br />แขวงคลองกุ่ม เขตบึงกุ่ม กทม. 10230</p>
                 </div>
               </div>
@@ -179,7 +178,7 @@ export default function ContactSection() {
 
             {/* Follow Us */}
             <div>
-              <h4 className="font-bold text-gray-900 mb-3 text-base">Follow Us On</h4>
+              <h4 className="font-bold text-gray-900 mb-3 text-base">ติดตามเรา</h4>
               <div className="flex space-x-2">
                 <a href="https://line.me/R/ti/p/@576kulwa" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

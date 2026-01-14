@@ -6,10 +6,8 @@ import {
   ChevronRight
 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { 
-  heroImages, 
-  promotionalCards
+  heroImages
 } from "./data/homepage-data";
 import PopularProducts from "./components/PopularProducts";
 import TrustedBrands from "./components/TrustedBrands";
@@ -24,7 +22,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 6000);
+    }, 2900);
     return () => clearInterval(timer);
   }, []);
 
@@ -133,7 +131,7 @@ export default function Home() {
                   ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
                 </p>
                 <div className="flex">
-                  <Link href="/categories" className="bg-white text-gray-900 px-4 py-2 text-base font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl">
+                  <Link href="/categories" className="bg-white text-gray-900 px-5 py-2.5 text-base font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-2xl">
                     เลือกซื้อสินค้า
                   </Link>
                 </div>
@@ -153,7 +151,7 @@ export default function Home() {
                   ศูนย์รวมวัสดุกันสาดมากที่สุดในไทย
                 </p>
                 <div className="flex">
-                  <Link href="/categories" className="bg-white text-gray-900 px-8 py-4 text-lg font-bold rounded-none hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 min-w-[200px] shadow-2xl">
+                  <Link href="/categories" className="bg-white text-gray-900 px-8 py-4 text-lg font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 min-w-[200px] shadow-2xl">
                     เลือกซื้อสินค้า
                   </Link>
                 </div>
@@ -165,13 +163,13 @@ export default function Home() {
         {/* Navigation Controls - Hidden on mobile */}
         <button
           onClick={prevSlide}
-          className="hidden sm:block absolute left-4 md:left-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute left-4 md:left-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-white p-3 rounded-lg transition-all duration-300 z-20 group"
         >
           <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
         <button
           onClick={nextSlide}
-          className="hidden sm:block absolute right-4 md:right-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-gray-900 p-3 rounded-none transition-all duration-300 z-20 group"
+          className="hidden sm:block absolute right-4 md:right-16 top-1/2 transform -translate-y-1/2 bg-black/10 hover:bg-black/20 backdrop-blur text-white p-3 rounded-lg transition-all duration-300 z-20 group"
         >
           <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform" />
         </button>
@@ -182,365 +180,13 @@ export default function Home() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 sm:w-3 sm:h-3 transition-all duration-300 ${
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide 
                   ? 'bg-white' 
                   : 'bg-white/50 hover:bg-white/70'
               }`}
             />
           ))}
-        </div>
-      </div>
-
-      {/* Category Navigation - BMW Style Layout (2+1 Cards) */}
-      <div className="py-8 bg-gray-100">
-        <div className="px-4 lg:px-8 xl:px-16 max-w-full">
-          {/* Mobile: Stack all cards vertically */}
-          <div className="lg:hidden grid grid-cols-1 gap-4">
-            {promotionalCards.slice(0, 3).map((card, index) => {
-              const isExternalLink = card.link.startsWith('http');
-              
-              if (isExternalLink) {
-                return (
-                  <a key={index} href={card.link} target="_blank" rel="noopener noreferrer" className="group">
-                    <div className="relative h-64 overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
-                  {/* Background Image */}
-                  <Image
-                    src={card.image || `/hero-promotion/${index + 1}.png`}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                    quality={95}
-                    unoptimized={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    priority={index < 3}
-                    style={{
-                      imageRendering: 'crisp-edges',
-                      filter: 'contrast(1.1) saturate(1.05)',
-                      backfaceVisibility: 'hidden',
-                      transform: 'translateZ(0)',
-                      willChange: 'transform'
-                    }}
-                  />
-                  
-                  {/* Dark Overlay */}
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
-                  
-                  {/* Gradient Background for Text */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-800/60 to-transparent rounded-2xl" />
-                  
-                  {/* Main Content */}
-                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center z-10">
-                    <div className="mb-2">
-                      <p className="text-white/70 text-sm font-bold tracking-[0.3em] uppercase">
-                        {card.subtitle}
-                      </p>
-                    </div>
-                    <div className="mb-3">
-                      <h3 className="text-white font-black text-lg leading-tight tracking-tight drop-shadow-2xl">
-                        {card.title.toUpperCase()}
-                      </h3>
-                    </div>
-                    <div className="mb-4">
-                      <p className="text-white/90 text-sm font-medium leading-relaxed">
-                        {card.description}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Hover Effect Overlay */}
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
-                </div>
-              </a>
-            );
-              }
-              
-              return (
-                <Link key={index} href={card.link} className="group">
-                  <div className="relative h-64 overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
-                    {/* Background Image */}
-                    <Image
-                      src={card.image || `/hero-promotion/${index + 1}.png`}
-                      alt={card.title}
-                      fill
-                      className="object-cover"
-                      quality={95}
-                      unoptimized={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      priority={index < 3}
-                      style={{
-                        imageRendering: 'crisp-edges',
-                        filter: 'contrast(1.1) saturate(1.05)',
-                        backfaceVisibility: 'hidden',
-                        transform: 'translateZ(0)',
-                        willChange: 'transform'
-                      }}
-                    />
-                    
-                    {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
-                    
-                    {/* Main Content */}
-                    <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
-                      <div className="mb-2">
-                        <p className="text-white/70 text-sm font-bold tracking-[0.3em] uppercase">
-                          {card.subtitle}
-                        </p>
-                      </div>
-                      <div className="mb-3">
-                        <h3 className="text-white font-black text-lg leading-tight tracking-tight drop-shadow-2xl">
-                          {card.title.toUpperCase()}
-                        </h3>
-                      </div>
-                      <div className="mb-4">
-                        <p className="text-white/90 text-sm font-medium leading-relaxed">
-                          {card.description}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Hover Effect Overlay */}
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Desktop: 2 small cards on left, 1 large card on right */}
-          <div className="hidden lg:grid lg:grid-cols-2 gap-6 h-[500px] w-full">
-            {/* Left Column: 2 stacked small cards */}
-            <div className="flex flex-col gap-6 w-full">
-              {promotionalCards.slice(0, 2).map((card, index) => {
-                const isExternalLink = card.link.startsWith('http');
-                
-                if (isExternalLink) {
-                  return (
-                    <a key={index} href={card.link} target="_blank" rel="noopener noreferrer" className="group flex-1">
-                  <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
-                    {/* Background Image */}
-                    <Image
-                      src={card.image || `/hero-promotion/${index + 1}.png`}
-                      alt={card.title}
-                      fill
-                      className="object-cover"
-                      quality={95}
-                      unoptimized={true}
-                      sizes="(max-width: 1024px) 50vw, 40vw"
-                      priority={true}
-                      style={{
-                        imageRendering: 'crisp-edges',
-                        filter: 'contrast(1.1) saturate(1.05)',
-                        backfaceVisibility: 'hidden',
-                        transform: 'translateZ(0)',
-                        willChange: 'transform'
-                      }}
-                    />
-                    
-                    {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
-                    
-                    {/* Main Content */}
-                    <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
-                      <div className="mb-2">
-                        <p className="text-white/70 text-xs font-bold tracking-[0.3em] uppercase">
-                          {card.subtitle}
-                        </p>
-                      </div>
-                      <div className="mb-3">
-                        <h3 className="text-white font-black text-xl xl:text-2xl leading-tight tracking-tight drop-shadow-2xl">
-                          {card.title.toUpperCase()}
-                        </h3>
-                      </div>
-                      <div className="mb-4">
-                        <p className="text-white/90 text-sm font-medium leading-relaxed">
-                          {card.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Hover Effect Overlay */}
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
-                    
-                    {/* Corner Accent */}
-                    <div className="absolute top-0 right-0 w-0 h-0 border-l-[30px] border-l-transparent border-t-[30px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
-                  </div>
-                </a>
-              );
-                }
-                
-                return (
-                  <Link key={index} href={card.link} className="group flex-1">
-                    <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
-                      {/* Background Image */}
-                      <Image
-                        src={card.image || `/hero-promotion/${index + 1}.png`}
-                        alt={card.title}
-                        fill
-                        className="object-cover"
-                        quality={95}
-                        unoptimized={true}
-                        sizes="(max-width: 1024px) 50vw, 40vw"
-                        priority={true}
-                        style={{
-                          imageRendering: 'crisp-edges',
-                          filter: 'contrast(1.1) saturate(1.05)',
-                          backfaceVisibility: 'hidden',
-                          transform: 'translateZ(0)',
-                          willChange: 'transform'
-                        }}
-                      />
-                      
-                      {/* Dark Overlay */}
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
-                      
-                      {/* Main Content */}
-                      <div className="absolute inset-0 flex flex-col justify-center items-center p-6 text-center">
-                        <div className="mb-2">
-                          <p className="text-white/70 text-xs font-bold tracking-[0.3em] uppercase">
-                            {card.subtitle}
-                          </p>
-                        </div>
-                        <div className="mb-3">
-                          <h3 className="text-white font-black text-xl xl:text-2xl leading-tight tracking-tight drop-shadow-2xl">
-                            {card.title.toUpperCase()}
-                          </h3>
-                        </div>
-                        <div className="mb-4">
-                          <p className="text-white/90 text-sm font-medium leading-relaxed">
-                            {card.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Hover Effect Overlay */}
-                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
-                      
-                      {/* Corner Accent */}
-                      <div className="absolute top-0 right-0 w-0 h-0 border-l-[30px] border-l-transparent border-t-[30px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Right Column: 1 large card */}
-            <div className="w-full">
-              {promotionalCards.slice(2, 3).map((card, index) => {
-                const isExternalLink = card.link.startsWith('http');
-                
-                if (isExternalLink) {
-                  return (
-                    <a key={index + 2} href={card.link} target="_blank" rel="noopener noreferrer" className="group block h-full">
-                  <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
-                    {/* Background Image */}
-                    <Image
-                      src={card.image || `/hero-promotion/3.png`}
-                      alt={card.title}
-                      fill
-                      className="object-cover"
-                      quality={95}
-                      unoptimized={true}
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      priority={true}
-                      style={{
-                        imageRendering: 'crisp-edges',
-                        filter: 'contrast(1.1) saturate(1.05)',
-                        backfaceVisibility: 'hidden',
-                        transform: 'translateZ(0)',
-                        willChange: 'transform'
-                      }}
-                    />
-                    
-                    {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
-                    
-                    {/* Main Content */}
-                    <div className="absolute inset-0 flex flex-col justify-center items-center p-8 text-center">
-                      <div className="mb-4">
-                        <p className="text-white/70 text-base font-bold tracking-[0.3em] uppercase">
-                          {card.subtitle}
-                        </p>
-                      </div>
-                      <div className="mb-6">
-                        <h3 className="text-white font-black text-3xl xl:text-4xl leading-tight tracking-tight drop-shadow-2xl">
-                          {card.title.toUpperCase()}
-                        </h3>
-                      </div>
-                      <div className="mb-8">
-                        <p className="text-white/90 text-lg font-medium leading-relaxed max-w-md">
-                          {card.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Hover Effect Overlay */}
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
-                    
-                    {/* Corner Accents */}
-                    <div className="absolute top-0 right-0 w-0 h-0 border-l-[60px] border-l-transparent border-t-[60px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
-                    <div className="absolute bottom-0 left-0 w-0 h-0 border-r-[60px] border-r-transparent border-b-[60px] border-b-white/10 group-hover:border-b-white/20 transition-all duration-300" />
-                  </div>
-                </a>
-              );
-                }
-                
-                return (
-                  <Link key={index + 2} href={card.link} className="group block h-full">
-                    <div className="relative h-full overflow-hidden rounded-2xl transition-all duration-500 transform hover:scale-[1.02] shadow-xl hover:shadow-2xl">
-                      {/* Background Image */}
-                      <Image
-                        src={card.image || `/hero-promotion/3.png`}
-                        alt={card.title}
-                        fill
-                        className="object-cover"
-                        quality={95}
-                        unoptimized={true}
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        priority={true}
-                        style={{
-                          imageRendering: 'crisp-edges',
-                          filter: 'contrast(1.1) saturate(1.05)',
-                          backfaceVisibility: 'hidden',
-                          transform: 'translateZ(0)',
-                          willChange: 'transform'
-                        }}
-                      />
-                      
-                      {/* Dark Overlay */}
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300 rounded-2xl" />
-                      
-                      {/* Main Content */}
-                      <div className="absolute inset-0 flex flex-col justify-center items-center p-8 text-center">
-                        <div className="mb-4">
-                          <p className="text-white/70 text-base font-bold tracking-[0.3em] uppercase">
-                            {card.subtitle}
-                          </p>
-                        </div>
-                        <div className="mb-6">
-                          <h3 className="text-white font-black text-3xl xl:text-4xl leading-tight tracking-tight drop-shadow-2xl">
-                            {card.title.toUpperCase()}
-                          </h3>
-                        </div>
-                        <div className="mb-8">
-                          <p className="text-white/90 text-lg font-medium leading-relaxed max-w-md">
-                            {card.description}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Hover Effect Overlay */}
-                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500 rounded-2xl" />
-                      
-                      {/* Corner Accents */}
-                      <div className="absolute top-0 right-0 w-0 h-0 border-l-[60px] border-l-transparent border-t-[60px] border-t-white/10 group-hover:border-t-white/20 transition-all duration-300" />
-                      <div className="absolute bottom-0 left-0 w-0 h-0 border-r-[60px] border-r-transparent border-b-[60px] border-b-white/10 group-hover:border-b-white/20 transition-all duration-300" />
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </div>
 
@@ -585,24 +231,31 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer CTA - Light AUTOID Style */}
-      <div className="py-24 bg-white">
+      {/* Footer CTA - Professional Construction Style */}
+      <div className="py-16 sm:py-20 bg-gray-100">
         <div className="px-4 lg:px-8 xl:px-16 max-w-full text-center">
-          <h2 className="text-4xl sm:text-6xl font-black text-gray-900 mb-8">
-            THE #1 EXPERTS IN<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-900">
-              CONSTRUCTION TOOLS
-            </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1e2e4f] mb-6">
+            ผู้เชี่ยวชาญด้านวัสดุก่อสร้าง
           </h2>
-          <p className="text-gray-600 text-xl mb-12 max-w-2xl mx-auto">
-            มืออาชีพเลือกใช้ เพราะเราคือผู้เชี่ยวชาญด้านเครื่องมือและวัสดุก่อสร้าง
+          <p className="text-gray-600 text-lg sm:text-xl mb-8 max-w-2xl mx-auto">
+            มากกว่า 25 ปี ที่เราเป็นศูนย์รวมวัสดุกันสาดและอุปกรณ์ก่อสร้างครบวงจร พร้อมทีมงานมืออาชีพให้คำปรึกษา
           </p>
-          <Link 
-            href="/categories" 
-            className="inline-block bg-gray-900 text-white px-12 py-6 text-xl font-black hover:bg-gray-800 transition-all duration-300 transform hover:scale-105"
-          >
-            SHOP CONSTRUCTION TOOLS
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/categories" 
+              className="inline-block bg-[#1e2e4f] text-white px-8 py-4 text-lg font-bold rounded-lg hover:bg-[#31487a] transition-all duration-300 transform hover:scale-105"
+            >
+              ดูสินค้าทั้งหมด
+            </Link>
+            <a 
+              href="https://line.me/R/ti/p/@576kulwa" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#06C755] text-white px-8 py-4 text-lg font-bold rounded-lg hover:bg-[#05b04c] transition-all duration-300 transform hover:scale-105"
+            >
+              ติดต่อเราทาง LINE
+            </a>
+          </div>
         </div>
       </div>
     </div>

@@ -54,41 +54,27 @@ export const promotionalCards = [
 ];
 
 export const brands = [
-  {
-    name: "ADRO",
-    description: "วัสดุก่อสร้างคุณภาพสูง",
-    link: "/categories?brand=adro"
-  },
-  {
-    name: "TRE",
-    description: "เครื่องมือช่างมืออาชีพ",
-    link: "/categories?brand=tre"
-  },
-  {
-    name: "HKS",
-    description: "อะไหล่และอุปกรณ์",
-    link: "/categories?brand=hks"
-  },
-  {
-    name: "VORSTEINER",
-    description: "เครื่องมือและอุปกรณ์",
-    link: "/categories?brand=vorsteiner"
-  },
-  {
-    name: "ZAERO",
-    description: "วัสดุคุณภาพพรีเมียม",
-    link: "/categories?brand=zaero"
-  },
-  {
-    name: "MILLTEK",
-    description: "เครื่องมือและอุปกรณ์ช่าง",
-    link: "/categories?brand=milltek"
-  },
-  {
-    name: "3D DESIGN",
-    description: "เทคโนโลยีและนวัตกรรม",
-    link: "/categories?brand=3d-design"
-  }
+  { name: "BlueScope", image: "/partner/BlueScope.png", link: "/categories?brand=bluescope" },
+  { name: "ZACS", image: "/partner/Zacs.png", link: "/categories?brand=zacs" },
+  { name: "LionRoof", image: "/partner/Lionroof.png", link: "/categories?brand=lionroof" },
+  { name: "DreamRoof", image: "/partner/DreamRoof.png", link: "/categories?brand=dreamroof" },
+  { name: "RoofyRoof", image: "/partner/RoofyRoof.png", link: "/categories?brand=roofyroof" },
+  { name: "Miniwave", image: "/partner/Miniwave.png", link: "/categories?brand=miniwave" },
+  { name: "Makrolon", image: "/partner/Makrolon%20Polycabonate.png", link: "/categories?brand=makrolon" },
+  { name: "Sunpoly", image: "/partner/Sunpoly%20Polycabonate.png", link: "/categories?brand=sunpoly" },
+  { name: "TN Polycarbonate", image: "/partner/TN%20Polycarbonate.png", link: "/categories?brand=tn" },
+  { name: "D-Lite FiberGlass", image: "/partner/D-Lite%20FiberGlass.png", link: "/categories?brand=dlite" },
+  { name: "Goodsense", image: "/partner/Goodsense%20AluminiumRoof.png", link: "/categories?brand=goodsense" },
+  { name: "Corner Stone", image: "/partner/Corner%20Stone%20Polycarbonate.png", link: "/categories?brand=cornerstone" },
+  { name: "Inno Cons", image: "/partner/logo-inno-cons.png", link: "/categories?brand=innocons" },
+  { name: "Inno Cons Logo", image: "/partner/inno-conslogo-02-1-2.png", link: "/categories?brand=innocons" },
+  { name: "VG", image: "/partner/Logo%20-%20VG%20%E0%B8%82%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%81%E0%B8%A3%E0%B8%A1-01.png", link: "/categories?brand=vg" },
+  { name: "Mini Gold", image: "/partner/logo-mini%20gold.png", link: "/categories?brand=minigold" },
+  { name: "Rhino Plus", image: "/partner/logo-rhino%20plus.png", link: "/categories?brand=rhinoplus" },
+  { name: "ชินโคไล", image: "/partner/%E0%B9%82%E0%B8%A5%E0%B9%82%E0%B8%81%E0%B9%89%E0%B8%8A%E0%B8%B4%E0%B8%99%E0%B9%82%E0%B8%84%E0%B9%84%E0%B8%A5.png", link: "/categories?brand=shinkolite" },
+  { name: "ไวนิล S.B.", image: "/partner/%E0%B9%84%E0%B8%A7%E0%B8%99%E0%B8%B4%E0%B8%A5%20S.B..png", link: "/categories?brand=vinyl-sb" },
+  { name: "ไวนิล ตราภูเขา", image: "/partner/%E0%B9%84%E0%B8%A7%E0%B8%99%E0%B8%B4%E0%B8%A5%20%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%A0%E0%B8%B9%E0%B9%80%E0%B8%82%E0%B8%B2.png", link: "/categories?brand=vinyl-mountain" },
+  { name: "SP เมทัลชีท", image: "/partner/%E0%B9%80%E0%B8%AD%E0%B8%AA%E0%B8%9E%E0%B8%B5%20%E0%B9%80%E0%B8%A1%E0%B8%97%E0%B8%B1%E0%B8%A5%E0%B8%8A%E0%B8%B5%E0%B8%97.png", link: "/categories?brand=sp-metalsheet" }
 ];
 
 export const customerReviews = [

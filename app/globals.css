@@ -150,3 +150,17 @@ input, textarea, select, button {
     transform: translateZ(0);
   }
 }
+
+/* Horizontal bounce animation for swipe hint */
+@keyframes bounce-x {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(25%);
+  }
+}
+
+.animate-bounce-x {
+  animation: bounce-x 1s ease-in-out infinite;
+}

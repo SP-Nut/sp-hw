@@ -120,48 +120,22 @@ export default function Header() {
             </div>
 
             {/* Center Section - Navigation */}
-            <nav className="hidden lg:flex items-center space-x-6 flex-1 justify-center">
-              <Link href="/categories?cat=opaque-roof" className={`font-medium transition-colors ${
-                isScrolled || !isHomePage 
+            <nav className="hidden lg:flex items-center space-x-8 flex-1 justify-center">
+              <Link href="/" className={`font-medium transition-colors ${
+                pathname === '/' ? 'text-blue-600' : 
+                (isScrolled || !isHomePage 
                   ? 'text-gray-900 hover:text-blue-600' 
-                  : 'text-white hover:text-gray-200'
+                  : 'text-white hover:text-gray-200')
               }`}>
-                กันสาดทึบแสง
+                หน้าแรก
               </Link>
-              <Link href="/categories?cat=translucent-roof" className={`font-medium transition-colors ${
-                isScrolled || !isHomePage 
+              <Link href="/categories" className={`font-medium transition-colors ${
+                pathname === '/categories' ? 'text-blue-600' : 
+                (isScrolled || !isHomePage 
                   ? 'text-gray-900 hover:text-blue-600' 
-                  : 'text-white hover:text-gray-200'
+                  : 'text-white hover:text-gray-200')
               }`}>
-                กันสาดโปร่งแสง
-              </Link>
-              <Link href="/categories?cat=installation" className={`font-medium transition-colors ${
-                isScrolled || !isHomePage 
-                  ? 'text-gray-900 hover:text-blue-600' 
-                  : 'text-white hover:text-gray-200'
-              }`}>
-                อุปกรณ์ติดตั้ง
-              </Link>
-              <Link href="/categories?cat=tools" className={`font-medium transition-colors ${
-                isScrolled || !isHomePage 
-                  ? 'text-gray-900 hover:text-blue-600' 
-                  : 'text-white hover:text-gray-200'
-              }`}>
-                เครื่องมือช่าง
-              </Link>
-              <Link href="/categories?cat=hardware" className={`font-medium transition-colors ${
-                isScrolled || !isHomePage 
-                  ? 'text-gray-900 hover:text-blue-600' 
-                  : 'text-white hover:text-gray-200'
-              }`}>
-                อุปกรณ์ฮาร์ดแวร์
-              </Link>
-              <Link href="/categories?cat=paint" className={`font-medium transition-colors ${
-                isScrolled || !isHomePage 
-                  ? 'text-gray-900 hover:text-blue-600' 
-                  : 'text-white hover:text-gray-200'
-              }`}>
-                สี & วัสดุทาสี
+                วัสดุของเรา
               </Link>
               <Link href="/about" className={`font-medium transition-colors ${
                 pathname === '/about' ? 'text-blue-600' : 
@@ -169,7 +143,7 @@ export default function Header() {
                   ? 'text-gray-900 hover:text-blue-600' 
                   : 'text-white hover:text-gray-200')
               }`}>
-                เกี่ยวกับเรา & ติดต่อ
+                เกี่ยวกับเรา
               </Link>
             </nav>
 
@@ -211,60 +185,34 @@ export default function Header() {
           <div className="container mx-auto px-4 md:px-8 py-4 md:py-6 max-w-full">
             <nav className="space-y-2 md:space-y-4">
               <Link
-                href="/categories?cat=opaque-roof"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
+                href="/"
+                className={`flex items-center py-2 md:py-3 font-medium transition-colors ${
+                  pathname === '/' ? 'text-blue-600' : 'text-gray-900 hover:text-blue-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Package className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                กันสาดทึบแสง
+                หน้าแรก
               </Link>
               <Link
-                href="/categories?cat=translucent-roof"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
+                href="/categories"
+                className={`flex items-center py-2 md:py-3 font-medium transition-colors ${
+                  pathname === '/categories' ? 'text-blue-600' : 'text-gray-900 hover:text-blue-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Package className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                กันสาดโปร่งแสง
-              </Link>
-              <Link
-                href="/categories?cat=installation"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Package className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                อุปกรณ์ติดตั้ง
-              </Link>
-              <Link
-                href="/categories?cat=tools"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Package className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                เครื่องมือช่าง
-              </Link>
-              <Link
-                href="/categories?cat=hardware"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Package className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                อุปกรณ์ฮาร์ดแวร์
-              </Link>
-              <Link
-                href="/categories?cat=paint"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Package className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                สี & วัสดุทาสี
+                วัสดุของเรา
               </Link>
               <Link
                 href="/about"
-                className="flex items-center py-2 md:py-3 text-gray-900 hover:text-blue-600 font-medium transition-colors"
+                className={`flex items-center py-2 md:py-3 font-medium transition-colors ${
+                  pathname === '/about' ? 'text-blue-600' : 'text-gray-900 hover:text-blue-600'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Info className="h-4 w-4 md:h-5 md:w-5 mr-3" />
-                เกี่ยวกับเรา & ติดต่อ
+                เกี่ยวกับเรา
               </Link>
 
               {/* Contact Info */}

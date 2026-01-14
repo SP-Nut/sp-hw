@@ -226,60 +226,43 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Thumbnail Gallery */}
-            <div className="mt-4">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-semibold text-gray-900">รูปสินค้า</h3>
-                {product.images && product.images.length > 0 && (
-                  <span className="text-sm text-green-600 flex items-center">
-                    <Camera className="h-4 w-4 mr-1" />
-                    {product.images.length} รูป
-                  </span>
-                )}
-              </div>
-              
-              {(() => {
-                // Get images array or fallback to single image
-                const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
-                
-                return productImages.length > 0 ? (
-                <div className="grid grid-cols-4 gap-2 mt-2">
-                  {/* Show actual images */}
-                  {productImages.slice(0, 4).map((image, index) => (
-                    <div 
-                      key={index} 
-                      className={`aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 overflow-hidden rounded-md ${
-                        selectedImageIndex === index ? 'ring-2 ring-[#1e2e4f]' : ''
-                      }`}
-                      onClick={() => setSelectedImageIndex(index)}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img 
-                        src={image} 
-                        alt={`${product.name} - รูปที่ ${index + 1}`}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.src = `https://via.placeholder.com/100x100/f3f4f6/6b7280?text=${index + 1}`;
-                        }}
-                      />
-                    </div>
-                  ))}
-                  
-                  {/* Placeholder thumbnails if less than 4 images */}
-                  {Array.from({ length: Math.max(0, 4 - productImages.length) }, (_, index) => (
-                    <div key={`placeholder-${index}`} className="aspect-square bg-white shadow-sm flex items-center justify-center rounded-md border-2 border-dashed border-gray-300">
-                      <span className="text-gray-400 text-xs font-medium">รูป {productImages.length + index + 1}</span>
-                    </div>
-                  ))}
+            {/* Thumbnail Gallery - Only show if multiple images */}
+            {(() => {
+              const productImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+              return productImages.length > 1 ? (
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-semibold text-gray-900">รูปสินค้า</h3>
+                    <span className="text-sm text-green-600 flex items-center">
+                      <Camera className="h-4 w-4 mr-1" />
+                      {productImages.length} รูป
+                    </span>
+                  </div>
+                  <div className={`grid gap-2 ${productImages.length === 2 ? 'grid-cols-2' : productImages.length === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
+                    {productImages.map((image, index) => (
+                      <div 
+                        key={index} 
+                        className={`aspect-square bg-white shadow-sm hover:shadow cursor-pointer transition-all duration-300 transform hover:scale-105 overflow-hidden rounded-md ${
+                          selectedImageIndex === index ? 'ring-2 ring-[#1e2e4f]' : ''
+                        }`}
+                        onClick={() => setSelectedImageIndex(index)}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={image} 
+                          alt={`${product.name} - รูปที่ ${index + 1}`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            target.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ) : (
-                <div className="text-center text-gray-500 py-4">
-                  ไม่มีรูปสินค้า
-                </div>
-              );
+              ) : null;
             })()}
-            </div>
           </div>
 
           {/* Product Details */}
@@ -362,27 +345,7 @@ export default function ProductDetail() {
               </button>
             </div>
 
-            {/* Divider */}
-            <hr className="border-gray-200 my-4 sm:my-6" />
 
-            {/* Additional Info */}
-            <div>
-              <h3 className="font-black text-gray-900 mb-3 sm:mb-4 text-base sm:text-lg">ข้อมูลเพิ่มเติม</h3>
-              <ul className="text-gray-700 space-y-2 sm:space-y-3">
-                <li className="flex items-start">
-                  <span className="text-gray-900 mr-2 sm:mr-3 text-sm sm:text-base">•</span>
-                  <span className="font-medium text-sm sm:text-base">รับประกันคุณภาพ 1 ปี</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-gray-900 mr-2 sm:mr-3 text-sm sm:text-base">•</span>
-                  <span className="font-medium text-sm sm:text-base">มีบริการติดตั้งโดยช่างมืออาชีพ</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-gray-900 mr-2 sm:mr-3 text-sm sm:text-base">•</span>
-                  <span className="font-medium text-sm sm:text-base">รองรับการคืนเงิน 7 วัน</span>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
