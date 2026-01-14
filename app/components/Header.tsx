@@ -84,7 +84,7 @@ export default function Header() {
           ? 'top-8 md:top-10 bg-transparent' 
           : 'top-0 bg-white shadow-md'
       }`}>
-      <div className={`py-4 md:py-4 transition-all duration-300 ${
+      <div className={`py-2 md:py-2 transition-all duration-300 ${
         isScrolled || !isHomePage 
           ? 'border-b border-gray-200' 
           : 'border-b border-transparent'
@@ -107,7 +107,7 @@ export default function Header() {
 
               {/* Logo */}
               <Link href="/" className="flex items-center group">
-                <div className="w-20 h-12 sm:w-24 sm:h-16 md:w-32 md:h-20 transition-transform group-hover:scale-105">
+                <div className="w-16 h-10 sm:w-20 sm:h-12 md:w-24 md:h-14 transition-transform group-hover:scale-105">
                   <Image
                     src="/logo.png"
                     alt="SP Hardware Logo"
