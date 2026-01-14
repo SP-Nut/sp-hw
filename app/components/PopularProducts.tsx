@@ -31,9 +31,12 @@ export default function PopularProducts() {
       try {
         const response = await fetch('/api/products/popular');
         const data = await response.json();
-        setProducts(data || []);
+        // Ensure data is an array
+        const productsArray = Array.isArray(data) ? data : (data?.products || []);
+        setProducts(productsArray);
       } catch (error) {
         console.error('Error fetching popular products:', error);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
